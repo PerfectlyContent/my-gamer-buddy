@@ -1,0 +1,219 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" width="1200" height="1200">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="greenGlow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <style>
+      .region-label { font-family: 'Georgia', serif; font-size: 16px; fill: #00cc66; text-anchor: middle; font-weight: bold; letter-spacing: 2px; }
+      .region-sublabel { font-family: 'Georgia', serif; font-size: 10px; fill: #009944; text-anchor: middle; font-style: italic; }
+      .region-border { stroke: #00cc66; stroke-width: 1; fill: none; opacity: 0.3; stroke-dasharray: 6,3; }
+      .river { stroke: #2266aa; stroke-width: 2; fill: none; opacity: 0.5; }
+      .river-thin { stroke: #2266aa; stroke-width: 1; fill: none; opacity: 0.4; }
+      .water { fill: #0a2040; opacity: 0.5; }
+      .forest-dot { fill: #0a3a0a; stroke: #00cc66; stroke-width: 0.3; opacity: 0.5; }
+      .mountain { fill: none; stroke: #555570; stroke-width: 1; opacity: 0.5; }
+      .mountain-snow { fill: none; stroke: #8888aa; stroke-width: 1; opacity: 0.5; }
+      .desert { fill: #2a2010; opacity: 0.3; }
+      .shrine { fill: #00cc66; }
+      .tower { fill: none; stroke: #00cc66; stroke-width: 1.5; }
+      .path { stroke: #333340; stroke-width: 1.5; fill: none; opacity: 0.4; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="1200" fill="#0a0a0f"/>
+
+  <!-- Outer border -->
+  <rect x="25" y="25" width="1150" height="1150" rx="12" ry="12" fill="none" stroke="#00cc66" stroke-width="1.5" opacity="0.5" filter="url(#glow)"/>
+  <rect x="30" y="30" width="1140" height="1140" rx="10" ry="10" fill="none" stroke="#00cc66" stroke-width="0.5" opacity="0.2"/>
+
+  <!-- Triforce ornament top center -->
+  <g transform="translate(600, 50)" stroke="#00cc66" stroke-width="1" fill="none" opacity="0.4">
+    <polygon points="0,-12 10,6 -10,6"/>
+    <polygon points="-10,6 0,24 -20,24"/>
+    <polygon points="10,6 20,24 0,24"/>
+  </g>
+
+  <!-- === TERRAIN === -->
+
+  <!-- Hebra (northwest - snowy) -->
+  <path d="M60,60 L350,60 L380,200 L350,350 L200,380 L60,320 Z" fill="#1a1a2a" opacity="0.3"/>
+  <polygon points="150,120 170,170 130,170" class="mountain-snow"/>
+  <polygon points="200,100 225,160 175,160" class="mountain-snow"/>
+  <polygon points="260,110 280,160 240,160" class="mountain-snow"/>
+  <polygon points="120,160 140,210 100,210" class="mountain-snow"/>
+  <polygon points="300,130 320,180 280,180" class="mountain-snow"/>
+  <polygon points="180,150 200,200 160,200" class="mountain-snow"/>
+
+  <!-- Eldin (northeast - volcanic) -->
+  <path d="M800,60 L1140,60 L1140,350 L1050,400 L900,380 L780,280 L750,150 Z" fill="#2a1010; opacity: 0.3"/>
+  <!-- Death Mountain -->
+  <polygon points="950,120 1000,220 900,220" fill="#2a1510" stroke="#cc3300" stroke-width="1" opacity="0.3"/>
+  <polygon points="950,140 970,190 930,190" fill="#3a1510" stroke="#ff4400" stroke-width="0.5" opacity="0.4"/>
+  <polygon points="1020,160 1050,230 990,230" class="mountain"/>
+  <polygon points="870,170 895,230 845,230" class="mountain"/>
+
+  <!-- Gerudo Desert (southwest) -->
+  <path d="M60,700 L300,650 L400,750 L380,950 L300,1050 L60,1050 Z" class="desert"/>
+  <path d="M60,700 L300,650 L400,750 L380,950 L300,1050 L60,1050 Z" class="region-border"/>
+
+  <!-- Faron (south) -->
+  <path d="M400,900 L650,880 L750,950 L700,1100 L500,1140 L380,1100 Z" fill="#0a2a0a" opacity="0.2"/>
+
+  <!-- Lanayru (east) -->
+  <path d="M850,400 L1140,380 L1140,750 L1000,800 L850,750 L800,600 Z" fill="#0a1a2a" opacity="0.2"/>
+  <!-- Lanayru wetlands water -->
+  <ellipse cx="950" cy="550" rx="80" ry="40" class="water"/>
+  <ellipse cx="1020" cy="620" rx="50" ry="25" class="water"/>
+
+  <!-- Necluda (southeast) -->
+  <path d="M750,800 L1000,800 L1140,900 L1140,1140 L800,1140 L700,1000 Z" fill="#1a2a1a" opacity="0.15"/>
+
+  <!-- Akkala (far northeast) -->
+  <path d="M950,60 L1140,60 L1140,250 L1050,280 L950,200 Z" fill="#2a1a1a" opacity="0.2"/>
+
+  <!-- Tabantha (west) -->
+  <path d="M60,350 L200,380 L250,550 L200,700 L60,700 Z" fill="#1a2a1a" opacity="0.15"/>
+
+  <!-- === FORESTS (clustered dots) === -->
+  <!-- Great Hyrule Forest (north-center) -->
+  <g>
+    <circle cx="550" cy="250" r="8" class="forest-dot"/><circle cx="570" cy="235" r="6" class="forest-dot"/>
+    <circle cx="530" cy="240" r="7" class="forest-dot"/><circle cx="560" cy="260" r="5" class="forest-dot"/>
+    <circle cx="540" cy="270" r="7" class="forest-dot"/><circle cx="580" cy="255" r="6" class="forest-dot"/>
+    <circle cx="520" cy="255" r="5" class="forest-dot"/><circle cx="565" cy="280" r="6" class="forest-dot"/>
+    <circle cx="545" cy="225" r="5" class="forest-dot"/><circle cx="590" cy="270" r="5" class="forest-dot"/>
+    <circle cx="510" cy="265" r="4" class="forest-dot"/><circle cx="575" cy="290" r="5" class="forest-dot"/>
+  </g>
+  <!-- Faron forests -->
+  <g>
+    <circle cx="520" cy="980" r="7" class="forest-dot"/><circle cx="540" cy="1000" r="6" class="forest-dot"/>
+    <circle cx="560" cy="990" r="5" class="forest-dot"/><circle cx="500" cy="1010" r="6" class="forest-dot"/>
+    <circle cx="550" cy="1020" r="5" class="forest-dot"/><circle cx="580" cy="1005" r="5" class="forest-dot"/>
+    <circle cx="530" cy="1040" r="4" class="forest-dot"/><circle cx="490" cy="990" r="4" class="forest-dot"/>
+  </g>
+  <!-- Tabantha forests -->
+  <g>
+    <circle cx="130" cy="480" r="6" class="forest-dot"/><circle cx="150" cy="500" r="5" class="forest-dot"/>
+    <circle cx="110" cy="510" r="5" class="forest-dot"/><circle cx="140" cy="520" r="4" class="forest-dot"/>
+    <circle cx="160" cy="490" r="4" class="forest-dot"/>
+  </g>
+
+  <!-- === RIVERS === -->
+  <!-- Main river from Lanayru through Central -->
+  <path d="M950,500 C850,480 750,500 650,520 C580,530 520,540 480,560 C440,580 400,620 380,670 C360,720 350,780 340,840" class="river"/>
+  <!-- Branch river north -->
+  <path d="M650,520 C620,460 600,400 590,350 C580,300 570,250 560,200" class="river-thin"/>
+  <!-- Gerudo river -->
+  <path d="M380,670 C320,690 260,710 200,730 C160,740 120,750 80,760" class="river-thin"/>
+  <!-- Zora river -->
+  <path d="M950,500 C970,450 980,400 990,350" class="river-thin"/>
+
+  <!-- === PATHS === -->
+  <path d="M600,550 L600,350" class="path"/>
+  <path d="M600,550 L400,700" class="path"/>
+  <path d="M600,550 L850,550" class="path"/>
+  <path d="M600,550 L600,900" class="path"/>
+  <path d="M600,550 L300,300" class="path"/>
+  <path d="M600,550 L950,300" class="path"/>
+  <path d="M400,700 L200,850" class="path"/>
+  <path d="M600,900 L850,900" class="path"/>
+
+  <!-- === HYRULE CASTLE (center) === -->
+  <g transform="translate(600, 500)">
+    <circle cx="0" cy="0" r="30" fill="#00cc66" opacity="0.05" filter="url(#glow)"/>
+    <circle cx="0" cy="0" r="20" fill="none" stroke="#00cc66" stroke-width="1" opacity="0.4"/>
+    <rect x="-12" y="-16" width="24" height="20" rx="2" fill="none" stroke="#00cc66" stroke-width="1.2" opacity="0.7"/>
+    <rect x="-5" y="-22" width="10" height="6" rx="1" fill="none" stroke="#00cc66" stroke-width="1" opacity="0.7"/>
+    <line x1="-12" y1="-16" x2="-16" y2="-20" stroke="#00cc66" stroke-width="1" opacity="0.5"/>
+    <line x1="12" y1="-16" x2="16" y2="-20" stroke="#00cc66" stroke-width="1" opacity="0.5"/>
+    <circle cx="0" cy="-25" r="3" fill="#00cc66" opacity="0.5" filter="url(#greenGlow)"/>
+  </g>
+  <text x="600" y="540" class="region-label" filter="url(#greenGlow)" font-size="14">HYRULE CASTLE</text>
+
+  <!-- === REGION LABELS === -->
+  <text x="600" y="590" class="region-label" filter="url(#greenGlow)">CENTRAL HYRULE</text>
+  <text x="600" y="608" class="region-sublabel">Kingdom Heartland</text>
+
+  <text x="200" y="220" class="region-label" filter="url(#greenGlow)" font-size="14">HEBRA</text>
+  <text x="200" y="238" class="region-sublabel">Frozen Peaks</text>
+
+  <text x="950" y="180" class="region-label" filter="url(#greenGlow)" font-size="14">ELDIN</text>
+  <text x="950" y="198" class="region-sublabel">Volcanic Region</text>
+
+  <text x="1050" y="140" class="region-label" filter="url(#greenGlow)" font-size="12">AKKALA</text>
+  <text x="1050" y="155" class="region-sublabel" font-size="9">Highlands</text>
+
+  <text x="950" y="580" class="region-label" filter="url(#greenGlow)" font-size="14">LANAYRU</text>
+  <text x="950" y="598" class="region-sublabel">Wetlands</text>
+
+  <text x="870" y="920" class="region-label" filter="url(#greenGlow)" font-size="14">NECLUDA</text>
+  <text x="870" y="938" class="region-sublabel">Eastern Wilds</text>
+
+  <text x="540" y="1000" class="region-label" filter="url(#greenGlow)" font-size="14">FARON</text>
+  <text x="540" y="1018" class="region-sublabel">Tropical Forests</text>
+
+  <text x="200" y="850" class="region-label" filter="url(#greenGlow)" font-size="14">GERUDO</text>
+  <text x="200" y="868" class="region-sublabel">Desert</text>
+
+  <text x="140" y="530" class="region-label" filter="url(#greenGlow)" font-size="14">TABANTHA</text>
+  <text x="140" y="548" class="region-sublabel">Frontier</text>
+
+  <!-- === SHRINE markers === -->
+  <g filter="url(#greenGlow)">
+    <rect x="347" y="397" width="6" height="6" rx="1" class="shrine" opacity="0.7"/>
+    <rect x="747" y="447" width="6" height="6" rx="1" class="shrine" opacity="0.7"/>
+    <rect x="447" y="697" width="6" height="6" rx="1" class="shrine" opacity="0.7"/>
+    <rect x="847" y="647" width="6" height="6" rx="1" class="shrine" opacity="0.7"/>
+    <rect x="297" y="547" width="6" height="6" rx="1" class="shrine" opacity="0.7"/>
+    <rect x="697" y="297" width="6" height="6" rx="1" class="shrine" opacity="0.7"/>
+    <rect x="547" y="797" width="6" height="6" rx="1" class="shrine" opacity="0.7"/>
+    <rect x="197" y="747" width="6" height="6" rx="1" class="shrine" opacity="0.7"/>
+    <rect x="947" y="447" width="6" height="6" rx="1" class="shrine" opacity="0.7"/>
+    <rect x="647" y="897" width="6" height="6" rx="1" class="shrine" opacity="0.7"/>
+    <rect x="147" y="297" width="6" height="6" rx="1" class="shrine" opacity="0.7"/>
+    <rect x="1047" y="597" width="6" height="6" rx="1" class="shrine" opacity="0.7"/>
+  </g>
+
+  <!-- === TOWER markers === -->
+  <g>
+    <!-- Central tower -->
+    <circle cx="600" cy="420" r="6" class="tower" filter="url(#greenGlow)"/>
+    <line x1="600" y1="414" x2="600" y2="426" stroke="#00cc66" stroke-width="1" opacity="0.5"/>
+    <!-- Hebra tower -->
+    <circle cx="250" cy="280" r="6" class="tower" filter="url(#greenGlow)"/>
+    <!-- Eldin tower -->
+    <circle cx="900" cy="280" r="6" class="tower" filter="url(#greenGlow)"/>
+    <!-- Lanayru tower -->
+    <circle cx="1000" cy="500" r="6" class="tower" filter="url(#greenGlow)"/>
+    <!-- Faron tower -->
+    <circle cx="550" cy="950" r="6" class="tower" filter="url(#greenGlow)"/>
+    <!-- Gerudo tower -->
+    <circle cx="250" cy="800" r="6" class="tower" filter="url(#greenGlow)"/>
+    <!-- Necluda tower -->
+    <circle cx="900" cy="850" r="6" class="tower" filter="url(#greenGlow)"/>
+    <!-- Tabantha tower -->
+    <circle cx="150" cy="450" r="6" class="tower" filter="url(#greenGlow)"/>
+    <!-- Akkala tower -->
+    <circle cx="1050" cy="180" r="6" class="tower" filter="url(#greenGlow)"/>
+  </g>
+
+  <!-- Title -->
+  <text x="600" y="1160" font-family="'Georgia', serif" font-size="11" fill="#00cc66" text-anchor="middle" opacity="0.4" letter-spacing="3">HYRULE -- KINGDOM MAP -- INTERACTIVE</text>
+
+  <!-- Compass -->
+  <g transform="translate(1100, 1100)">
+    <circle cx="0" cy="0" r="22" fill="none" stroke="#00cc66" stroke-width="0.5" opacity="0.3"/>
+    <text x="0" y="-10" font-family="'Georgia', serif" font-size="10" fill="#00cc66" text-anchor="middle" opacity="0.5">N</text>
+    <text x="0" y="16" font-family="'Georgia', serif" font-size="8" fill="#00cc66" text-anchor="middle" opacity="0.3">S</text>
+    <text x="12" y="4" font-family="'Georgia', serif" font-size="8" fill="#00cc66" text-anchor="middle" opacity="0.3">E</text>
+    <text x="-12" y="4" font-family="'Georgia', serif" font-size="8" fill="#00cc66" text-anchor="middle" opacity="0.3">W</text>
+    <line x1="0" y1="-6" x2="0" y2="6" stroke="#00cc66" stroke-width="0.8" opacity="0.4"/>
+    <line x1="-6" y1="0" x2="6" y2="0" stroke="#00cc66" stroke-width="0.8" opacity="0.4"/>
+  </g>
+</svg>

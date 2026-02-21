@@ -1,0 +1,40 @@
+{
+  "name": "my-gamer-buddy-frontend",
+  "version": "1.0.0",
+  "description": "Frontend for My Gamer Buddy - AI Gaming Assistant",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 3000",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@radix-ui/react-scroll-area": "^1.1.0",
+    "@radix-ui/react-select": "^2.1.1",
+    "@radix-ui/react-slot": "^1.1.0",
+    "axios": "^1.7.7",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "date-fns": "^3.6.0",
+    "framer-motion": "^12.34.3",
+    "lucide-react": "^0.445.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-dropzone": "^14.2.3",
+    "react-markdown": "^9.0.1",
+    "react-router-dom": "^6.26.0",
+    "react-zoom-pan-pinch": "^3.7.0",
+    "tailwind-merge": "^2.5.2",
+    "zustand": "^4.5.5"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.4",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.41",
+    "tailwindcss": "^3.4.11",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.2"
+  }
+}
