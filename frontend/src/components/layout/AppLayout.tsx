@@ -2,6 +2,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { MessageSquare, Code2, Map, ListChecks, Gamepad2 } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import SettingsPanel from './SettingsPanel';
+import { playSound, triggerHaptic } from '@/lib/sounds';
 
 const navItems = [
   { path: '/', label: 'Chat', icon: MessageSquare },
@@ -29,7 +30,7 @@ export default function AppLayout() {
             return (
               <button
                 key={item.path}
-                onClick={() => navigate(item.path)}
+                onClick={() => { playSound('nav'); triggerHaptic('tap'); navigate(item.path); }}
                 className={`relative flex flex-col items-center gap-1.5 p-3 rounded-xl transition-all duration-200 w-[72px] active:scale-[0.95] ${
                   isActive
                     ? 'bg-white/[0.08] text-gaming-blue shadow-[0_0_16px_rgba(0,212,255,0.2)]'
@@ -75,7 +76,7 @@ export default function AppLayout() {
             return (
               <button
                 key={item.path}
-                onClick={() => navigate(item.path)}
+                onClick={() => { playSound('nav'); triggerHaptic('tap'); navigate(item.path); }}
                 className={`relative flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl transition-all duration-200 active:scale-[0.90] ${
                   isActive
                     ? 'text-gaming-blue'

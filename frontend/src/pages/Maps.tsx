@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Loader2 } from 'lucide-react';
+import { playSound, triggerHaptic } from '@/lib/sounds';
 import GameHeader from '@/components/layout/GameHeader';
 import { GamingButton } from '@/components/ui/GamingButton';
 import InteractiveMap from '@/components/maps/InteractiveMap';
@@ -51,6 +52,8 @@ export default function Maps() {
   }, [selectedMarkerType, selectedMap, fetchMarkers]);
 
   const handleMarkerClick = (marker: MapMarker) => {
+    playSound('marker');
+    triggerHaptic('tap');
     selectMarker(selectedMarker?.id === marker.id ? null : marker);
   };
 
