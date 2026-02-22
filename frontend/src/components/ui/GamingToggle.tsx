@@ -1,5 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
+import { playSound, triggerHaptic } from '@/lib/sounds';
 
 export interface GamingToggleProps {
   checked: boolean;
@@ -18,6 +19,8 @@ export const GamingToggle: React.FC<GamingToggleProps> = ({
 }) => {
   const handleToggle = () => {
     if (!disabled) {
+      playSound('toggle');
+      triggerHaptic('double');
       onCheckedChange(!checked);
     }
   };

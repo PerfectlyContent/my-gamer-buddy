@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import ReactDOM from 'react-dom';
 import { cn } from '@/lib/utils';
-import { playSound } from '@/lib/sounds';
+import { playSound, triggerHaptic } from '@/lib/sounds';
 
 // ---- Types ----
 
@@ -216,8 +216,10 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({
     setToasts((prev) => [...prev, { ...input, id }]);
     if (input.variant === 'achievement') {
       playSound('complete');
+      triggerHaptic('achievement');
     } else {
       playSound('notification');
+      triggerHaptic('tap');
     }
   }, []);
 

@@ -3,6 +3,7 @@ import { Quest, QuestProgress } from '@/types';
 import { GamingBadge } from '@/components/ui/GamingBadge';
 import { cn } from '@/lib/utils';
 import { StickyNote, ChevronDown, ChevronUp } from 'lucide-react';
+import { triggerHaptic } from '@/lib/sounds';
 
 interface QuestItemProps {
   quest: Quest;
@@ -39,7 +40,7 @@ export default function QuestItem({
       <div className="flex items-start gap-3">
         {/* Checkbox */}
         <button
-          onClick={onToggle}
+          onClick={() => { triggerHaptic('tap'); onToggle(); }}
           className={cn(
             'mt-0.5 shrink-0 w-5 h-5 rounded border-2 flex items-center justify-center transition-all duration-200',
             isCompleted

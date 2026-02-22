@@ -4,6 +4,7 @@ import { GamingCard } from '@/components/ui/GamingCard';
 import { GamingBadge } from '@/components/ui/GamingBadge';
 import { Copy, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { playSound, triggerHaptic } from '@/lib/sounds';
 
 interface CheatCodeCardProps {
   cheatCode: CheatCode;
@@ -16,8 +17,12 @@ export default function CheatCodeCard({ cheatCode }: CheatCodeCardProps) {
     try {
       await navigator.clipboard.writeText(cheatCode.code);
       setCopied(true);
+      playSound('copy');
+      triggerHaptic('copy');
       setTimeout(() => setCopied(false), 2000);
     } catch {
+      playSound('error');
+      triggerHaptic('error');
       console.error('Failed to copy to clipboard');
     }
   };

@@ -1,7 +1,7 @@
 import { useState, useRef, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Send, Image, X, Mic, MicOff, Loader2 } from 'lucide-react';
-import { playSound } from '@/lib/sounds';
+import { playSound, triggerHaptic } from '@/lib/sounds';
 
 interface ChatInputProps {
   onSend: (message: string, image?: File) => void;
@@ -35,6 +35,7 @@ export default function ChatInput({ onSend, disabled }: ChatInputProps) {
   const handleSend = () => {
     if ((!message.trim() && !image) || disabled) return;
     playSound('send');
+    triggerHaptic('tap');
     onSend(message.trim(), image || undefined);
     setMessage('');
     setImage(null);
@@ -86,6 +87,7 @@ export default function ChatInput({ onSend, disabled }: ChatInputProps) {
       };
 
       mediaRecorder.start();
+      triggerHaptic('double');
       setIsRecording(true);
 
       const SpeechRecognition =

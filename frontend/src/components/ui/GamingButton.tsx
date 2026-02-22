@@ -1,11 +1,17 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
+import { playSound, triggerHaptic } from '@/lib/sounds';
+import type { SoundName } from '@/lib/sounds';
 
 export interface GamingButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'ghost' | 'danger';
   size?: 'sm' | 'md' | 'lg';
   glow?: boolean;
+  /** Sound to play on click. Pass false to disable. Defaults to 'click'. */
+  sound?: SoundName | false;
+  /** Whether to trigger haptic feedback on click. Defaults to true. */
+  haptic?: boolean;
 }
 
 const variantStyles: Record<
@@ -46,18 +52,30 @@ export const GamingButton = React.forwardRef<
       variant = 'primary',
       size = 'md',
       glow = false,
+      sound = 'click',
+      haptic = true,
       disabled,
       children,
+      onClick,
       ...props
     },
     ref
   ) => {
     const v = variantStyles[variant];
 
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (!disabled) {
+        if (sound !== false) playSound(sound);
+        if (haptic) triggerHaptic('tap');
+      }
+      onClick?.(e);
+    };
+
     return (
       <button
         ref={ref}
         disabled={disabled}
+        onClick={handleClick}
         className={cn(
           'inline-flex items-center justify-center font-medium font-body tracking-wide border rounded-xl',
           'transition-all duration-150 ease-out',
