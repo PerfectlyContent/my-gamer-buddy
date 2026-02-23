@@ -42,7 +42,7 @@ async function fetchFortniteMapData(): Promise<{ images: FortniteMapImages; pois
     clearTimeout(timeout);
 
     if (!res.ok) return null;
-    const json = await res.json();
+    const json = await res.json() as any;
     if (json.status !== 200 || !json.data) return null;
 
     const images: FortniteMapImages = json.data.images ?? {};
