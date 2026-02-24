@@ -1,55 +1,68 @@
 import { useGameStore } from '../../store/gameStore';
-import { Game } from '../../types';
 
 interface GameSelectorProps {
-  onSelect?: (game: Game | null) => void;
+  onSelect?: (game: import('../../types').Game | null) => void;
   compact?: boolean;
 }
 
-export default function GameSelector({ onSelect, compact }: GameSelectorProps) {
+export default function GameSelector({ onSelect, compact: _compact }: GameSelectorProps) {
   const { games, selectedGame, selectGame } = useGameStore();
 
-  const handleSelect = (game: Game | null) => {
+  const handleSelect = (game: import('../../types').Game | null) => {
     selectGame(game);
     onSelect?.(game);
   };
 
-  const pillSize = compact ? 'px-2 py-0.5 text-[11px]' : 'px-2.5 py-1 text-xs';
-
   return (
-    <div className="flex gap-1.5 p-3 overflow-x-auto scrollbar-hide">
+    <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide py-1">
+      {/* All games pill */}
       <button
         onClick={() => handleSelect(null)}
-        className={`flex items-center gap-1 ${pillSize} rounded-full font-medium transition-all whitespace-nowrap shrink-0 ${
+        className={`flex-shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border transition-all ${
           !selectedGame
-            ? 'glass-strong bg-gaming-blue/15 text-gaming-blue border border-gaming-blue/50 shadow-[0_0_10px_rgba(0,212,255,0.2)]'
-            : 'glass text-gaming-muted border border-white/[0.08] hover:border-white/[0.16] hover:text-gaming-text'
+            ? 'bg-gaming-blue/20 border-gaming-blue/50 ring-1 ring-gaming-blue/20'
+            : 'bg-white/[0.05] border-white/10 grayscale hover:grayscale-0'
         }`}
       >
-        🎮 All
-      </button>
-      {games.map((game) => (
-        <button
-          key={game.id}
-          onClick={() => handleSelect(game)}
-          className={`flex items-center gap-1 ${pillSize} rounded-full font-medium transition-all whitespace-nowrap shrink-0 ${
-            selectedGame?.id === game.id
-              ? 'glass border'
-              : 'glass text-gaming-muted border border-white/[0.08] hover:border-white/[0.16] hover:text-gaming-text'
+        <span className="text-xl">🎮</span>
+        <span
+          className={`text-[10px] font-display uppercase tracking-widest font-bold pr-1 ${
+            !selectedGame ? 'text-gaming-blue' : 'text-gaming-muted'
           }`}
-          style={
-            selectedGame?.id === game.id
-              ? {
-                  backgroundColor: `${game.color_accent}20`,
-                  color: game.color_accent,
-                  borderColor: `${game.color_accent}80`,
-                }
-              : undefined
-          }
         >
-          {game.icon} {game.name}
-        </button>
-      ))}
+          All
+        </span>
+      </button>
+
+      {games.map((game) => {
+        const isActive = selectedGame?.id === game.id;
+        return (
+          <button
+            key={game.id}
+            onClick={() => handleSelect(game)}
+            className={`flex-shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border transition-all ${
+              isActive ? 'ring-1' : 'bg-white/[0.05] border-white/10 grayscale hover:grayscale-0'
+            }`}
+            style={
+              isActive
+                ? {
+                    backgroundColor: `${game.color_accent}20`,
+                    borderColor: `${game.color_accent}60`,
+                    boxShadow: `0 0 0 1px ${game.color_accent}20`,
+                  }
+                : undefined
+            }
+          >
+            <span className="text-xl">{game.icon}</span>
+            <span
+              className="text-[10px] font-display uppercase tracking-widest font-bold pr-1"
+              style={isActive ? { color: game.color_accent } : undefined}
+            >
+              {game.name}
+            </span>
+          </button>
+        );
+      })}
     </div>
   );
 }
