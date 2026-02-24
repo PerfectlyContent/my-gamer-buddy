@@ -88,44 +88,44 @@ CREATE INDEX IF NOT EXISTS idx_map_markers_map ON map_markers(map_id);
 CREATE INDEX IF NOT EXISTS idx_map_markers_type ON map_markers(marker_type);
 
 -- Seed game maps
--- Fortnite: image_url is populated dynamically by the backend via fortnite-api.com;
---           this placeholder gets overwritten on first request.
+-- Fortnite: image_url is updated dynamically by the backend via fortnite-api.com;
+--           the local SVG is the initial/fallback value.
 INSERT INTO game_maps (game_id, name, slug, image_url, width, height)
 SELECT g.id,
        'Battle Royale Island',
        'battle-royale',
-       'https://media.fortniteapi.io/images/map.png',
-       2048, 2048
+       '/maps/fortnite-battle-royale.svg',
+       1200, 1200
 FROM games g WHERE g.slug = 'fortnite'
 ON CONFLICT ON CONSTRAINT game_maps_game_slug_unique DO NOTHING;
 
--- GTA V – high-res atlas map (bragitoff community mirror, public domain fan use)
+-- GTA V – locally-served stylised map SVG
 INSERT INTO game_maps (game_id, name, slug, image_url, width, height)
 SELECT g.id,
        'Los Santos',
        'los-santos',
-       'https://www.bragitoff.com/wp-content/uploads/2015/11/GTAV_ATLUS_8192x8192.png',
-       2048, 2048
+       '/maps/gta-los-santos.svg',
+       1200, 1200
 FROM games g WHERE g.slug = 'gta'
 ON CONFLICT ON CONSTRAINT game_maps_game_slug_unique DO NOTHING;
 
--- Elden Ring – full Lands Between world map (fextralife wiki community image)
+-- Elden Ring – locally-served stylised map SVG
 INSERT INTO game_maps (game_id, name, slug, image_url, width, height)
 SELECT g.id,
        'Lands Between',
        'lands-between',
-       'https://eldenring.wiki.fextralife.com/file/Elden-Ring/elden_ring_world_map.jpg',
-       2048, 2048
+       '/maps/elden-ring-lands-between.svg',
+       1200, 1400
 FROM games g WHERE g.slug = 'elden-ring'
 ON CONFLICT ON CONSTRAINT game_maps_game_slug_unique DO NOTHING;
 
--- Zelda: Tears of the Kingdom – Hyrule surface map (fextralife wiki community image)
+-- Zelda: Tears of the Kingdom – locally-served stylised map SVG
 INSERT INTO game_maps (game_id, name, slug, image_url, width, height)
 SELECT g.id,
        'Hyrule',
        'hyrule',
-       'https://zeldatearsofthekingdom.wiki.fextralife.com/file/Zelda-Tears-of-the-Kingdom/totk_world_map.jpg',
-       2048, 2048
+       '/maps/zelda-hyrule.svg',
+       1200, 1200
 FROM games g WHERE g.slug = 'zelda'
 ON CONFLICT ON CONSTRAINT game_maps_game_slug_unique DO NOTHING;
 

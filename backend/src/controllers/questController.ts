@@ -39,11 +39,7 @@ export async function getQuestProgress(req: Request, res: Response) {
        WHERE qp.session_id = $1 AND g.slug = $2`,
       [req.sessionId, slug]
     );
-    const progressMap: Record<string, any> = {};
-    result.rows.forEach((row: any) => {
-      progressMap[row.quest_id] = row;
-    });
-    res.json(progressMap);
+    res.json(result.rows);
   } catch (error) {
     console.error('Error fetching quest progress:', error);
     res.status(500).json({ error: 'Failed to fetch quest progress' });
