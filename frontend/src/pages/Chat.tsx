@@ -8,11 +8,7 @@ import { History, Plus } from 'lucide-react';
 export default function Chat() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { games, selectedGame, selectGame } = useGameStore();
-  const { createConversation, clearCurrent } = useChatStore();
-
-  const handleNewChat = async () => {
-    clearCurrent();
-  };
+  const { currentConversation, clearCurrent } = useChatStore();
 
   return (
     <div className="flex flex-col flex-1 min-h-0">
@@ -70,7 +66,7 @@ export default function Chat() {
           })}
         </div>
 
-        {/* Row 2: history button + title + new chat */}
+        {/* Row 2: history button + context label + action */}
         <div className="flex items-center justify-between gap-3 px-3 py-2.5">
           <div className="flex items-center gap-2.5">
             <button
@@ -81,17 +77,32 @@ export default function Chat() {
               <History className="w-4 h-4" />
             </button>
             <div className="w-px h-5 bg-white/10" />
-            <h2 className="font-display text-[11px] tracking-[0.2em] uppercase text-slate-300">
-              Buddy Active
-            </h2>
+            {currentConversation ? (
+              /* Active chat — show status indicator */
+              <div className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-gaming-green shadow-[0_0_6px_rgba(57,255,20,0.8)] animate-pulse" />
+                <h2 className="font-display text-[11px] tracking-[0.2em] uppercase text-gaming-green">
+                  Buddy Active
+                </h2>
+              </div>
+            ) : (
+              /* Home screen — show friendly prompt */
+              <h2 className="font-display text-[11px] tracking-[0.2em] uppercase text-gaming-muted">
+                {selectedGame ? `${selectedGame.name} mode` : 'Choose a game'}
+              </h2>
+            )}
           </div>
-          <button
-            onClick={handleNewChat}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gaming-blue text-gaming-bg font-display text-[10px] font-bold uppercase tracking-widest shadow-glow-teal-sm active:scale-95 transition-transform"
-          >
-            <Plus className="w-3.5 h-3.5" />
-            New Chat
-          </button>
+
+          {/* Only show New Chat when a conversation is open */}
+          {currentConversation && (
+            <button
+              onClick={clearCurrent}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gaming-blue text-gaming-bg font-display text-[10px] font-bold uppercase tracking-widest shadow-glow-teal-sm active:scale-95 transition-transform"
+            >
+              <Plus className="w-3.5 h-3.5" />
+              New Chat
+            </button>
+          )}
         </div>
       </header>
 
