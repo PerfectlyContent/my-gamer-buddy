@@ -1,13 +1,29 @@
 import { useEffect } from 'react';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Map as MapIcon } from 'lucide-react';
 import { playSound, triggerHaptic } from '@/lib/sounds';
 import GameHeader from '@/components/layout/GameHeader';
-import { GamingButton } from '@/components/ui/GamingButton';
 import InteractiveMap from '@/components/maps/InteractiveMap';
 import MarkerPopover from '@/components/maps/MarkerPopover';
 import { useGameStore } from '@/store/gameStore';
 import { useMapStore } from '@/store/mapStore';
 import { MapMarker } from '@/types';
+
+function FilterPill({ active, onClick, children }: {
+  active: boolean; onClick: () => void; children: React.ReactNode;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`flex-shrink-0 px-3 py-1.5 rounded-xl border text-[10px] font-display uppercase tracking-widest font-bold transition-all whitespace-nowrap ${
+        active
+          ? 'bg-gaming-blue/20 border-gaming-blue/50 ring-1 ring-gaming-blue/20 text-gaming-blue'
+          : 'bg-white/[0.05] border-white/10 text-gaming-muted hover:bg-white/[0.08] hover:text-gaming-text'
+      }`}
+    >
+      {children}
+    </button>
+  );
+}
 
 const MARKER_TYPES: { type: MapMarker['marker_type']; label: string }[] = [
   { type: 'loot', label: 'Loot' },
@@ -62,18 +78,14 @@ export default function Maps() {
       <GameHeader
         title="Game Maps"
         subtitle="Explore interactive maps with points of interest"
+        icon={<MapIcon className="w-3.5 h-3.5" />}
       />
 
       {!selectedGame ? (
         <div className="flex-1 flex items-center justify-center p-8">
-          <div className="text-center">
-            <div className="text-5xl mb-4">🎮</div>
-            <h2 className="text-xl font-bold text-gaming-text mb-2">
-              Select a Game
-            </h2>
-            <p className="text-gaming-muted">
-              Choose a game above to explore maps
-            </p>
+          <div className="flex items-center gap-2 px-4 py-3 rounded-2xl border border-dashed border-white/10 text-gaming-muted text-xs">
+            <span>👆</span>
+            <span>Select a game above to explore maps</span>
           </div>
         </div>
       ) : loading ? (
@@ -95,54 +107,24 @@ export default function Maps() {
       ) : (
         <div className="flex flex-col flex-1 min-h-0">
           {/* Map Selector + Marker Type Filter */}
-          <div className="px-4 py-3 lg:px-6 border-b border-white/[0.10] glass space-y-3 shrink-0">
-            {/* Map Tabs */}
+          <div className="px-4 py-3 lg:px-6 border-b border-white/[0.06] glass-surface space-y-2.5 shrink-0">
             {maps.length > 1 && (
-              <div className="flex items-center gap-2 flex-nowrap overflow-x-auto scrollbar-hide">
-                <span className="text-xs text-gaming-muted font-medium mr-1 shrink-0">
-                  Map:
-                </span>
+              <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
+                <span className="text-[10px] text-gaming-muted font-display uppercase tracking-[2px] shrink-0 mr-1">Map</span>
                 {maps.map((map) => (
-                  <GamingButton
-                    key={map.id}
-                    variant={
-                      selectedMap?.id === map.id ? 'primary' : 'ghost'
-                    }
-                    size="sm"
-                    className="shrink-0 whitespace-nowrap"
-                    onClick={() => selectMap(map)}
-                  >
+                  <FilterPill key={map.id} active={selectedMap?.id === map.id} onClick={() => selectMap(map)}>
                     {map.name}
-                  </GamingButton>
+                  </FilterPill>
                 ))}
               </div>
             )}
-
-            {/* Marker Type Filter */}
-            <div className="flex items-center gap-2 flex-nowrap overflow-x-auto scrollbar-hide">
-              <span className="text-xs text-gaming-muted font-medium mr-1 shrink-0">
-                Markers:
-              </span>
-              <GamingButton
-                variant={selectedMarkerType === null ? 'primary' : 'ghost'}
-                size="sm"
-                className="shrink-0 whitespace-nowrap"
-                onClick={() => setMarkerType(null)}
-              >
-                All
-              </GamingButton>
+            <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
+              <span className="text-[10px] text-gaming-muted font-display uppercase tracking-[2px] shrink-0 mr-1">Show</span>
+              <FilterPill active={selectedMarkerType === null} onClick={() => setMarkerType(null)}>All</FilterPill>
               {MARKER_TYPES.map(({ type, label }) => (
-                <GamingButton
-                  key={type}
-                  variant={selectedMarkerType === type ? 'primary' : 'ghost'}
-                  size="sm"
-                  className="shrink-0 whitespace-nowrap"
-                  onClick={() =>
-                    setMarkerType(selectedMarkerType === type ? null : type)
-                  }
-                >
+                <FilterPill key={type} active={selectedMarkerType === type} onClick={() => setMarkerType(selectedMarkerType === type ? null : type)}>
                   {label}
-                </GamingButton>
+                </FilterPill>
               ))}
             </div>
           </div>

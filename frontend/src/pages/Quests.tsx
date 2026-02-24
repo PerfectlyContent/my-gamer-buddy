@@ -1,12 +1,29 @@
 import { useEffect, useMemo } from 'react';
+import { ListChecks } from 'lucide-react';
 import GameHeader from '@/components/layout/GameHeader';
-import { GamingButton } from '@/components/ui/GamingButton';
 import { GamingProgressBar } from '@/components/ui/GamingProgressBar';
 import { useToast } from '@/components/ui/GamingToast';
 import QuestCategorySection from '@/components/quests/QuestCategorySection';
 import { useGameStore } from '@/store/gameStore';
 import { useQuestStore } from '@/store/questStore';
 import type { Quest } from '@/types';
+
+function FilterPill({ active, onClick, children }: {
+  active: boolean; onClick: () => void; children: React.ReactNode;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`flex-shrink-0 px-3 py-1.5 rounded-xl border text-[10px] font-display uppercase tracking-widest font-bold transition-all whitespace-nowrap ${
+        active
+          ? 'bg-gaming-blue/20 border-gaming-blue/50 ring-1 ring-gaming-blue/20 text-gaming-blue'
+          : 'bg-white/[0.05] border-white/10 text-gaming-muted hover:bg-white/[0.08] hover:text-gaming-text'
+      }`}
+    >
+      {children}
+    </button>
+  );
+}
 
 const CATEGORIES = [
   { value: null, label: 'All' },
@@ -110,80 +127,50 @@ export default function Quests() {
     <div className="flex flex-col flex-1 min-h-0">
       <GameHeader
         title="Quest Tracker"
-        subtitle="Secrets, hidden encounters & missable events you might have skipped"
+        subtitle="Secrets, hidden encounters & missable events"
+        icon={<ListChecks className="w-3.5 h-3.5" />}
       />
 
       {!selectedGame ? (
         <div className="flex-1 flex items-center justify-center p-8">
-          <div className="text-center">
-            <div className="text-5xl mb-4">🎮</div>
-            <h2 className="text-xl font-bold text-gaming-text mb-2">
-              Select a Game
-            </h2>
-            <p className="text-gaming-muted">
-              Choose a game above to track quests
-            </p>
+          <div className="flex items-center gap-2 px-4 py-3 rounded-2xl border border-dashed border-white/10 text-gaming-muted text-xs">
+            <span>👆</span>
+            <span>Select a game above to track quests</span>
           </div>
         </div>
       ) : (
         <div className="flex flex-col flex-1 min-h-0">
-          {/* Filter Bar */}
-          <div className="px-4 py-3 lg:px-6 border-b border-white/[0.10] glass space-y-3 shrink-0">
-            {/* Category Tabs */}
-            <div className="flex items-center gap-2 flex-nowrap overflow-x-auto scrollbar-hide">
-              <span className="text-xs text-gaming-muted font-medium mr-1 shrink-0">
-                Category:
-              </span>
+          {/* Filter bar */}
+          <div className="px-4 py-3 lg:px-6 border-b border-white/[0.06] glass-surface space-y-2.5 shrink-0">
+            <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
+              <span className="text-[10px] text-gaming-muted font-display uppercase tracking-[2px] shrink-0 mr-1">Cat</span>
               {CATEGORIES.map(({ value, label }) => (
-                <GamingButton
-                  key={label}
-                  variant={selectedCategory === value ? 'primary' : 'ghost'}
-                  size="sm"
-                  className="shrink-0 whitespace-nowrap"
-                  onClick={() => setCategory(value)}
-                >
+                <FilterPill key={label} active={selectedCategory === value} onClick={() => setCategory(value)}>
                   {label}
-                </GamingButton>
+                </FilterPill>
               ))}
             </div>
-
-            {/* Completion Filter */}
-            <div className="flex items-center gap-2 flex-nowrap overflow-x-auto scrollbar-hide">
-              <span className="text-xs text-gaming-muted font-medium mr-1 shrink-0">
-                Show:
-              </span>
+            <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
+              <span className="text-[10px] text-gaming-muted font-display uppercase tracking-[2px] shrink-0 mr-1">Show</span>
               {COMPLETION_FILTERS.map(({ value, label }) => (
-                <GamingButton
+                <FilterPill
                   key={value}
-                  variant={showCompleted === value ? 'primary' : 'ghost'}
-                  size="sm"
-                  className="shrink-0 whitespace-nowrap"
-                  onClick={() =>
-                    setShowCompleted(
-                      value as 'all' | 'incomplete' | 'complete'
-                    )
-                  }
+                  active={showCompleted === value}
+                  onClick={() => setShowCompleted(value as 'all' | 'incomplete' | 'complete')}
                 >
                   {label}
-                </GamingButton>
+                </FilterPill>
               ))}
             </div>
 
-            {/* Overall Progress */}
+            {/* Overall progress */}
             {totalQuests > 0 && (
-              <div className="glass-card rounded-2xl p-4">
-                <div className="flex items-center gap-3">
-                  <span className="text-xs text-gaming-muted font-medium">
-                    Overall: {completedQuests}/{totalQuests}
-                  </span>
-                  <div className="flex-1">
-                    <GamingProgressBar
-                      value={overallPercent}
-                      size="md"
-                      showLabel
-                      color="#00d4ff"
-                    />
-                  </div>
+              <div className="flex items-center gap-3 px-1">
+                <span className="text-[10px] text-gaming-muted font-display uppercase tracking-[2px] shrink-0">
+                  {completedQuests}/{totalQuests}
+                </span>
+                <div className="flex-1">
+                  <GamingProgressBar value={overallPercent} size="md" showLabel color="#00d4ff" />
                 </div>
               </div>
             )}
@@ -205,15 +192,11 @@ export default function Quests() {
                 ))}
               </div>
             ) : filteredQuests.length === 0 ? (
-              <div className="flex items-center justify-center py-12">
+              <div className="flex items-center justify-center py-16">
                 <div className="text-center">
                   <div className="text-4xl mb-3">📋</div>
-                  <h3 className="text-lg font-semibold text-gaming-text mb-1">
-                    No quests found
-                  </h3>
-                  <p className="text-gaming-muted text-sm">
-                    Try adjusting your filters or select a different game
-                  </p>
+                  <p className="text-sm font-semibold text-gaming-text mb-1">No quests found</p>
+                  <p className="text-xs text-gaming-muted">Try adjusting your filters</p>
                 </div>
               </div>
             ) : (
