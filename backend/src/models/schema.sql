@@ -99,33 +99,33 @@ SELECT g.id,
 FROM games g WHERE g.slug = 'fortnite'
 ON CONFLICT ON CONSTRAINT game_maps_game_slug_unique DO NOTHING;
 
--- GTA V – locally-served stylised map SVG
+-- GTA V – GTA Wiki (Fandom CDN) full Los Santos / San Andreas map
 INSERT INTO game_maps (game_id, name, slug, image_url, width, height)
 SELECT g.id,
        'Los Santos',
        'los-santos',
-       '/maps/gta-los-santos.svg',
-       1200, 1200
+       'https://static.wikia.nocookie.net/gtawiki/images/d/d5/Los_Santos_County_in_San_Andreas.png/revision/latest',
+       2048, 2048
 FROM games g WHERE g.slug = 'gta'
 ON CONFLICT ON CONSTRAINT game_maps_game_slug_unique DO NOTHING;
 
--- Elden Ring – locally-served stylised map SVG
+-- Elden Ring – Elden Ring Wiki (Fandom CDN) 4K Lands Between world map
 INSERT INTO game_maps (game_id, name, slug, image_url, width, height)
 SELECT g.id,
        'Lands Between',
        'lands-between',
-       '/maps/elden-ring-lands-between.svg',
-       1200, 1400
+       'https://static.wikia.nocookie.net/eldenring/images/f/f2/EldenRing-Map_4k.jpg/revision/latest',
+       2048, 2048
 FROM games g WHERE g.slug = 'elden-ring'
 ON CONFLICT ON CONSTRAINT game_maps_game_slug_unique DO NOTHING;
 
--- Zelda: Tears of the Kingdom – locally-served stylised map SVG
+-- Zelda: Tears of the Kingdom – Zelda Wiki (Fandom CDN) central Hyrule surface map
 INSERT INTO game_maps (game_id, name, slug, image_url, width, height)
 SELECT g.id,
        'Hyrule',
        'hyrule',
-       '/maps/zelda-hyrule.svg',
-       1200, 1200
+       'https://static.wikia.nocookie.net/zelda_gamepedia_en/images/5/52/TotK_Central_Hyrule_Map.png/revision/latest',
+       1920, 1353
 FROM games g WHERE g.slug = 'zelda'
 ON CONFLICT ON CONSTRAINT game_maps_game_slug_unique DO NOTHING;
 

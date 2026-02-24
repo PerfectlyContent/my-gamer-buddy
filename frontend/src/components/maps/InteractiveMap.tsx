@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from 'react';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import { GameMap, MapMarker } from '@/types';
 import { GamingButton } from '@/components/ui/GamingButton';
@@ -9,6 +10,8 @@ interface InteractiveMapProps {
   markers: MapMarker[];
   selectedMarkerId: string | null;
   onMarkerClick: (marker: MapMarker) => void;
+  /** Local SVG path to display if the primary image_url fails to load */
+  fallbackSrc?: string;
 }
 
 export default function InteractiveMap({
@@ -16,7 +19,24 @@ export default function InteractiveMap({
   markers,
   selectedMarkerId,
   onMarkerClick,
+  fallbackSrc,
 }: InteractiveMapProps) {
+  const [imgSrc, setImgSrc] = useState(map.image_url);
+  const triedFallback = useRef(false);
+
+  // Reset when the map changes
+  useEffect(() => {
+    setImgSrc(map.image_url);
+    triedFallback.current = false;
+  }, [map.image_url]);
+
+  const handleImageError = () => {
+    if (!triedFallback.current && fallbackSrc && imgSrc !== fallbackSrc) {
+      triedFallback.current = true;
+      setImgSrc(fallbackSrc);
+    }
+  };
+
   return (
     <TransformWrapper
       initialScale={1}
@@ -72,10 +92,11 @@ export default function InteractiveMap({
                 }}
               >
                 <img
-                  src={map.image_url}
+                  src={imgSrc}
                   alt={map.name}
                   className="w-full h-full object-contain"
                   draggable={false}
+                  onError={handleImageError}
                 />
                 {/* Markers */}
                 {markers.map((marker) => (
