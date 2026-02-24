@@ -162,6 +162,7 @@ export default function Maps() {
                   markers={markers}
                   selectedMarkerId={selectedMarker?.id || null}
                   onMarkerClick={handleMarkerClick}
+                  fallbackSrc={`/maps/${selectedGame.slug}-${selectedMap.slug}.svg`}
                 />
               </div>
             )}
