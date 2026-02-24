@@ -131,7 +131,7 @@ export default function ChatWindow() {
           )}
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto px-3 py-4 space-y-3 lg:px-5 lg:py-5">
+          <div className="flex-1 overflow-y-auto px-3 py-4 space-y-4 lg:px-5 lg:py-5 flex flex-col">
             {loading ? (
               <div className="flex justify-center py-8">
                 <Loader2 className="w-6 h-6 text-gaming-blue animate-spin" />
@@ -141,7 +141,15 @@ export default function ChatWindow() {
                 <p className="text-sm">Ask anything about {currentConversation.game_name || 'gaming'}!</p>
               </div>
             ) : (
-              messages.map((msg) => <MessageBubble key={msg.id} message={msg} />)
+              <>
+                {/* Date divider */}
+                <div className="flex justify-center">
+                  <div className="px-4 py-1 rounded-full bg-white/[0.05] border border-white/10 text-[9px] text-gaming-muted uppercase tracking-widest font-medium">
+                    Today
+                  </div>
+                </div>
+                {messages.map((msg) => <MessageBubble key={msg.id} message={msg} />)}
+              </>
             )}
 
             {/* Typing indicator */}

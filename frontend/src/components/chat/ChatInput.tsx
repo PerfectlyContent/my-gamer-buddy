@@ -125,11 +125,7 @@ export default function ChatInput({ onSend, disabled }: ChatInputProps) {
       {/* Image preview */}
       {imagePreview && (
         <div className="mb-2 relative inline-block">
-          <img
-            src={imagePreview}
-            alt="Preview"
-            className="h-16 glass rounded-xl"
-          />
+          <img src={imagePreview} alt="Preview" className="h-16 glass rounded-xl" />
           <button
             onClick={removeImage}
             className="absolute -top-2 -right-2 bg-gaming-red rounded-full p-0.5 hover:bg-red-600 transition"
@@ -139,19 +135,17 @@ export default function ChatInput({ onSend, disabled }: ChatInputProps) {
         </div>
       )}
 
-      {/* Input area */}
+      {/* Input row */}
       <div
         {...getRootProps()}
-        className={`flex items-end gap-1 glass-card rounded-2xl transition-all focus-within:shadow-[0_0_16px_rgba(0,212,255,0.15)] focus-within:border-gaming-blue/30 ${
-          isDragActive
-            ? 'border-gaming-blue shadow-lg shadow-gaming-blue/20'
-            : ''
+        className={`flex items-center gap-2.5 p-1.5 rounded-2xl glass-card border border-white/10 transition-all focus-within:border-gaming-blue/40 focus-within:shadow-[0_0_16px_rgba(0,212,255,0.12)] ${
+          isDragActive ? 'border-gaming-blue shadow-lg shadow-gaming-blue/20' : ''
         }`}
       >
         <input {...getInputProps()} />
 
         {/* Image upload button */}
-        <label className="flex-shrink-0 p-2.5 cursor-pointer text-gaming-muted hover:text-gaming-blue transition">
+        <label className="flex-shrink-0 p-2 cursor-pointer text-gaming-muted hover:text-gaming-blue transition-colors">
           <Image className="w-5 h-5" />
           <input
             type="file"
@@ -174,39 +168,35 @@ export default function ChatInput({ onSend, disabled }: ChatInputProps) {
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={handleKeyDown}
           onInput={handleTextareaInput}
-          placeholder={isDragActive ? 'Drop screenshot here...' : 'Ask your gamer buddy...'}
+          placeholder={isDragActive ? 'Drop screenshot here...' : 'Ask your buddy...'}
           rows={1}
           disabled={disabled}
-          className="flex-1 bg-transparent py-2.5 text-sm text-gaming-text placeholder-gaming-muted resize-none outline-none max-h-[120px] min-w-0"
+          className="flex-1 bg-transparent py-2 text-sm text-gaming-text placeholder-gaming-muted resize-none outline-none border-none focus:ring-0 max-h-[120px] min-w-0"
         />
 
         {/* Voice button */}
         <button
           onClick={toggleRecording}
           disabled={disabled}
-          className={`flex-shrink-0 p-2.5 transition ${
+          className={`flex-shrink-0 p-2 transition-colors ${
             isRecording
-              ? 'text-gaming-red animate-pulse shadow-[0_0_12px_rgba(255,0,0,0.4)]'
+              ? 'text-gaming-red animate-pulse'
               : 'text-gaming-muted hover:text-gaming-green'
           }`}
         >
-          {isRecording ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
+          {isRecording ? <MicOff className="w-4.5 h-4.5" /> : <Mic className="w-4.5 h-4.5" />}
         </button>
 
-        {/* Send button */}
+        {/* Send button — cyan */}
         <button
           onClick={handleSend}
           disabled={disabled || (!message.trim() && !image)}
-          className={`flex-shrink-0 p-2.5 rounded-xl transition ${
-            message.trim() || image
-              ? 'bg-gradient-to-r from-gaming-blue to-[#0099cc] text-white shadow-glow-teal-sm'
-              : 'text-gaming-muted opacity-50'
-          } disabled:opacity-50 disabled:shadow-none`}
+          className="flex-shrink-0 w-9 h-9 rounded-xl bg-gaming-blue flex items-center justify-center text-gaming-bg shadow-glow-teal-sm active:scale-95 transition-all disabled:opacity-40 disabled:shadow-none disabled:scale-100"
         >
           {disabled ? (
-            <Loader2 className="w-5 h-5 animate-spin" />
+            <Loader2 className="w-4 h-4 animate-spin" />
           ) : (
-            <Send className="w-5 h-5" />
+            <Send className="w-4 h-4" />
           )}
         </button>
       </div>
