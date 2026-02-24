@@ -1,11 +1,12 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { MessageSquare, Code2, Map, ListChecks, Gamepad2 } from 'lucide-react';
+import { House, MessageSquare, Code2, Map, ListChecks, Gamepad2 } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import SettingsPanel from './SettingsPanel';
 import { playSound, triggerHaptic } from '@/lib/sounds';
 
 const navItems = [
-  { path: '/', label: 'Chat', icon: MessageSquare },
+  { path: '/', label: 'Home', icon: House },
+  { path: '/chat', label: 'Chat', icon: MessageSquare },
   { path: '/cheat-codes', label: 'Cheats', icon: Code2 },
   { path: '/maps', label: 'Maps', icon: Map },
   { path: '/quests', label: 'Quests', icon: ListChecks },
@@ -77,7 +78,7 @@ export default function AppLayout() {
               <button
                 key={item.path}
                 onClick={() => { playSound('nav'); triggerHaptic('tap'); navigate(item.path); }}
-                className={`relative flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl transition-all duration-200 active:scale-[0.90] ${
+                className={`relative flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-xl transition-all duration-200 active:scale-[0.90] ${
                   isActive
                     ? 'text-gaming-blue'
                     : 'text-gaming-muted hover:text-gaming-text'
