@@ -26,7 +26,7 @@ export const useCheatCodeStore = create<CheatCodeStore>((set, get) => ({
       if (selectedCategory) params.category = selectedCategory;
       if (selectedPlatform) params.platform = selectedPlatform;
       const cheatCodes = await cheatCodesApi.list(slug, params);
-      set({ cheatCodes, loading: false });
+      set({ cheatCodes: Array.isArray(cheatCodes) ? cheatCodes : [], loading: false });
     } catch (error) {
       console.error('Failed to fetch cheat codes:', error);
       set({ cheatCodes: [], loading: false });

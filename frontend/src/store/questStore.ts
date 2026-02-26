@@ -28,7 +28,7 @@ export const useQuestStore = create<QuestStore>((set, get) => ({
     try {
       const { selectedCategory } = get();
       const quests = await questsApi.list(slug, selectedCategory || undefined);
-      set({ quests, loading: false });
+      set({ quests: Array.isArray(quests) ? quests : [], loading: false });
     } catch (error) {
       console.error('Failed to fetch quests:', error);
       set({ quests: [], loading: false });
@@ -37,12 +37,9 @@ export const useQuestStore = create<QuestStore>((set, get) => ({
 
   fetchProgress: async (slug: string) => {
     try {
-      const progressArray: QuestProgress[] = await questsApi.getProgress(slug);
-      const progressMap: Record<string, QuestProgress> = {};
-      progressArray.forEach((p) => {
-        progressMap[p.quest_id] = p;
-      });
-      set({ progress: progressMap });
+      // Backend returns Record<string, QuestProgress> directly
+      const progress: Record<string, QuestProgress> = await questsApi.getProgress(slug);
+      set({ progress: (progress && typeof progress === 'object' && !Array.isArray(progress)) ? progress : {} });
     } catch (error) {
       console.error('Failed to fetch quest progress:', error);
     }
