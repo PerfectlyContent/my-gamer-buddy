@@ -35,12 +35,13 @@ export default function ChatWindow() {
   } = useChatStore();
 
   const { selectedGame, fetchGames } = useGameStore();
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => { fetchGames(); }, [fetchGames]);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const el = messagesContainerRef.current;
+    if (el) el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' });
   }, [messages, sending]);
 
   // Auto-create conversation if needed, then send
@@ -167,7 +168,7 @@ export default function ChatWindow() {
           )}
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto px-3 py-4 space-y-4 lg:px-5 lg:py-5 flex flex-col">
+          <div ref={messagesContainerRef} className="flex-1 overflow-y-auto px-3 py-4 space-y-4 lg:px-5 lg:py-5 flex flex-col">
             <div className="flex-1" />
             {loading ? (
               <div className="flex justify-center py-8">
@@ -204,7 +205,6 @@ export default function ChatWindow() {
                 </div>
               </div>
             )}
-            <div ref={messagesEndRef} />
           </div>
 
           {/* Input */}
