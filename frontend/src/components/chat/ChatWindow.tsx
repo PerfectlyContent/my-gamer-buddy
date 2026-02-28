@@ -168,6 +168,7 @@ export default function ChatWindow() {
 
           {/* Messages */}
           <div className="flex-1 overflow-y-auto px-3 py-4 space-y-4 lg:px-5 lg:py-5 flex flex-col">
+            <div className="flex-1" />
             {loading ? (
               <div className="flex justify-center py-8">
                 <Loader2 className="w-6 h-6 text-gaming-blue animate-spin" />
