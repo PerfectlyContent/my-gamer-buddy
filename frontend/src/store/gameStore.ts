@@ -19,7 +19,7 @@ export const useGameStore = create<GameStore>((set) => ({
     set({ loading: true });
     try {
       const games = await gamesApi.list();
-      set({ games, loading: false });
+      set({ games: Array.isArray(games) ? games : [], loading: false });
     } catch (error) {
       console.error('Failed to fetch games:', error);
       set({ loading: false });

@@ -31,7 +31,7 @@ export const useChatStore = create<ChatStore>((set, get) => ({
   fetchConversations: async () => {
     try {
       const conversations = await conversationsApi.list();
-      set({ conversations });
+      set({ conversations: Array.isArray(conversations) ? conversations : [] });
     } catch (error) {
       console.error('Failed to fetch conversations:', error);
     }
@@ -51,7 +51,7 @@ export const useChatStore = create<ChatStore>((set, get) => ({
     set({ currentConversation: conversation, loading: true, error: null });
     try {
       const messages = await messagesApi.list(conversation.id);
-      set({ messages, loading: false });
+      set({ messages: Array.isArray(messages) ? messages : [], loading: false });
     } catch (error) {
       console.error('Failed to fetch messages:', error);
       set({ loading: false });

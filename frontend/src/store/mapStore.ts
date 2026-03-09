@@ -29,7 +29,8 @@ export const useMapStore = create<MapStore>((set, get) => ({
   fetchMaps: async (slug: string) => {
     set({ loading: true, maps: [], selectedMap: null, markers: [], selectedMarker: null });
     try {
-      const maps = await mapsApi.listMaps(slug);
+      const raw = await mapsApi.listMaps(slug);
+      const maps = Array.isArray(raw) ? raw : [];
       set({ maps, loading: false });
       // Auto-select first map and fetch its markers
       if (maps.length > 0) {
@@ -53,7 +54,7 @@ export const useMapStore = create<MapStore>((set, get) => ({
     try {
       const { selectedMarkerType } = get();
       const markers = await mapsApi.getMarkers(mapId, selectedMarkerType || undefined);
-      set({ markers, markersLoading: false });
+      set({ markers: Array.isArray(markers) ? markers : [], markersLoading: false });
     } catch (error) {
       console.error('Failed to fetch markers:', error);
       set({ markers: [], markersLoading: false });
