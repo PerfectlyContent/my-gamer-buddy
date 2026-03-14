@@ -8,6 +8,11 @@
   box-sizing: border-box;
 }
 
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
   background-color: #050510;
   background-image:
@@ -17,11 +22,10 @@ body {
   background-attachment: fixed;
   color: #e0e0e0;
   font-family: 'Inter', system-ui, sans-serif;
-  min-height: 100vh;
 }
 
 #root {
-  min-height: 100vh;
+  height: 100%;
 }
 
 /* ======================================

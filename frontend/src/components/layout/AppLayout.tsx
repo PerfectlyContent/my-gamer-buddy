@@ -17,7 +17,7 @@ export default function AppLayout() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col h-[100dvh]">
+    <div className="flex flex-col h-full">
       <div className="flex flex-1 min-h-0">
         {/* Desktop side navigation — wider w-24, more spacing */}
         <nav className="hidden lg:flex flex-col w-24 glass-surface border-r border-white/[0.06] items-center py-6 gap-2 shrink-0">
