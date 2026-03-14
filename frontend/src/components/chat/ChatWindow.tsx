@@ -3,7 +3,7 @@ import { useChatStore } from '../../store/chatStore';
 import { useGameStore } from '../../store/gameStore';
 import MessageBubble from './MessageBubble';
 import ChatInput from './ChatInput';
-import { Loader2, AlertTriangle, X, Home, ChevronRight } from 'lucide-react';
+import { Loader2, AlertTriangle, X, Home } from 'lucide-react';
 
 // Contextual suggestions per game slug
 const GAME_SUGGESTIONS: Record<string, string[]> = {
@@ -21,7 +21,6 @@ const DEFAULT_SUGGESTIONS = ['🎯 Best loadout tips?', '🏗️ Build strategie
 
 export default function ChatWindow() {
   const {
-    conversations,
     currentConversation,
     messages,
     loading,
@@ -29,7 +28,6 @@ export default function ChatWindow() {
     error,
     sendMessage,
     createConversation,
-    selectConversation,
     clearCurrent,
     clearError,
   } = useChatStore();
@@ -62,72 +60,24 @@ export default function ChatWindow() {
       {/* ── WELCOME / HOME STATE: no conversation active ── */}
       {!currentConversation && (
         <div className="flex-1 flex flex-col min-h-0">
-          <div className="flex-1 overflow-y-auto px-4 py-5 space-y-5">
-
-            {/* Game context — adapts to header selection */}
-            {selectedGame ? (
-              <div className="flex items-center gap-3 p-4 rounded-2xl glass-card border-l-2 border-l-gaming-blue">
-                <span className="text-3xl">{selectedGame.icon}</span>
-                <div>
-                  <p className="text-[10px] font-display uppercase tracking-widest text-gaming-muted mb-0.5">
-                    Playing
-                  </p>
-                  <p
-                    className="text-base font-bold font-display"
-                    style={{ color: selectedGame.color_accent }}
-                  >
-                    {selectedGame.name}
-                  </p>
-                </div>
-              </div>
-            ) : (
-              <div className="flex items-center gap-2 px-4 py-3 rounded-2xl border border-dashed border-white/10 text-gaming-muted text-xs">
-                <span>👆</span>
-                <span>Select a game above to get tailored tips</span>
-              </div>
-            )}
-
-            {/* Quick suggestions */}
+          <div className="flex-1 flex flex-col justify-end px-4 py-5">
+            {/* Quick suggestions — horizontal scroll */}
             <div>
               <p className="text-[10px] font-bold text-gaming-muted uppercase tracking-[2px] mb-2.5">
                 Quick questions
               </p>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="flex gap-2 overflow-x-auto scrollbar-hide -mx-4 px-4">
                 {suggestions.map((s) => (
                   <button
                     key={s}
                     onClick={() => handleSend(s.replace(/^[^\s]+\s/, ''))}
-                    className="glass-card rounded-xl p-3 text-xs text-gaming-muted hover:text-gaming-text hover:border-gaming-blue/30 hover:shadow-[0_0_10px_rgba(0,212,255,0.10)] transition-all duration-200 active:scale-[0.97] text-left"
+                    className="flex-shrink-0 glass-card rounded-xl px-3 py-2.5 text-xs text-gaming-muted hover:text-gaming-text hover:border-gaming-blue/30 hover:shadow-[0_0_10px_rgba(0,212,255,0.10)] transition-all duration-200 active:scale-[0.97] whitespace-nowrap"
                   >
                     {s}
                   </button>
                 ))}
               </div>
             </div>
-
-            {/* Recent sessions — quick resume */}
-            {conversations.length > 0 && (
-              <div>
-                <p className="text-[10px] font-bold text-gaming-muted uppercase tracking-[2px] mb-2.5">
-                  Resume recent
-                </p>
-                <div className="space-y-2">
-                  {conversations.slice(0, 3).map((conv) => (
-                    <button
-                      key={conv.id}
-                      onClick={() => selectConversation(conv)}
-                      className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/10 transition-all active:scale-[0.98] text-left"
-                    >
-                      <span className="text-lg flex-shrink-0">{conv.game_icon || '🎮'}</span>
-                      <span className="flex-1 text-xs font-medium text-gaming-text truncate">
-                        {conv.title}
-                      </span>
-                      <ChevronRight className="w-3.5 h-3.5 text-gaming-muted flex-shrink-0" />
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
 
           <ChatInput onSend={handleSend} disabled={sending} />

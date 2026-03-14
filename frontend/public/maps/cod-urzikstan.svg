@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048" width="2048" height="2048">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="terrain" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1a1a10"/>
+      <stop offset="80%" stop-color="#101008"/>
+      <stop offset="100%" stop-color="#080804"/>
+    </radialGradient>
+    <style>
+      .poi { font-family: 'Courier New', monospace; font-size: 22px; fill: #fff; text-anchor: middle; font-weight: bold; }
+      .sub { font-family: 'Courier New', monospace; font-size: 14px; fill: #ff6b00; text-anchor: middle; }
+      .zone { fill: #ff6b00; opacity: 0.1; stroke: #ff6b00; stroke-width: 2; stroke-opacity: 0.3; }
+      .road { stroke: #333320; stroke-width: 3; fill: none; opacity: 0.4; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="2048" height="2048" fill="#080804"/>
+  <rect x="100" y="100" width="1848" height="1848" rx="20" fill="url(#terrain)" stroke="#ff6b00" stroke-width="1" stroke-opacity="0.15"/>
+
+  <!-- Grid -->
+  <g opacity="0.1" stroke="#ff6b00" stroke-width="0.5">
+    <line x1="400" y1="100" x2="400" y2="1948"/><line x1="700" y1="100" x2="700" y2="1948"/>
+    <line x1="1024" y1="100" x2="1024" y2="1948"/><line x1="1348" y1="100" x2="1348" y2="1948"/>
+    <line x1="1648" y1="100" x2="1648" y2="1948"/>
+    <line x1="100" y1="400" x2="1948" y2="400"/><line x1="100" y1="700" x2="1948" y2="700"/>
+    <line x1="100" y1="1024" x2="1948" y2="1024"/><line x1="100" y1="1348" x2="1948" y2="1348"/>
+    <line x1="100" y1="1648" x2="1948" y2="1648"/>
+  </g>
+
+  <!-- Roads -->
+  <path d="M 300,1024 L 1748,1024" class="road"/>
+  <path d="M 1024,300 L 1024,1748" class="road"/>
+  <path d="M 400,500 Q 700,600 1024,700 Q 1348,800 1648,700" class="road"/>
+  <path d="M 500,1400 Q 800,1300 1200,1350 Q 1500,1400 1600,1200" class="road"/>
+
+  <!-- POIs -->
+  <rect x="400" y="350" width="250" height="150" rx="8" class="zone"/>
+  <text x="525" y="420" class="poi" filter="url(#glow)">Orlov Military</text>
+  <text x="525" y="445" class="sub">High Loot — Contested</text>
+
+  <rect x="1300" y="300" width="250" height="150" rx="8" class="zone"/>
+  <text x="1425" y="370" class="poi" filter="url(#glow)">Popov Power</text>
+  <text x="1425" y="395" class="sub">Sniper Positions</text>
+
+  <rect x="800" y="600" width="250" height="150" rx="8" class="zone"/>
+  <text x="925" y="670" class="poi" filter="url(#glow)">City Center</text>
+  <text x="925" y="695" class="sub">Urban CQB</text>
+
+  <rect x="350" y="850" width="250" height="150" rx="8" class="zone"/>
+  <text x="475" y="920" class="poi" filter="url(#glow)">Industrial</text>
+  <text x="475" y="945" class="sub">Vehicle Spawns</text>
+
+  <rect x="1400" y="850" width="250" height="150" rx="8" class="zone"/>
+  <text x="1525" y="920" class="poi" filter="url(#glow)">Old Town</text>
+  <text x="1525" y="945" class="sub">Dense Buildings</text>
+
+  <rect x="600" y="1200" width="250" height="150" rx="8" class="zone"/>
+  <text x="725" y="1270" class="poi" filter="url(#glow)">Port</text>
+  <text x="725" y="1295" class="sub">Buy Station</text>
+
+  <rect x="1200" y="1200" width="250" height="150" rx="8" class="zone"/>
+  <text x="1325" y="1270" class="poi" filter="url(#glow)">Zaravan City</text>
+  <text x="1325" y="1295" class="sub">Hot Drop Zone</text>
+
+  <rect x="800" y="1500" width="250" height="150" rx="8" class="zone"/>
+  <text x="925" y="1570" class="poi" filter="url(#glow)">Lowtown</text>
+  <text x="925" y="1595" class="sub">Underground Access</text>
+
+  <!-- Title -->
+  <text x="1024" y="180" font-family="'Courier New', monospace" font-size="40" fill="#ff6b00" text-anchor="middle" font-weight="bold" filter="url(#glow)">URZIKSTAN</text>
+  <text x="1024" y="215" font-family="'Courier New', monospace" font-size="18" fill="#666" text-anchor="middle">CALL OF DUTY: WARZONE</text>
+</svg>

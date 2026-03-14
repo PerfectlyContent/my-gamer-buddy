@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048" width="2048" height="2048">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="terrain" cx="50%" cy="50%" r="48%">
+      <stop offset="0%" stop-color="#1a1520"/>
+      <stop offset="70%" stop-color="#120a18"/>
+      <stop offset="100%" stop-color="#0a0510"/>
+    </radialGradient>
+    <style>
+      .poi { font-family: 'Courier New', monospace; font-size: 22px; fill: #fff; text-anchor: middle; font-weight: bold; }
+      .sub { font-family: 'Courier New', monospace; font-size: 14px; fill: #ff3333; text-anchor: middle; }
+      .hotzone { fill: #ff3333; opacity: 0.1; stroke: #ff3333; stroke-width: 2; stroke-opacity: 0.3; }
+      .lava { fill: #ff4400; opacity: 0.08; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="2048" height="2048" fill="#0a0510"/>
+  <ellipse cx="1024" cy="1024" rx="850" ry="820" fill="url(#terrain)" stroke="#ff3333" stroke-width="2" stroke-opacity="0.2"/>
+
+  <!-- Lava fissure -->
+  <path d="M 400,600 Q 700,900 600,1200 Q 550,1500 700,1700" stroke="#ff4400" stroke-width="8" fill="none" opacity="0.3"/>
+  <path d="M 1400,400 Q 1200,700 1300,1000 Q 1400,1300 1200,1600" stroke="#ff4400" stroke-width="6" fill="none" opacity="0.2"/>
+
+  <!-- Grid -->
+  <g opacity="0.1" stroke="#ff3333" stroke-width="0.5">
+    <line x1="400" y1="200" x2="400" y2="1850"/><line x1="700" y1="200" x2="700" y2="1850"/>
+    <line x1="1024" y1="200" x2="1024" y2="1850"/><line x1="1348" y1="200" x2="1348" y2="1850"/>
+    <line x1="1648" y1="200" x2="1648" y2="1850"/>
+    <line x1="200" y1="400" x2="1850" y2="400"/><line x1="200" y1="700" x2="1850" y2="700"/>
+    <line x1="200" y1="1024" x2="1850" y2="1024"/><line x1="200" y1="1348" x2="1850" y2="1348"/>
+    <line x1="200" y1="1648" x2="1850" y2="1648"/>
+  </g>
+
+  <!-- POIs -->
+  <circle cx="1024" cy="500" r="120" class="hotzone"/>
+  <text x="1024" y="495" class="poi" filter="url(#glow)">Skyhook</text>
+  <text x="1024" y="520" class="sub">High Tier Loot</text>
+
+  <circle cx="550" cy="700" r="100" class="hotzone"/>
+  <text x="550" y="695" class="poi" filter="url(#glow)">Lava Siphon</text>
+  <text x="550" y="720" class="sub">Gondolas</text>
+
+  <circle cx="1500" cy="700" r="110" class="hotzone"/>
+  <text x="1500" y="695" class="poi" filter="url(#glow)">Climatizer</text>
+  <text x="1500" y="720" class="sub">Rotate Hub</text>
+
+  <circle cx="1024" cy="1024" r="140" class="hotzone"/>
+  <text x="1024" y="1015" class="poi" filter="url(#glow)">Fragment</text>
+  <text x="1024" y="1045" class="sub">Hot Drop — High Risk</text>
+
+  <circle cx="500" cy="1300" r="100" class="hotzone"/>
+  <text x="500" y="1295" class="poi" filter="url(#glow)">Harvester</text>
+  <text x="500" y="1320" class="sub">Lava Zone</text>
+
+  <circle cx="1500" cy="1350" r="110" class="hotzone"/>
+  <text x="1500" y="1345" class="poi" filter="url(#glow)">Countdown</text>
+  <text x="1500" y="1370" class="sub">Open Area</text>
+
+  <circle cx="1024" cy="1550" r="100" class="hotzone"/>
+  <text x="1024" y="1545" class="poi" filter="url(#glow)">Thermal Station</text>
+  <text x="1024" y="1570" class="sub">Geyser Rotation</text>
+
+  <!-- Title -->
+  <text x="1024" y="180" font-family="'Courier New', monospace" font-size="40" fill="#ff3333" text-anchor="middle" font-weight="bold" filter="url(#glow)">WORLD'S EDGE</text>
+  <text x="1024" y="215" font-family="'Courier New', monospace" font-size="18" fill="#666" text-anchor="middle">APEX LEGENDS — Volcanic Landscape</text>
+</svg>

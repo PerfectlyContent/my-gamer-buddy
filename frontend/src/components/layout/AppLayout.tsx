@@ -1,5 +1,5 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { House, MessageSquare, Code2, Map, ListChecks, Gamepad2 } from 'lucide-react';
+import { House, MessageSquare, Code2, Swords, ListChecks, Gamepad2 } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import SettingsPanel from './SettingsPanel';
 import { playSound, triggerHaptic } from '@/lib/sounds';
@@ -8,7 +8,7 @@ const navItems = [
   { path: '/', label: 'Home', icon: House },
   { path: '/chat', label: 'Chat', icon: MessageSquare },
   { path: '/cheat-codes', label: 'Cheats', icon: Code2 },
-  { path: '/maps', label: 'Maps', icon: Map },
+  { path: '/loadout', label: 'Loadout', icon: Swords },
   { path: '/quests', label: 'Quests', icon: ListChecks },
 ];
 

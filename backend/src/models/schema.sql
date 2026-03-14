@@ -99,42 +99,43 @@ SELECT g.id,
 FROM games g WHERE g.slug = 'fortnite'
 ON CONFLICT ON CONSTRAINT game_maps_game_slug_unique DO NOTHING;
 
--- GTA V – GTA Wiki (Fandom CDN) full Los Santos / San Andreas map
+-- GTA V – fallback SVG; image_url replaced at runtime if a better source is found
 INSERT INTO game_maps (game_id, name, slug, image_url, width, height)
 SELECT g.id,
        'Los Santos',
        'los-santos',
-       'https://static.wikia.nocookie.net/gtawiki/images/d/d5/Los_Santos_County_in_San_Andreas.png/revision/latest',
+       '/maps/gta-los-santos.svg',
        2048, 2048
 FROM games g WHERE g.slug = 'gta'
 ON CONFLICT ON CONSTRAINT game_maps_game_slug_unique DO NOTHING;
 
--- Elden Ring – Elden Ring Wiki (Fandom CDN) 4K Lands Between world map
+-- Elden Ring – fallback SVG
 INSERT INTO game_maps (game_id, name, slug, image_url, width, height)
 SELECT g.id,
        'Lands Between',
        'lands-between',
-       'https://static.wikia.nocookie.net/eldenring/images/f/f2/EldenRing-Map_4k.jpg/revision/latest',
+       '/maps/elden-ring-lands-between.svg',
        2048, 2048
 FROM games g WHERE g.slug = 'elden-ring'
 ON CONFLICT ON CONSTRAINT game_maps_game_slug_unique DO NOTHING;
 
--- Zelda: Tears of the Kingdom – Zelda Wiki (Fandom CDN) central Hyrule surface map
+-- Zelda: Tears of the Kingdom – fallback SVG
 INSERT INTO game_maps (game_id, name, slug, image_url, width, height)
 SELECT g.id,
        'Hyrule',
        'hyrule',
-       'https://static.wikia.nocookie.net/zelda_gamepedia_en/images/5/52/TotK_Central_Hyrule_Map.png/revision/latest',
+       '/maps/zelda-hyrule.svg',
        1920, 1353
 FROM games g WHERE g.slug = 'zelda'
 ON CONFLICT ON CONSTRAINT game_maps_game_slug_unique DO NOTHING;
 
--- Valorant – Ascent map (Valorant fandom wiki)
+-- Valorant – image_url updated dynamically by the backend via valorant-api.com;
+--            the local SVG is the initial/fallback value.
 INSERT INTO game_maps (game_id, name, slug, image_url, width, height)
 SELECT g.id,
        'Ascent',
        'ascent',
-       'https://static.wikia.nocookie.net/valorant/images/e/e7/Loading_Screen_Ascent.png/revision/latest',
+       '/maps/valorant-ascent.svg',
        1024, 1024
 FROM games g WHERE g.slug = 'valorant'
 ON CONFLICT ON CONSTRAINT game_maps_game_slug_unique DO NOTHING;
@@ -143,17 +144,17 @@ INSERT INTO game_maps (game_id, name, slug, image_url, width, height)
 SELECT g.id,
        'Bind',
        'bind',
-       'https://static.wikia.nocookie.net/valorant/images/2/23/Loading_Screen_Bind.png/revision/latest',
+       '/maps/valorant-bind.svg',
        1024, 1024
 FROM games g WHERE g.slug = 'valorant'
 ON CONFLICT ON CONSTRAINT game_maps_game_slug_unique DO NOTHING;
 
--- Apex Legends – Storm Point (Apex fandom wiki)
+-- Apex Legends – fallback SVGs
 INSERT INTO game_maps (game_id, name, slug, image_url, width, height)
 SELECT g.id,
        'Storm Point',
        'storm-point',
-       'https://static.wikia.nocookie.net/apexlegends/images/3/30/Storm_Point_Map_S13.png/revision/latest',
+       '/maps/apex-storm-point.svg',
        2048, 2048
 FROM games g WHERE g.slug = 'apex'
 ON CONFLICT ON CONSTRAINT game_maps_game_slug_unique DO NOTHING;
@@ -162,27 +163,28 @@ INSERT INTO game_maps (game_id, name, slug, image_url, width, height)
 SELECT g.id,
        'World''s Edge',
        'worlds-edge',
-       'https://static.wikia.nocookie.net/apexlegends/images/b/b8/World%27s_Edge_Loading_Screen.png/revision/latest',
+       '/maps/apex-worlds-edge.svg',
        2048, 2048
 FROM games g WHERE g.slug = 'apex'
 ON CONFLICT ON CONSTRAINT game_maps_game_slug_unique DO NOTHING;
 
--- League of Legends – Summoner's Rift (LoL fandom wiki)
+-- League of Legends – image_url updated dynamically by the backend via Riot Data Dragon;
+--                     the local SVG is the initial/fallback value.
 INSERT INTO game_maps (game_id, name, slug, image_url, width, height)
 SELECT g.id,
        'Summoner''s Rift',
        'summoners-rift',
-       'https://static.wikia.nocookie.net/leagueoflegends/images/8/82/Summoner%27s_Rift_Map.png/revision/latest',
+       '/maps/lol-summoners-rift.svg',
        2048, 2048
 FROM games g WHERE g.slug = 'lol'
 ON CONFLICT ON CONSTRAINT game_maps_game_slug_unique DO NOTHING;
 
--- Call of Duty Warzone – Urzikstan (CoD fandom wiki)
+-- Call of Duty Warzone – fallback SVG
 INSERT INTO game_maps (game_id, name, slug, image_url, width, height)
 SELECT g.id,
        'Urzikstan',
        'urzikstan',
-       'https://static.wikia.nocookie.net/callofduty/images/3/36/Urzikstan_WZ_Map.jpg/revision/latest',
+       '/maps/cod-urzikstan.svg',
        2048, 2048
 FROM games g WHERE g.slug = 'cod'
 ON CONFLICT ON CONSTRAINT game_maps_game_slug_unique DO NOTHING;
