@@ -551,4 +551,122 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
       },
     },
   },
+
+  rdr2: {
+    playstyles: ['Gunslinger', 'Sniper', 'Brawler', 'Hunter'],
+    patchLabel: 'Updated for RDR2 Online 2025',
+    loadouts: {
+      Gunslinger: {
+        weapons: [
+          { name: 'Schofield Revolver', icon: '🔫', type: 'Revolver', damage: 85 },
+          { name: 'Cattleman Revolver', icon: '🔫', type: 'Revolver', damage: 72 },
+          { name: 'Sawed-Off Shotgun', icon: '💥', type: 'Shotgun', damage: 90 },
+          { name: 'Volatile Dynamite', icon: '💣', type: 'Throwable', damage: 88 },
+        ],
+        aiTip: 'Dual Schofield Revolvers with express ammo are devastating in Dead Eye. Fan the hammer for rapid fire at close range and use the Sawed-Off as a last-resort hip fire weapon.',
+        metaRank: 1,
+        matchPercent: 94,
+        proUsage: '8/10 players',
+        tags: ['Dead Eye', 'Dual Wield', 'Close Range'],
+      },
+      Sniper: {
+        weapons: [
+          { name: 'Carcano Rifle', icon: '🎯', type: 'Sniper', damage: 96 },
+          { name: 'Rolling Block Rifle', icon: '🎯', type: 'Sniper', damage: 92 },
+          { name: 'Lancaster Repeater', icon: '🔫', type: 'Repeater', damage: 75 },
+          { name: 'Binoculars', icon: '🔭', type: 'Utility', damage: 0 },
+        ],
+        aiTip: 'The Carcano Rifle has the highest damage per shot in the game with express ammo. Use Dead Eye to paint targets at extreme range and the Lancaster for mid-range backup.',
+        metaRank: 2,
+        matchPercent: 89,
+        proUsage: '6/10 players',
+        tags: ['Long Range', 'Dead Eye', 'Hunting'],
+      },
+      Brawler: {
+        weapons: [
+          { name: 'Pump-Action Shotgun', icon: '💥', type: 'Shotgun', damage: 92 },
+          { name: 'Machete', icon: '🗡️', type: 'Melee', damage: 70 },
+          { name: 'Tomahawk', icon: '🪓', type: 'Thrown', damage: 78 },
+          { name: 'Fire Bottle', icon: '🔥', type: 'Throwable', damage: 82 },
+        ],
+        aiTip: 'The Pump-Action Shotgun with slugs is a one-shot kill at surprising range. Use fire bottles to flush enemies from cover and the tomahawk for silent one-hit kills.',
+        metaRank: 3,
+        matchPercent: 85,
+        proUsage: '5/10 players',
+        tags: ['CQB', 'Melee', 'Aggressive'],
+      },
+      Hunter: {
+        weapons: [
+          { name: 'Springfield Rifle', icon: '🎯', type: 'Rifle', damage: 88 },
+          { name: 'Varmint Rifle', icon: '🔫', type: 'Rifle', damage: 45 },
+          { name: 'Bow', icon: '🏹', type: 'Ranged', damage: 65 },
+          { name: 'Lasso', icon: '🤠', type: 'Utility', damage: 0 },
+        ],
+        aiTip: 'Use the Springfield with high velocity ammo for perfect large animal pelts. The Varmint Rifle is essential for small game — it is the only way to get perfect small pelts without ruining them.',
+        metaRank: 4,
+        matchPercent: 80,
+        proUsage: '4/10 players',
+        tags: ['Hunting', 'Pelts', 'Trader Role'],
+      },
+    },
+  },
+
+  'elder-scrolls': {
+    playstyles: ['Warrior', 'Mage', 'Stealth Archer', 'Paladin'],
+    patchLabel: 'Updated for Skyrim Anniversary Edition',
+    loadouts: {
+      Warrior: {
+        weapons: [
+          { name: 'Daedric Greatsword', icon: '⚔️', type: 'Two-Handed', damage: 94 },
+          { name: 'Daedric Shield', icon: '🛡️', type: 'Heavy Armor', damage: 0 },
+          { name: 'Dragonbone Warhammer', icon: '🔨', type: 'Two-Handed', damage: 92 },
+          { name: 'Vegetable Soup', icon: '🍲', type: 'Consumable', damage: 0 },
+        ],
+        aiTip: 'The Daedric Greatsword with the Chaos Enchantment deals fire, frost, and shock damage simultaneously. Vegetable Soup grants unlimited power attacks — spam them for maximum DPS.',
+        metaRank: 2,
+        matchPercent: 90,
+        proUsage: '6/10 players',
+        tags: ['Melee', 'Tank', 'Power Attack'],
+      },
+      Mage: {
+        weapons: [
+          { name: 'Staff of Magnus', icon: '🪄', type: 'Staff', damage: 85 },
+          { name: 'Destruction Spells', icon: '🔥', type: 'Magic', damage: 90 },
+          { name: 'Conjuration Spells', icon: '👻', type: 'Magic', damage: 75 },
+          { name: 'Archmage Robes', icon: '🧙', type: 'Apparel', damage: 0 },
+        ],
+        aiTip: 'Impact perk in Destruction staggers any enemy with dual-cast spells — even dragons. Conjure two Dremora Lords as tanks while you blast from range with Lightning Storm.',
+        metaRank: 1,
+        matchPercent: 93,
+        proUsage: '7/10 players',
+        tags: ['Destruction', 'Conjuration', 'Crowd Control'],
+      },
+      'Stealth Archer': {
+        weapons: [
+          { name: 'Dragonbone Bow', icon: '🏹', type: 'Bow', damage: 92 },
+          { name: 'Daedric Arrows', icon: '🏹', type: 'Ammo', damage: 80 },
+          { name: 'Nightingale Armor', icon: '🥷', type: 'Light Armor', damage: 0 },
+          { name: 'Invisibility Potion', icon: '🧪', type: 'Potion', damage: 0 },
+        ],
+        aiTip: 'Stealth Archer is the most overpowered build in Skyrim. With maxed Sneak and Archery, you deal 3x sneak attack damage with bows — most enemies die before they detect you.',
+        metaRank: 1,
+        matchPercent: 97,
+        proUsage: '9/10 players',
+        tags: ['Sneak', 'One-Shot', 'Cheese'],
+      },
+      Paladin: {
+        weapons: [
+          { name: 'Dawnbreaker', icon: '☀️', type: 'One-Handed', damage: 82 },
+          { name: 'Spellbreaker Shield', icon: '🛡️', type: 'Shield', damage: 0 },
+          { name: 'Restoration Spells', icon: '✨', type: 'Magic', damage: 40 },
+          { name: 'Amulet of Stendarr', icon: '📿', type: 'Amulet', damage: 0 },
+        ],
+        aiTip: 'Dawnbreaker causes a fiery explosion when killing undead, chain-killing groups of Draugr instantly. Spellbreaker creates a ward that blocks dragon breath and mage spells.',
+        metaRank: 3,
+        matchPercent: 86,
+        proUsage: '5/10 players',
+        tags: ['Anti-Undead', 'Sustain', 'Dungeons'],
+      },
+    },
+  },
 };

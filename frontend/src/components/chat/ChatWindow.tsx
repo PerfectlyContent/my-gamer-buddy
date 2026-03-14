@@ -16,6 +16,8 @@ const GAME_SUGGESTIONS: Record<string, string[]> = {
   'elden-ring': ['🗡️ Beat Malenia?', '⚔️ Best starter build?', '🗺️ Where to go first?', '💎 Best weapons early?'],
   lol: ['🏆 Best champs to climb?', '🗺️ How to jungle?', '🎯 Improve CS?', '⚔️ Counter picks?'],
   zelda: ['🗺️ All shrine locations?', '⚔️ Best weapons?', '💎 Hidden secrets?', '🐴 Find a horse?'],
+  rdr2: ['🤠 Best horse breed?', '💰 Fast money tips?', '🗺️ Treasure map locations?', '🔫 Best weapons?'],
+  'elder-scrolls': ['⚔️ Best build for mage?', '🗺️ All Daedric artifacts?', '💎 Fast leveling tips?', '🐉 Dragon shout locations?'],
 };
 const DEFAULT_SUGGESTIONS = ['🎯 Best loadout tips?', '🏗️ Build strategies?', '💰 Money making guide?', '🗡️ Beat this boss?'];
 
