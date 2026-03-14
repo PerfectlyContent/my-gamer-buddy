@@ -10,12 +10,15 @@ interface GameStore {
   selectGame: (game: Game | null) => void;
 }
 
-export const useGameStore = create<GameStore>((set) => ({
+export const useGameStore = create<GameStore>((set, get) => ({
   games: [],
   selectedGame: null,
   loading: false,
 
   fetchGames: async () => {
+    const { games, loading } = get();
+    if (games.length > 0 || loading) return;
+
     set({ loading: true });
     try {
       const games = await gamesApi.list();

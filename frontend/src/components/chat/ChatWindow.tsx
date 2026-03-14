@@ -34,10 +34,8 @@ export default function ChatWindow() {
     clearError,
   } = useChatStore();
 
-  const { selectedGame, fetchGames } = useGameStore();
+  const { selectedGame } = useGameStore();
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => { fetchGames(); }, [fetchGames]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });

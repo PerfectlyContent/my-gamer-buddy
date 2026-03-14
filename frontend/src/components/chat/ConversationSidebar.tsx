@@ -18,12 +18,11 @@ export default function ConversationSidebar({ onClose }: ConversationSidebarProp
     deleteConversation,
   } = useChatStore();
 
-  const { selectedGame, fetchGames } = useGameStore();
+  const { selectedGame } = useGameStore();
 
   useEffect(() => {
-    fetchGames();
     fetchConversations();
-  }, [fetchGames, fetchConversations]);
+  }, [fetchConversations]);
 
   const handleNewConversation = async () => {
     await createConversation(selectedGame?.id);
