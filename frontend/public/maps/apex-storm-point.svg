@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048" width="2048" height="2048">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="island" cx="50%" cy="50%" r="45%">
+      <stop offset="0%" stop-color="#1a2a1a"/>
+      <stop offset="80%" stop-color="#0a1a0a"/>
+      <stop offset="100%" stop-color="#050a10"/>
+    </radialGradient>
+    <style>
+      .poi { font-family: 'Courier New', monospace; font-size: 22px; fill: #fff; text-anchor: middle; font-weight: bold; }
+      .sub { font-family: 'Courier New', monospace; font-size: 14px; fill: #ff3333; text-anchor: middle; }
+      .water { fill: #0a1530; }
+      .land { fill: url(#island); stroke: #ff3333; stroke-width: 2; stroke-opacity: 0.3; }
+      .hotzone { fill: #ff3333; opacity: 0.1; stroke: #ff3333; stroke-width: 2; stroke-opacity: 0.3; }
+    </style>
+  </defs>
+
+  <!-- Ocean -->
+  <rect width="2048" height="2048" class="water"/>
+
+  <!-- Island shape -->
+  <ellipse cx="1024" cy="1024" rx="800" ry="750" class="land"/>
+
+  <!-- Grid -->
+  <g opacity="0.1" stroke="#ff3333" stroke-width="0.5">
+    <line x1="400" y1="274" x2="400" y2="1774"/><line x1="700" y1="274" x2="700" y2="1774"/>
+    <line x1="1024" y1="274" x2="1024" y2="1774"/><line x1="1348" y1="274" x2="1348" y2="1774"/>
+    <line x1="1648" y1="274" x2="1648" y2="1774"/>
+    <line x1="224" y1="500" x2="1824" y2="500"/><line x1="224" y1="760" x2="1824" y2="760"/>
+    <line x1="224" y1="1024" x2="1824" y2="1024"/><line x1="224" y1="1288" x2="1824" y2="1288"/>
+    <line x1="224" y1="1548" x2="1824" y2="1548"/>
+  </g>
+
+  <!-- Hot Zones / POIs -->
+  <circle cx="650" cy="550" r="100" class="hotzone"/>
+  <text x="650" y="545" class="poi" filter="url(#glow)">Checkpoint</text>
+  <text x="650" y="570" class="sub">High Tier Loot</text>
+
+  <circle cx="1400" cy="500" r="110" class="hotzone"/>
+  <text x="1400" y="495" class="poi" filter="url(#glow)">The Mill</text>
+  <text x="1400" y="520" class="sub">Contested</text>
+
+  <circle cx="500" cy="1024" r="120" class="hotzone"/>
+  <text x="500" y="1019" class="poi" filter="url(#glow)">Cascade Falls</text>
+  <text x="500" y="1044" class="sub">Rotate Point</text>
+
+  <circle cx="1024" cy="750" r="130" class="hotzone"/>
+  <text x="1024" y="745" class="poi" filter="url(#glow)">Storm Catcher</text>
+  <text x="1024" y="770" class="sub">Central Hub</text>
+
+  <circle cx="1500" cy="1024" r="100" class="hotzone"/>
+  <text x="1500" y="1019" class="poi" filter="url(#glow)">Launch Pad</text>
+  <text x="1500" y="1044" class="sub">Rotation</text>
+
+  <circle cx="750" cy="1400" r="110" class="hotzone"/>
+  <text x="750" y="1395" class="poi" filter="url(#glow)">Coastal Camp</text>
+  <text x="750" y="1420" class="sub">Edge Zone</text>
+
+  <circle cx="1300" cy="1400" r="100" class="hotzone"/>
+  <text x="1300" y="1395" class="poi" filter="url(#glow)">North Pad</text>
+  <text x="1300" y="1420" class="sub">Trident Spawn</text>
+
+  <!-- Title -->
+  <text x="1024" y="180" font-family="'Courier New', monospace" font-size="40" fill="#ff3333" text-anchor="middle" font-weight="bold" filter="url(#glow)">STORM POINT</text>
+  <text x="1024" y="215" font-family="'Courier New', monospace" font-size="18" fill="#666" text-anchor="middle">APEX LEGENDS — Tropical Island</text>
+</svg>

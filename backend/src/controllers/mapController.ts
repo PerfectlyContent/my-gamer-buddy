@@ -1,41 +1,36 @@
 import { Request, Response } from 'express';
 import pool from '../config/database';
 
-// Fortnite map coordinates: the API returns game-world coordinates.
-// The blank map image is 2048×2048 and covers world bounds of roughly
-// x: [-2500, 2500], y: [-2500, 2500] (with Y-axis inverted in image space).
+// ─── Generic cache helper ───────────────────────────────────────────────────
+const CACHE_TTL_MS = 6 * 60 * 60 * 1000; // 6 hours
+
+interface CacheEntry<T> { ts: number; data: T }
+const cache = new Map<string, CacheEntry<any>>();
+
+async function cachedFetch<T>(key: string, fetcher: () => Promise<T | null>): Promise<T | null> {
+  const entry = cache.get(key);
+  if (entry && Date.now() - entry.ts < CACHE_TTL_MS) return entry.data;
+  const data = await fetcher();
+  if (data) cache.set(key, { ts: Date.now(), data });
+  return data;
+}
+
+// ─── Fortnite ───────────────────────────────────────────────────────────────
 const FORTNITE_MAP_WORLD_MIN = -2500;
 const FORTNITE_MAP_WORLD_MAX = 2500;
 const FORTNITE_MAP_WORLD_RANGE = FORTNITE_MAP_WORLD_MAX - FORTNITE_MAP_WORLD_MIN;
 
 function fortniteWorldToPercent(worldX: number, worldY: number) {
   const x = ((worldX - FORTNITE_MAP_WORLD_MIN) / FORTNITE_MAP_WORLD_RANGE) * 100;
-  // Y is inverted: positive world-Y is towards the top of the image
   const y = ((FORTNITE_MAP_WORLD_MAX - worldY) / FORTNITE_MAP_WORLD_RANGE) * 100;
   return { x: Math.round(x * 100) / 100, y: Math.round(y * 100) / 100 };
 }
 
-interface FortnitePOI {
-  id: string;
-  name: string;
-  location: { x: number; y: number };
-}
-
-interface FortniteMapImages {
-  blank: string;
-  pois?: string;
-}
-
-let fortnitePoiCache: { ts: number; pois: FortnitePOI[]; images: FortniteMapImages } | null = null;
-const FORTNITE_CACHE_TTL_MS = 6 * 60 * 60 * 1000; // 6 hours
+interface FortnitePOI { id: string; name: string; location: { x: number; y: number } }
+interface FortniteMapImages { blank: string; pois?: string }
 
 async function fetchFortniteMapData(): Promise<{ images: FortniteMapImages; pois: FortnitePOI[] } | null> {
-  const now = Date.now();
-  if (fortnitePoiCache && now - fortnitePoiCache.ts < FORTNITE_CACHE_TTL_MS) {
-    return { images: fortnitePoiCache.images, pois: fortnitePoiCache.pois };
-  }
-
-  try {
+  return cachedFetch('fortnite-map', async () => {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 8000);
     const res = await fetch('https://fortnite-api.com/v1/map', { signal: controller.signal });
@@ -49,12 +44,79 @@ async function fetchFortniteMapData(): Promise<{ images: FortniteMapImages; pois
     const pois: FortnitePOI[] = (json.data.pois ?? []).filter(
       (p: FortnitePOI) => p.name && p.name.trim() !== ''
     );
-
-    fortnitePoiCache = { ts: now, images, pois };
     return { images, pois };
-  } catch {
-    return null;
-  }
+  });
+}
+
+// ─── Valorant (valorant-api.com – no auth required) ─────────────────────────
+interface ValorantMap {
+  uuid: string;
+  displayName: string;
+  displayIcon: string | null;   // minimap overhead view
+  splash: string | null;
+  mapUrl: string;
+  xMultiplier: number;
+  yMultiplier: number;
+  xScalarToAdd: number;
+  yScalarToAdd: number;
+  callouts: { regionName: string; superRegionName: string; location: { x: number; y: number } }[] | null;
+}
+
+async function fetchValorantMaps(): Promise<ValorantMap[] | null> {
+  return cachedFetch('valorant-maps', async () => {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+    const res = await fetch('https://valorant-api.com/v1/maps', { signal: controller.signal });
+    clearTimeout(timeout);
+
+    if (!res.ok) return null;
+    const json = await res.json() as any;
+    return (json.data ?? []) as ValorantMap[];
+  });
+}
+
+// Map valorant-api mapUrl paths to our DB slugs
+const VALORANT_MAP_SLUGS: Record<string, string> = {
+  '/Game/Maps/Ascent/Ascent': 'ascent',
+  '/Game/Maps/Bind/Bind': 'bind',
+  '/Game/Maps/Bonsai/Bonsai': 'split',
+  '/Game/Maps/Canyon/Canyon': 'fracture',
+  '/Game/Maps/Duality/Duality': 'haven',
+  '/Game/Maps/Foxtrot/Foxtrot': 'breeze',
+  '/Game/Maps/Jam/Jam': 'lotus',
+  '/Game/Maps/Juliett/Juliett': 'sunset',
+  '/Game/Maps/Pitt/Pitt': 'pearl',
+  '/Game/Maps/Port/Port': 'icebox',
+  '/Game/Maps/Triad/Triad': 'haven',
+  '/Game/Maps/HURM/HURM_Alley/HURM_Alley': 'district',
+  '/Game/Maps/HURM/HURM_Bowl/HURM_Bowl': 'kasbah',
+  '/Game/Maps/HURM/HURM_Yard/HURM_Yard': 'piazza',
+  '/Game/Maps/Infinity/Infinity': 'abyss',
+};
+
+function valorantCalloutToPercent(
+  callout: { location: { x: number; y: number } },
+  map: ValorantMap,
+): { x: number; y: number } {
+  // valorant-api provides multipliers to convert game coords → 0-1 range on the minimap
+  const x = (callout.location.y * map.xMultiplier + map.xScalarToAdd) * 100;
+  const y = (callout.location.x * map.yMultiplier + map.yScalarToAdd) * 100;
+  return { x: Math.round(x * 100) / 100, y: Math.round(y * 100) / 100 };
+}
+
+// ─── League of Legends (Riot Data Dragon – no auth required) ────────────────
+async function fetchLoLMapImageUrl(): Promise<string | null> {
+  return cachedFetch('lol-map-url', async () => {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+    const res = await fetch('https://ddragon.leagueoflegends.com/api/versions.json', { signal: controller.signal });
+    clearTimeout(timeout);
+
+    if (!res.ok) return null;
+    const versions = await res.json() as string[];
+    const latest = versions[0];
+    return `https://ddragon.leagueoflegends.com/cdn/${latest}/img/map/map11.png`;
+  });
 }
 
 export async function getGameMaps(req: Request, res: Response) {
@@ -71,15 +133,43 @@ export async function getGameMaps(req: Request, res: Response) {
 
     const maps = result.rows;
 
-    // For Fortnite, always try to serve the latest map image from fortnite-api.com
+    // Fortnite: serve latest map image from fortnite-api.com
     if (slug === 'fortnite' && maps.length > 0) {
       const live = await fetchFortniteMapData();
       if (live?.images?.blank) {
         maps[0].image_url = live.images.blank;
-        // Persist updated URL to DB in the background (best-effort)
         pool.query('UPDATE game_maps SET image_url = $1 WHERE id = $2', [
-          live.images.blank,
-          maps[0].id,
+          live.images.blank, maps[0].id,
+        ]).catch(() => {});
+      }
+    }
+
+    // Valorant: replace DB image URLs with live displayIcon from valorant-api.com
+    if (slug === 'valorant' && maps.length > 0) {
+      const valMaps = await fetchValorantMaps();
+      if (valMaps) {
+        for (const dbMap of maps) {
+          const match = valMaps.find((vm) => {
+            const apiSlug = VALORANT_MAP_SLUGS[vm.mapUrl];
+            return apiSlug === dbMap.slug;
+          });
+          if (match?.displayIcon) {
+            dbMap.image_url = match.displayIcon;
+            pool.query('UPDATE game_maps SET image_url = $1 WHERE id = $2', [
+              match.displayIcon, dbMap.id,
+            ]).catch(() => {});
+          }
+        }
+      }
+    }
+
+    // League of Legends: serve minimap from Riot Data Dragon CDN
+    if (slug === 'lol' && maps.length > 0) {
+      const lolUrl = await fetchLoLMapImageUrl();
+      if (lolUrl) {
+        maps[0].image_url = lolUrl;
+        pool.query('UPDATE game_maps SET image_url = $1 WHERE id = $2', [
+          lolUrl, maps[0].id,
         ]).catch(() => {});
       }
     }
@@ -96,7 +186,7 @@ export async function getMapMarkers(req: Request, res: Response) {
     const { id } = req.params;
     const { type } = req.query;
 
-    // Check whether this map belongs to Fortnite so we can enrich with live POIs
+    // Look up which game/map this belongs to
     const mapRow = await pool.query(
       `SELECT gm.slug AS map_slug, g.slug AS game_slug
        FROM game_maps gm
@@ -105,12 +195,15 @@ export async function getMapMarkers(req: Request, res: Response) {
       [id]
     );
 
-    if (mapRow.rows[0]?.game_slug === 'fortnite') {
+    const gameSlug = mapRow.rows[0]?.game_slug;
+    const mapSlug = mapRow.rows[0]?.map_slug;
+
+    // ── Fortnite: live POIs ──
+    if (gameSlug === 'fortnite') {
       const live = await fetchFortniteMapData();
       if (live && live.pois.length > 0) {
-        // Convert live POIs to our marker format; apply type filter if set
         const markers = live.pois
-          .filter(() => !type || type === 'loot') // POIs are effectively loot/drop locations
+          .filter(() => !type || type === 'loot')
           .map((poi) => {
             const { x, y } = fortniteWorldToPercent(poi.location.x, poi.location.y);
             return {
@@ -129,6 +222,35 @@ export async function getMapMarkers(req: Request, res: Response) {
       // Fall through to DB markers if API unavailable
     }
 
+    // ── Valorant: live callouts ──
+    if (gameSlug === 'valorant') {
+      const valMaps = await fetchValorantMaps();
+      if (valMaps) {
+        const match = valMaps.find((vm) => VALORANT_MAP_SLUGS[vm.mapUrl] === mapSlug);
+        if (match?.callouts && match.callouts.length > 0) {
+          const markers = match.callouts
+            .filter(() => !type || type === 'loot') // callouts map to 'loot' type (map regions)
+            .map((callout, i) => {
+              const { x, y } = valorantCalloutToPercent(callout, match);
+              return {
+                id: `valapi-${match.uuid}-${i}`,
+                map_id: id,
+                marker_type: 'loot' as const,
+                label: callout.regionName,
+                description: `${callout.superRegionName} region`,
+                x_coord: x,
+                y_coord: y,
+                icon: null,
+              };
+            })
+            .filter((m) => m.x_coord >= 0 && m.x_coord <= 100 && m.y_coord >= 0 && m.y_coord <= 100);
+          if (markers.length > 0) return res.json(markers);
+        }
+      }
+      // Fall through to DB markers if API unavailable
+    }
+
+    // ── Default: DB markers ──
     let query = 'SELECT * FROM map_markers WHERE map_id = $1';
     const params: unknown[] = [id];
 

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <style>
+      .label { font-family: 'Courier New', monospace; font-size: 14px; fill: #ffffff; text-anchor: middle; font-weight: bold; }
+      .sublabel { font-family: 'Courier New', monospace; font-size: 10px; fill: #ff4655; text-anchor: middle; }
+      .site { fill: #ff4655; opacity: 0.15; stroke: #ff4655; stroke-width: 2; stroke-opacity: 0.4; }
+      .tp { fill: #00ccff; opacity: 0.15; stroke: #00ccff; stroke-width: 2; stroke-opacity: 0.5; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1024" height="1024" fill="#0f0f1a"/>
+  <rect x="100" y="80" width="824" height="864" rx="12" fill="#141428" stroke="#252545" stroke-width="2"/>
+
+  <!-- Grid -->
+  <g opacity="0.15" stroke="#333366" stroke-width="0.5">
+    <line x1="100" y1="300" x2="924" y2="300"/><line x1="100" y1="512" x2="924" y2="512"/>
+    <line x1="100" y1="724" x2="924" y2="724"/>
+    <line x1="300" y1="80" x2="300" y2="944"/><line x1="512" y1="80" x2="512" y2="944"/>
+    <line x1="724" y1="80" x2="724" y2="944"/>
+  </g>
+
+  <!-- A Site -->
+  <rect x="630" y="180" width="220" height="200" rx="8" class="site"/>
+  <text x="740" y="275" class="label" filter="url(#glow)">A SITE</text>
+  <text x="740" y="295" class="sublabel">Bath / Showers</text>
+
+  <!-- B Site -->
+  <rect x="180" y="180" width="220" height="200" rx="8" class="site"/>
+  <text x="290" y="275" class="label" filter="url(#glow)">B SITE</text>
+  <text x="290" y="295" class="sublabel">Hookah / Window</text>
+
+  <!-- Teleporters -->
+  <rect x="180" y="500" width="100" height="80" rx="20" class="tp"/>
+  <text x="230" y="545" font-family="'Courier New', monospace" font-size="11" fill="#00ccff" text-anchor="middle" font-weight="bold">TP 1</text>
+
+  <rect x="740" y="500" width="100" height="80" rx="20" class="tp"/>
+  <text x="790" y="545" font-family="'Courier New', monospace" font-size="11" fill="#00ccff" text-anchor="middle" font-weight="bold">TP 2</text>
+
+  <!-- TP connection line -->
+  <line x1="280" y1="540" x2="740" y2="540" stroke="#00ccff" stroke-width="1" stroke-dasharray="8,4" opacity="0.3"/>
+
+  <!-- Attacker Spawn -->
+  <rect x="380" y="780" width="264" height="80" rx="8" fill="#ff4655" opacity="0.08"/>
+  <text x="512" y="828" class="sublabel">ATTACKER SPAWN</text>
+
+  <!-- Defender Spawn -->
+  <rect x="380" y="100" width="264" height="60" rx="8" fill="#ff4655" opacity="0.08"/>
+  <text x="512" y="138" class="sublabel">DEFENDER SPAWN</text>
+
+  <!-- Title -->
+  <text x="512" y="40" font-family="'Courier New', monospace" font-size="24" fill="#ff4655" text-anchor="middle" font-weight="bold" filter="url(#glow)">BIND</text>
+  <text x="512" y="60" font-family="'Courier New', monospace" font-size="11" fill="#666" text-anchor="middle">VALORANT — Two Teleporters, No Mid</text>
+
+  <!-- Compass -->
+  <circle cx="880" cy="900" r="25" fill="none" stroke="#ff4655" stroke-width="1" opacity="0.4"/>
+  <text x="880" y="885" font-family="'Courier New', monospace" font-size="10" fill="#ff4655" text-anchor="middle">N</text>
+  <line x1="880" y1="890" x2="880" y2="910" stroke="#ff4655" stroke-width="1.5" opacity="0.6"/>
+</svg>
