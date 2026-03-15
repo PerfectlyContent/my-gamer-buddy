@@ -6,10 +6,11 @@ import { playSound, triggerHaptic } from '@/lib/sounds';
 interface ChatInputProps {
   onSend: (message: string, image?: File) => void;
   disabled?: boolean;
+  initialMessage?: string;
 }
 
-export default function ChatInput({ onSend, disabled }: ChatInputProps) {
-  const [message, setMessage] = useState('');
+export default function ChatInput({ onSend, disabled, initialMessage }: ChatInputProps) {
+  const [message, setMessage] = useState(initialMessage || '');
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isRecording, setIsRecording] = useState(false);

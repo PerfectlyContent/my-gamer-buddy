@@ -1,4 +1,5 @@
 import { useEffect, useRef, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useChatStore } from '../../store/chatStore';
 import { useGameStore } from '../../store/gameStore';
 import MessageBubble from './MessageBubble';
@@ -17,6 +18,7 @@ const GAME_SUGGESTIONS: Record<string, string[]> = {
   lol: ['🏆 Best champs to climb?', '🗺️ How to jungle?', '🎯 Improve CS?', '⚔️ Counter picks?'],
   zelda: ['🗺️ All shrine locations?', '⚔️ Best weapons?', '💎 Hidden secrets?', '🐴 Find a horse?'],
   rdr2: ['🤠 Best horse breed?', '💰 Fast money tips?', '🗺️ Treasure map locations?', '🔫 Best weapons?'],
+  'rainbow-six': ['🔫 Best Ash loadout?', '🗺️ How to hold site on Oregon?', '🛡️ Top defender operators?', '🎯 How to improve aim?'],
   'elder-scrolls': ['⚔️ Best build for mage?', '🗺️ All Daedric artifacts?', '💎 Fast leveling tips?', '🐉 Dragon shout locations?'],
 };
 const DEFAULT_SUGGESTIONS = ['🎯 Best loadout tips?', '🏗️ Build strategies?', '💰 Money making guide?', '🗡️ Beat this boss?'];
@@ -36,6 +38,15 @@ export default function ChatWindow() {
 
   const { selectedGame } = useGameStore();
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const draftMessage = searchParams.get('draft') || '';
+
+  // Clear draft param from URL after reading it
+  useEffect(() => {
+    if (draftMessage) {
+      setSearchParams({}, { replace: true });
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -82,7 +93,7 @@ export default function ChatWindow() {
             </div>
           </div>
 
-          <ChatInput onSend={handleSend} disabled={sending} />
+          <ChatInput onSend={handleSend} disabled={sending} initialMessage={draftMessage} />
         </div>
       )}
 
@@ -158,7 +169,7 @@ export default function ChatWindow() {
           </div>
 
           {/* Input */}
-          <ChatInput onSend={handleSend} disabled={sending} />
+          <ChatInput onSend={handleSend} disabled={sending} initialMessage={draftMessage} />
         </>
       )}
     </div>

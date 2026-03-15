@@ -611,6 +611,65 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
     },
   },
 
+  'rainbow-six': {
+    playstyles: ['Attacker', 'Defender', 'Support', 'Roamer'],
+    patchLabel: 'Updated for Year 9 Season 4',
+    loadouts: {
+      Attacker: {
+        weapons: [
+          { name: 'R4-C (Ash)', icon: '🔫', type: 'Assault Rifle', damage: 84 },
+          { name: 'G8A1 (IQ)', icon: '🔫', type: 'LMG', damage: 78 },
+          { name: 'Frag Grenades', icon: '💣', type: 'Gadget', damage: 72 },
+          { name: 'Breaching Charges', icon: '💥', type: 'Gadget', damage: 65 },
+        ],
+        aiTip: 'The R4-C is the fastest-killing attacker rifle with its insane fire rate. Ash\'s speed and small hitbox make her the go-to entry fragger — rush site after droning and trade with your team.',
+        metaRank: 1,
+        matchPercent: 95,
+        proUsage: '8/10 pros',
+        tags: ['Entry Frag', 'Ranked', 'Aggressive'],
+      },
+      Defender: {
+        weapons: [
+          { name: 'MP7 (Bandit)', icon: '🔫', type: 'SMG', damage: 76 },
+          { name: '416-C (Jäger)', icon: '🔫', type: 'Assault Rifle', damage: 82 },
+          { name: 'Nitro Cell', icon: '💣', type: 'Gadget', damage: 85 },
+          { name: 'Barbed Wire', icon: '🛡️', type: 'Gadget', damage: 0 },
+        ],
+        aiTip: 'Jäger\'s 416-C is the best defender weapon in the game — it hits like an attacker rifle. Place ADS devices to deny grenades on site, then play aggressively with your gun skill advantage.',
+        metaRank: 1,
+        matchPercent: 94,
+        proUsage: '9/10 pros',
+        tags: ['Anchor', 'Anti-Grenade', 'Site Hold'],
+      },
+      Support: {
+        weapons: [
+          { name: 'P90 (Doc/Rook)', icon: '🔫', type: 'SMG', damage: 68 },
+          { name: 'MP5 (Doc)', icon: '🔫', type: 'SMG', damage: 72 },
+          { name: 'Deployable Shield', icon: '🛡️', type: 'Gadget', damage: 0 },
+          { name: 'Impact Grenades', icon: '💣', type: 'Gadget', damage: 55 },
+        ],
+        aiTip: 'Doc\'s stim pistol can overheal to 140 HP — use it on yourself during gunfights for a massive advantage. Rook\'s armor plates guarantee a DBNO state instead of instant death for your whole team.',
+        metaRank: 3,
+        matchPercent: 88,
+        proUsage: '6/10 pros',
+        tags: ['Anchor', 'Healer', 'Team Play'],
+      },
+      Roamer: {
+        weapons: [
+          { name: 'T-5 SMG (Lesion)', icon: '🔫', type: 'SMG', damage: 74 },
+          { name: 'Mx4 Storm (Alibi)', icon: '🔫', type: 'SMG', damage: 70 },
+          { name: 'C4', icon: '💣', type: 'Gadget', damage: 85 },
+          { name: 'Proximity Alarm', icon: '📡', type: 'Gadget', damage: 0 },
+        ],
+        aiTip: 'Lesion\'s Gu mines give you intel on attacker positions and slow their push — place them on common entry points. Roam above or below site and rotate back when you hear a Gu trigger.',
+        metaRank: 2,
+        matchPercent: 91,
+        proUsage: '7/10 pros',
+        tags: ['Flank', 'Intel', 'Off-Site'],
+      },
+    },
+  },
+
   'elder-scrolls': {
     playstyles: ['Warrior', 'Mage', 'Stealth Archer', 'Paladin'],
     patchLabel: 'Updated for Skyrim Anniversary Edition',
