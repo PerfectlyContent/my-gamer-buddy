@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useGameStore } from '../../store/gameStore';
 
 interface GameSelectorProps {
@@ -5,7 +6,7 @@ interface GameSelectorProps {
   compact?: boolean;
 }
 
-export default function GameSelector({ onSelect, compact: _compact }: GameSelectorProps) {
+export default memo(function GameSelector({ onSelect, compact: _compact }: GameSelectorProps) {
   const { games, selectedGame, selectGame } = useGameStore();
 
   const handleSelect = (game: import('../../types').Game | null) => {
@@ -65,4 +66,4 @@ export default function GameSelector({ onSelect, compact: _compact }: GameSelect
       })}
     </div>
   );
-}
+})
