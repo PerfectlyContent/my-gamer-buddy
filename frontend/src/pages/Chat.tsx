@@ -3,12 +3,20 @@ import ConversationSidebar from '../components/chat/ConversationSidebar';
 import ChatWindow from '../components/chat/ChatWindow';
 import { useGameStore } from '../store/gameStore';
 import { useChatStore } from '../store/chatStore';
+import type { Game } from '../types';
 import { History, Plus } from 'lucide-react';
 
 export default function Chat() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { games, selectedGame, selectGame } = useGameStore();
   const { currentConversation, clearCurrent } = useChatStore();
+
+  const handleGameChange = (game: Game | null) => {
+    selectGame(game);
+    if (game && game.id !== selectedGame?.id) {
+      clearCurrent();
+    }
+  };
 
   return (
     <div className="flex flex-col flex-1 min-h-0">
@@ -18,7 +26,7 @@ export default function Chat() {
         <div className="flex items-center gap-2.5 overflow-x-auto scrollbar-hide px-3 pt-3 pb-1">
           {/* All games pill */}
           <button
-            onClick={() => selectGame(null)}
+            onClick={() => handleGameChange(null)}
             className={`flex-shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border transition-all ${
               !selectedGame
                 ? 'bg-gaming-blue/20 border-gaming-blue/50 ring-1 ring-gaming-blue/20'
@@ -40,7 +48,7 @@ export default function Chat() {
             return (
               <button
                 key={game.id}
-                onClick={() => selectGame(game)}
+                onClick={() => handleGameChange(game)}
                 className={`flex-shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border transition-all ${
                   isActive ? 'ring-1' : 'bg-white/[0.05] border-white/10 grayscale hover:grayscale-0'
                 }`}

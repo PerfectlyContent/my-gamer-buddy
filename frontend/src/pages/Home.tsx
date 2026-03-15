@@ -7,6 +7,7 @@ import {
   Code2,
   Map,
   ListChecks,
+  Swords,
   ChevronRight,
   Zap,
   Gamepad2,
@@ -49,6 +50,15 @@ const FEATURES = [
     colorClass: 'text-gaming-orange',
     borderColor: 'rgba(255,107,0,0.2)',
     glowColor: 'rgba(255,107,0,0.08)',
+  },
+  {
+    icon: Swords,
+    label: 'Loadout',
+    sub: 'Build your setup',
+    path: '/loadout',
+    colorClass: 'text-gaming-pink',
+    borderColor: 'rgba(236,72,153,0.2)',
+    glowColor: 'rgba(236,72,153,0.08)',
   },
 ];
 

@@ -8,6 +8,7 @@ import { APEX_PROMPT } from './apex';
 import { ELDEN_RING_PROMPT } from './eldenring';
 import { LOL_PROMPT } from './lol';
 import { ZELDA_PROMPT } from './zelda';
+import { RAINBOW_SIX_PROMPT } from './rainbow-six';
 
 const gamePrompts: Record<string, string> = {
   fortnite: FORTNITE_PROMPT,
@@ -19,6 +20,7 @@ const gamePrompts: Record<string, string> = {
   'elden-ring': ELDEN_RING_PROMPT,
   lol: LOL_PROMPT,
   zelda: ZELDA_PROMPT,
+  'rainbow-six': RAINBOW_SIX_PROMPT,
 };
 
 export function getSystemPrompt(gameSlug?: string): string {
