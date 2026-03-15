@@ -1,15 +1,14 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Swords, ChevronDown, ChevronUp, Send, Loader2, Plus, X } from 'lucide-react';
+import { Swords, Send, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { playSound, triggerHaptic } from '@/lib/sounds';
 import { useToast } from '@/components/ui/GamingToast';
 import { GamingButton } from '@/components/ui/GamingButton';
-import { GamingProgressBar } from '@/components/ui/GamingProgressBar';
 import GameHeader from '@/components/layout/GameHeader';
 import { useGameStore } from '@/store/gameStore';
 import { useChatStore } from '@/store/chatStore';
-import { LOADOUT_DATA, Weapon } from '@/data/loadouts';
+import { LOADOUT_DATA } from '@/data/loadouts';
 import { conversationsApi, messagesApi } from '@/lib/api';
 
 export default function Loadout() {
@@ -19,30 +18,22 @@ export default function Loadout() {
   const { toast } = useToast();
 
   const [activePlaystyle, setActivePlaystyle] = useState<string | null>(null);
-  const [selectedWeapons, setSelectedWeapons] = useState<Set<number>>(new Set([0, 1]));
+  const [selectedWeapons, setSelectedWeapons] = useState<Set<string>>(new Set());
 
-  // Custom AI tip state (change #3)
-  const [customAiTip, setCustomAiTip] = useState<string | null>(null);
+  // AI analysis state — regenerates when loadout changes
+  const [aiAnalysis, setAiAnalysis] = useState<string | null>(null);
+  const [aiAnalysisLoading, setAiAnalysisLoading] = useState(false);
 
-  // Inline AI chat state (change #4)
-  const [inlineChatOpen, setInlineChatOpen] = useState(false);
+  // Inline AI chat state — default open
   const [inlineQuestion, setInlineQuestion] = useState('');
   const [inlineAnswer, setInlineAnswer] = useState<string | null>(null);
   const [inlineSending, setInlineSending] = useState(false);
-
-  // Custom weapons state (change #5)
-  const [customWeapons, setCustomWeapons] = useState<Weapon[]>([]);
-  const [showCustomForm, setShowCustomForm] = useState(false);
-  const [customName, setCustomName] = useState('');
-  const [customType, setCustomType] = useState('Rifle');
-  const [customPower, setCustomPower] = useState(50);
 
   const gameData = useMemo(() => {
     if (!selectedGame) return null;
     return LOADOUT_DATA[selectedGame.slug] ?? null;
   }, [selectedGame]);
 
-  // Reset playstyle when game changes
   const playstyle = useMemo(() => {
     if (!gameData) return null;
     if (activePlaystyle && gameData.playstyles.includes(activePlaystyle)) {
@@ -56,117 +47,108 @@ export default function Loadout() {
     return gameData.loadouts[playstyle] ?? null;
   }, [gameData, playstyle]);
 
-  // Combined weapons: preset + custom
-  const allWeapons = useMemo(() => {
-    if (!loadout) return [];
-    return [...loadout.weapons, ...customWeapons];
-  }, [loadout, customWeapons]);
+  // Pre-select recommended weapons when playstyle changes
+  useEffect(() => {
+    if (!loadout) return;
+    setSelectedWeapons(new Set(loadout.recommended));
+    setAiAnalysis(null);
+    setInlineAnswer(null);
+    setInlineQuestion('');
+  }, [loadout]);
 
   const handlePlaystyleChange = useCallback((ps: string) => {
     playSound('filter');
     triggerHaptic('tap');
     setActivePlaystyle(ps);
-    setSelectedWeapons(new Set([0, 1]));
-    // Reset custom AI tip when playstyle changes (change #3)
-    setCustomAiTip(null);
-    // Reset custom weapons when playstyle changes
-    setCustomWeapons([]);
-    // Reset inline chat
-    setInlineAnswer(null);
-    setInlineQuestion('');
   }, []);
 
-  const toggleWeapon = useCallback((idx: number) => {
+  const toggleWeapon = useCallback((weaponName: string) => {
     playSound('click');
     triggerHaptic('tap');
     setSelectedWeapons((prev) => {
       const next = new Set(prev);
-      if (next.has(idx)) next.delete(idx);
-      else next.add(idx);
+      if (next.has(weaponName)) next.delete(weaponName);
+      else next.add(weaponName);
       return next;
     });
   }, []);
 
-  // Update custom AI tip when weapon selection changes (change #3)
+  // Regenerate AI analysis whenever weapon selection changes
   useEffect(() => {
-    if (!loadout || !playstyle) return;
-    const selected = allWeapons.filter((_, i) => selectedWeapons.has(i));
-    if (selected.length === 0) {
-      setCustomAiTip(null);
+    if (!selectedGame || !playstyle || !loadout || selectedWeapons.size === 0) {
+      setAiAnalysis(null);
       return;
     }
-    const weaponNames = selected.map((w) => w.name).join(', ');
-    const weaponTypes = [...new Set(selected.map((w) => w.type))].join(', ');
-    setCustomAiTip(
-      `You've selected ${weaponNames}. This ${playstyle} setup focuses on ${weaponTypes}.`
-    );
-  }, [selectedWeapons, allWeapons, playstyle, loadout]);
+
+    const weaponNames = [...selectedWeapons].join(', ');
+    const recommended = loadout.recommended;
+    const isDefault = selectedWeapons.size === recommended.length &&
+      recommended.every((w) => selectedWeapons.has(w));
+
+    if (isDefault) {
+      setAiAnalysis(loadout.aiTip);
+      return;
+    }
+
+    // Generate custom analysis for non-default selection
+    const customWeapons = [...selectedWeapons].filter((w) => !recommended.includes(w));
+    const droppedWeapons = recommended.filter((w) => !selectedWeapons.has(w));
+
+    let tip = loadout.aiTip;
+    if (customWeapons.length > 0 || droppedWeapons.length > 0) {
+      tip = `Custom loadout: ${weaponNames}. `;
+      if (customWeapons.length > 0) {
+        tip += `You've added ${customWeapons.join(', ')} beyond the recommended picks. `;
+      }
+      if (droppedWeapons.length > 0) {
+        tip += `You dropped ${droppedWeapons.join(', ')} from the meta build. `;
+      }
+      tip += loadout.aiTip;
+    }
+    setAiAnalysis(tip);
+  }, [selectedWeapons, selectedGame, playstyle, loadout]);
 
   const handleSave = useCallback(() => {
-    if (!selectedGame || !playstyle || !loadout) return;
+    if (!selectedGame || !playstyle) return;
     const saved = {
       game: selectedGame.slug,
       playstyle,
-      weapons: allWeapons.filter((_, i) => selectedWeapons.has(i)).map((w) => w.name),
+      weapons: [...selectedWeapons],
       savedAt: new Date().toISOString(),
     };
-    const key = `loadout-${selectedGame.slug}`;
-    localStorage.setItem(key, JSON.stringify(saved));
+    localStorage.setItem(`loadout-${selectedGame.slug}`, JSON.stringify(saved));
     playSound('complete');
     triggerHaptic('achievement');
     toast({ title: 'Loadout saved \u2713', variant: 'success' });
-  }, [selectedGame, playstyle, loadout, allWeapons, selectedWeapons, toast]);
+  }, [selectedGame, playstyle, selectedWeapons, toast]);
 
-  // Change #1: Navigate with draft param instead of auto-sending
   const handleAskAI = useCallback(async () => {
-    if (!selectedGame || !playstyle || !loadout) return;
-    const selected = allWeapons.filter((_, i) => selectedWeapons.has(i));
-    const weaponNames = selected.map((w) => w.name).join(' + ') || 'my loadout';
+    if (!selectedGame || !playstyle) return;
+    const weaponNames = [...selectedWeapons].join(' + ') || 'my loadout';
     const message = `I'm running ${weaponNames} as a ${playstyle} player. Give me 3 tips to win more with this loadout.`;
 
     await createConversation(selectedGame.id);
     navigate('/chat?draft=' + encodeURIComponent(message));
-  }, [selectedGame, playstyle, loadout, allWeapons, selectedWeapons, createConversation, navigate]);
+  }, [selectedGame, playstyle, selectedWeapons, createConversation, navigate]);
 
-  // Change #4: Inline AI chat send handler
   const handleInlineSend = useCallback(async () => {
-    if (!inlineQuestion.trim() || !selectedGame || !playstyle || !loadout) return;
+    if (!inlineQuestion.trim() || !selectedGame || !playstyle || inlineSending) return;
     setInlineSending(true);
     setInlineAnswer(null);
 
-    const selected = allWeapons.filter((_, i) => selectedWeapons.has(i));
-    const weaponNames = selected.map((w) => w.name).join(', ') || 'none selected';
+    const weaponNames = [...selectedWeapons].join(', ') || 'none selected';
     const contextMessage = `[Game: ${selectedGame.name}, Playstyle: ${playstyle}, Loadout: ${weaponNames}] ${inlineQuestion.trim()}`;
 
     try {
       const conversation = await conversationsApi.create(selectedGame.id);
       const response = await messagesApi.send(conversation.id, contextMessage);
       setInlineAnswer(response.content);
-    } catch (error) {
-      console.error('Inline AI chat error:', error);
+    } catch {
       setInlineAnswer('Sorry, something went wrong. Please try again.');
     } finally {
       setInlineSending(false);
     }
-  }, [inlineQuestion, selectedGame, playstyle, loadout, allWeapons, selectedWeapons]);
-
-  // Change #5: Add custom weapon handler
-  const handleAddCustomWeapon = useCallback(() => {
-    if (!customName.trim()) return;
-    const newWeapon: Weapon = {
-      name: customName.trim(),
-      icon: '🔧',
-      type: customType,
-      damage: customPower,
-    };
-    setCustomWeapons((prev) => [...prev, newWeapon]);
-    setCustomName('');
-    setCustomType('Rifle');
-    setCustomPower(50);
-    setShowCustomForm(false);
-    playSound('complete');
-    triggerHaptic('tap');
-  }, [customName, customType, customPower]);
+  }, [inlineQuestion, selectedGame, playstyle, selectedWeapons, inlineSending]);
 
   return (
     <div className="flex flex-col flex-1 min-h-0">
@@ -222,7 +204,7 @@ export default function Loadout() {
               ))}
             </div>
 
-            {/* Weapon grid */}
+            {/* Weapon grid — ALL weapons from the game */}
             {loadout && (
               <AnimatePresence mode="wait">
                 <motion.div
@@ -233,132 +215,43 @@ export default function Loadout() {
                   transition={{ duration: 0.2 }}
                   className="space-y-5"
                 >
-                  <div className="grid grid-cols-2 gap-3">
-                    {allWeapons.map((weapon, idx) => {
-                      const isSelected = selectedWeapons.has(idx);
-                      return (
-                        <button
-                          key={`${playstyle}-${idx}`}
-                          onClick={() => toggleWeapon(idx)}
-                          className={`relative text-left p-3.5 rounded-2xl border transition-all duration-200 active:scale-[0.97] min-h-[44px] ${
-                            isSelected
-                              ? 'bg-gaming-blue/[0.08] border-gaming-blue/40 shadow-[0_0_16px_rgba(0,212,255,0.15)]'
-                              : 'bg-white/[0.03] border-white/[0.06] hover:bg-white/[0.06]'
-                          }`}
-                        >
-                          {isSelected && (
-                            <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-gaming-blue shadow-[0_0_6px_rgba(0,212,255,0.8)]" />
-                          )}
-                          <span className="text-2xl block mb-2">{weapon.icon}</span>
-                          <p className="text-sm font-semibold text-gaming-text leading-tight">
-                            {weapon.name}
-                          </p>
-                          <p className="text-[10px] text-gaming-muted mt-0.5">{weapon.type}</p>
-                          {weapon.damage > 0 && (
-                            <div className="mt-2.5 flex items-center gap-2">
-                              {/* Change #2: DMG label */}
-                              <span className="text-[9px] text-gaming-muted uppercase tracking-wider">DMG</span>
-                              <GamingProgressBar value={weapon.damage} size="sm" className="flex-1" />
-                              <span className="text-[10px] text-gaming-muted tabular-nums font-medium">
-                                {weapon.damage}
-                              </span>
-                            </div>
-                          )}
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  {/* Change #5: Add Custom Weapon button + form */}
                   <div>
-                    {!showCustomForm ? (
-                      <button
-                        onClick={() => setShowCustomForm(true)}
-                        className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-dashed border-white/[0.12] text-gaming-muted text-xs hover:text-gaming-blue hover:border-gaming-blue/30 transition-all"
-                      >
-                        <Plus className="w-3.5 h-3.5" />
-                        Add Custom Weapon
-                      </button>
-                    ) : (
-                      <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-4 space-y-3">
-                        <div className="flex items-center justify-between">
-                          <span className="text-[10px] font-display uppercase tracking-[0.2em] text-gaming-blue font-bold">
-                            Add Custom Weapon
-                          </span>
+                    <p className="text-[10px] text-gaming-muted uppercase tracking-wider mb-2">
+                      Tap to select weapons &bull; Recommended are pre-selected
+                    </p>
+                    <div className="grid grid-cols-2 gap-3">
+                      {gameData.allWeapons.map((weapon) => {
+                        const isSelected = selectedWeapons.has(weapon.name);
+                        const isRecommended = loadout.recommended.includes(weapon.name);
+                        return (
                           <button
-                            onClick={() => setShowCustomForm(false)}
-                            className="text-gaming-muted hover:text-gaming-text transition-colors"
+                            key={weapon.name}
+                            onClick={() => toggleWeapon(weapon.name)}
+                            className={`relative text-left p-3.5 rounded-2xl border transition-all duration-200 active:scale-[0.97] min-h-[44px] ${
+                              isSelected
+                                ? 'bg-gaming-blue/[0.08] border-gaming-blue/40 shadow-[0_0_16px_rgba(0,212,255,0.15)]'
+                                : 'bg-white/[0.03] border-white/[0.06] hover:bg-white/[0.06]'
+                            }`}
                           >
-                            <X className="w-4 h-4" />
+                            {isSelected && (
+                              <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-gaming-blue shadow-[0_0_6px_rgba(0,212,255,0.8)]" />
+                            )}
+                            {isRecommended && (
+                              <span className="absolute top-2 left-2 text-[8px] text-gaming-green font-bold uppercase tracking-wider">Meta</span>
+                            )}
+                            <span className="text-2xl block mb-2">{weapon.icon}</span>
+                            <p className="text-sm font-semibold text-gaming-text leading-tight">
+                              {weapon.name}
+                            </p>
+                            <p className="text-[10px] text-gaming-muted mt-0.5">{weapon.type}</p>
                           </button>
-                        </div>
-
-                        {/* Name */}
-                        <div>
-                          <label className="block text-[10px] text-gaming-muted uppercase tracking-wider mb-1">
-                            Weapon Name
-                          </label>
-                          <input
-                            type="text"
-                            value={customName}
-                            onChange={(e) => setCustomName(e.target.value)}
-                            placeholder="e.g. Rail Gun"
-                            className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-3 py-2 text-sm text-gaming-text placeholder-gaming-muted outline-none focus:border-gaming-blue/40 transition-colors"
-                          />
-                        </div>
-
-                        {/* Type */}
-                        <div>
-                          <label className="block text-[10px] text-gaming-muted uppercase tracking-wider mb-1">
-                            Type
-                          </label>
-                          <select
-                            value={customType}
-                            onChange={(e) => setCustomType(e.target.value)}
-                            className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-3 py-2 text-sm text-gaming-text outline-none focus:border-gaming-blue/40 transition-colors appearance-none"
-                          >
-                            <option value="Rifle">Rifle</option>
-                            <option value="SMG">SMG</option>
-                            <option value="Shotgun">Shotgun</option>
-                            <option value="Pistol">Pistol</option>
-                            <option value="Melee">Melee</option>
-                            <option value="Utility">Utility</option>
-                            <option value="Other">Other</option>
-                          </select>
-                        </div>
-
-                        {/* Power slider */}
-                        <div>
-                          <label className="block text-[10px] text-gaming-muted uppercase tracking-wider mb-1">
-                            Estimated Power: {customPower}
-                          </label>
-                          <input
-                            type="range"
-                            min={0}
-                            max={100}
-                            value={customPower}
-                            onChange={(e) => setCustomPower(Number(e.target.value))}
-                            className="w-full accent-gaming-blue"
-                          />
-                        </div>
-
-                        {/* Submit */}
-                        <GamingButton
-                          variant="primary"
-                          size="sm"
-                          className="w-full min-h-[40px]"
-                          onClick={handleAddCustomWeapon}
-                          disabled={!customName.trim()}
-                        >
-                          Add Weapon
-                        </GamingButton>
-                      </div>
-                    )}
+                        );
+                      })}
+                    </div>
                   </div>
 
-                  {/* AI Analysis panel */}
+                  {/* AI Analysis panel — resets when loadout changes */}
                   <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-4 space-y-3">
-                    {/* Badge */}
                     <div className="flex items-center gap-2">
                       <span className="relative flex h-2 w-2">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gaming-blue opacity-75" />
@@ -369,12 +262,10 @@ export default function Loadout() {
                       </span>
                     </div>
 
-                    {/* Tip text — change #3: dynamic based on selection */}
                     <p className="text-xs text-gaming-muted leading-relaxed">
-                      {customAiTip || loadout.aiTip}
+                      {aiAnalysis || loadout.aiTip}
                     </p>
 
-                    {/* Tags */}
                     <div className="flex flex-wrap gap-1.5">
                       {loadout.tags.map((tag) => (
                         <span
@@ -386,7 +277,6 @@ export default function Loadout() {
                       ))}
                     </div>
 
-                    {/* Meta stat pills */}
                     <div className="flex gap-2">
                       <div className="flex-1 text-center p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
                         <p className="text-sm font-bold text-gaming-blue">#{loadout.metaRank}</p>
@@ -403,61 +293,44 @@ export default function Loadout() {
                     </div>
                   </div>
 
-                  {/* Change #4: Inline AI chat area */}
-                  <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03]">
-                    <button
-                      onClick={() => setInlineChatOpen((prev) => !prev)}
-                      className="w-full flex items-center justify-between px-4 py-3 text-left"
-                    >
-                      <span className="text-[10px] font-display uppercase tracking-[0.2em] text-gaming-muted font-bold">
-                        Ask about this loadout
-                      </span>
-                      {inlineChatOpen ? (
-                        <ChevronUp className="w-4 h-4 text-gaming-muted" />
-                      ) : (
-                        <ChevronDown className="w-4 h-4 text-gaming-muted" />
-                      )}
-                    </button>
-
-                    {inlineChatOpen && (
-                      <div className="px-4 pb-4 space-y-3">
-                        {/* Input row */}
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="text"
-                            value={inlineQuestion}
-                            onChange={(e) => setInlineQuestion(e.target.value)}
-                            onKeyDown={(e) => {
-                              if (e.key === 'Enter' && !e.shiftKey) {
-                                e.preventDefault();
-                                handleInlineSend();
-                              }
-                            }}
-                            placeholder="What's your playstyle? What modes do you play?"
-                            className="flex-1 bg-white/[0.04] border border-white/[0.08] rounded-xl px-3 py-2 text-sm text-gaming-text placeholder-gaming-muted outline-none focus:border-gaming-blue/40 transition-colors"
-                            disabled={inlineSending}
-                          />
-                          <button
-                            onClick={handleInlineSend}
-                            disabled={inlineSending || !inlineQuestion.trim()}
-                            className="flex-shrink-0 w-9 h-9 rounded-xl bg-gaming-blue flex items-center justify-center text-gaming-bg shadow-glow-teal-sm active:scale-95 transition-all disabled:opacity-40 disabled:shadow-none disabled:scale-100"
-                          >
-                            {inlineSending ? (
-                              <Loader2 className="w-4 h-4 animate-spin" />
-                            ) : (
-                              <Send className="w-4 h-4" />
-                            )}
-                          </button>
-                        </div>
-
-                        {/* Answer display */}
-                        {inlineAnswer && (
-                          <div className="rounded-xl bg-white/[0.04] border border-white/[0.06] p-3">
-                            <p className="text-xs text-gaming-text leading-relaxed whitespace-pre-wrap">
-                              {inlineAnswer}
-                            </p>
-                          </div>
+                  {/* Inline AI chat — always visible */}
+                  <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-4 space-y-3">
+                    <span className="text-[10px] font-display uppercase tracking-[0.2em] text-gaming-purple font-bold">
+                      Ask About This Loadout
+                    </span>
+                    <p className="text-[10px] text-gaming-muted">
+                      Tell the AI about your playstyle, modes, and preferences for personalized tips.
+                    </p>
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        value={inlineQuestion}
+                        onChange={(e) => setInlineQuestion(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault();
+                            handleInlineSend();
+                          }
+                        }}
+                        placeholder="What's your playstyle? What modes do you play?"
+                        className="flex-1 bg-white/[0.04] border border-white/[0.08] rounded-xl px-3 py-2 text-sm text-gaming-text placeholder-gaming-muted outline-none focus:border-gaming-purple/40 transition-colors"
+                        disabled={inlineSending}
+                      />
+                      <button
+                        onClick={handleInlineSend}
+                        disabled={inlineSending || !inlineQuestion.trim()}
+                        className="flex-shrink-0 w-9 h-9 rounded-xl bg-gaming-purple flex items-center justify-center text-white shadow-sm active:scale-95 transition-all disabled:opacity-40"
+                      >
+                        {inlineSending ? (
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                        ) : (
+                          <Send className="w-4 h-4" />
                         )}
+                      </button>
+                    </div>
+                    {inlineAnswer && (
+                      <div className="rounded-xl bg-gaming-purple/[0.08] border border-gaming-purple/20 p-3">
+                        <p className="text-xs text-gaming-text leading-relaxed whitespace-pre-wrap">{inlineAnswer}</p>
                       </div>
                     )}
                   </div>

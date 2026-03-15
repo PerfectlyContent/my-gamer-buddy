@@ -5,7 +5,6 @@ import { useGameStore } from '../store/gameStore';
 import {
   MessageSquare,
   Code2,
-  Map,
   ListChecks,
   Swords,
   ChevronRight,
@@ -34,10 +33,10 @@ const FEATURES = [
     glowColor: 'rgba(139,92,246,0.08)',
   },
   {
-    icon: Map,
-    label: 'Maps',
-    sub: 'Interactive maps',
-    path: '/maps',
+    icon: Swords,
+    label: 'Loadout',
+    sub: 'Build your setup',
+    path: '/loadout',
     colorClass: 'text-gaming-green',
     borderColor: 'rgba(57,255,20,0.15)',
     glowColor: 'rgba(57,255,20,0.05)',
@@ -50,15 +49,6 @@ const FEATURES = [
     colorClass: 'text-gaming-orange',
     borderColor: 'rgba(255,107,0,0.2)',
     glowColor: 'rgba(255,107,0,0.08)',
-  },
-  {
-    icon: Swords,
-    label: 'Loadout',
-    sub: 'Build your setup',
-    path: '/loadout',
-    colorClass: 'text-gaming-pink',
-    borderColor: 'rgba(236,72,153,0.2)',
-    glowColor: 'rgba(236,72,153,0.08)',
   },
 ];
 

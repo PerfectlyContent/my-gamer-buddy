@@ -55,7 +55,8 @@ INSERT INTO games (name, slug, icon, color_accent, sort_order) VALUES
     ('League of Legends', 'lol', '🏆', '#c89b3c', 8),
     ('Zelda', 'zelda', '🛡️', '#00cc66', 9),
     ('Red Dead Redemption 2', 'rdr2', '🤠', '#c41e3a', 10),
-    ('Elder Scrolls', 'elder-scrolls', '📜', '#8b7355', 11)
+    ('Elder Scrolls', 'elder-scrolls', '📜', '#8b7355', 11),
+    ('Rainbow Six Siege', 'rainbow-six', '🛡️', '#1f4e78', 12)
 ON CONFLICT (slug) DO NOTHING;
 
 -- Game Maps
