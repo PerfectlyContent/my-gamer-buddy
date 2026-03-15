@@ -1454,7 +1454,134 @@ INSERT INTO quests (game_id, name, description, category, region, difficulty, is
 SELECT g.id, 'Companion Item Requests', 'Camp members ask for items: Molly wants a pocket mirror, Jack a book, Pearson a rabbit, etc. Missable after Ch6.', 'missable', 'Camp', 'medium', true, 26
 FROM games g WHERE g.slug = 'rdr2';
 INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
-SELECT g.id, 'Hunting Challenges (9 Sets)', 'Complete 9 challenge categories: Bandit, Explorer, Gambler, Herbalist, Horseman, Hunter, Sharpshooter, Survivalist, Weapons Expert.', 'secret', 'Various', 'hard', false, 27
+SELECT g.id, 'Hunting Challenges (9 Sets)', 'Complete 9 challenge categories: Bandit, Explorer, Gambler, Herbalist, Horseman, Hunter, Sharpshooter, Survivalist, Weapons Expert. 90 total challenges. Gambler 8 is pure RNG. Horseman 9 best in Epilogue. Completing all unlocks Legend of the East Outfit.', 'secret', 'Various', 'hard', false, 27
+FROM games g WHERE g.slug = 'rdr2';
+
+-- Additional RDR2 Stranger Missions
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Arcadia for Amateurs (Albert Mason)', 'A 4-part mission with wildlife photographer. Help photograph coyotes, horses, alligators, wolves. Albert gets into danger. Available from Chapter 2.', 'npc_encounter', 'Various', 'easy', false, 28
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'The Noblest of Men, and a Woman', 'Track 4 gunslingers: Granger, Flaco, Midnight, Black Belle. Each drops unique weapon. Ends with Calloway duel. MISSABLE WEAPONS. Chapter 2+.', 'npc_encounter', 'Various', 'medium', false, 29
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'A Fisher of Fish (Jeremy Gill)', 'Catch all 13 legendary fish with Special Lures. Mail from post office. Tragic ending after all 13. Chapter 4+.', 'npc_encounter', 'Various', 'hard', false, 30
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'American Dreams (Serial Killer)', 'Find 3 murder scenes with map pieces. Combine to find killer Edmund Lowry Jr. Reward: Ornate Dagger. Chapter 2+.', 'secret', 'Heartlands / Valentine', 'medium', false, 31
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'He''s British, Of Course (Penelope & Beau)', 'Romeo & Juliet between feuding Braithwaites and Grays. MISSABLE: Parts IV-V before Ch.4 ends.', 'npc_encounter', 'Rhodes', 'easy', true, 32
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Geology for Beginners (Francis Sinclair)', 'Find 10 rock carvings for possible time traveler. Return for mind-bending conclusion. Reward: $10, Bourbon, Rock Statue.', 'npc_encounter', 'Strawberry / Various', 'medium', false, 33
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Brothers and Sisters (Sister Calderon)', 'Honor mission at Saint Denis church. Faith and redemption. MISSABLE: Before "Our Best Selves."', 'npc_encounter', 'Saint Denis', 'easy', true, 34
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Do Not Seek Absolution (Edith Downes)', 'Ch.6 honor mission with Thomas Downes'' wife. MISSABLE: Chapter 6 only.', 'npc_encounter', 'Annesburg / Saint Denis', 'easy', true, 35
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'The Wisdom of the Elders (Rains Fall)', 'Honor mission at Wapiti Reservation. Help resist oppression. From Chapter 5.', 'npc_encounter', 'Wapiti Reservation', 'medium', true, 36
+FROM games g WHERE g.slug = 'rdr2';
+
+-- Additional RDR2 Easter Eggs
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Vampire of Saint Denis', 'Find 5 wall writings in Saint Denis. Visit marked alley after midnight. Defeat vampire for Ornate Dagger.', 'easter_egg', 'Saint Denis', 'medium', false, 37
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Devil Cave / Cave Hermit', 'Hidden Tunnel NW of Pronghorn Ranch. Cave hermit claims to be the Devil. Strange paintings on walls.', 'easter_egg', 'Big Valley, West Elizabeth', 'easy', false, 38
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Bigfoot Skeleton & Voice', 'Giant skeleton in Mount Shann cave. Near Wapiti: after studying 30+ animals, talk to invisible being in boulder cave.', 'easter_egg', 'Mount Shann / Wapiti', 'hard', false, 39
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'The Wolfman', 'Feral man with wolves in Roanoke Valley. Doesn''t know he''s human.', 'easter_egg', 'Roanoke Valley', 'easy', false, 40
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Manbearpig', 'Man-bear-pig hybrid in shack near Van Horn. South Park reference.', 'easter_egg', 'Van Horn, New Hanover', 'easy', false, 41
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Seven Statues Puzzle', 'Cave east of Donner Falls. Press buttons on statues with prime fingers. Reward: 3 gold bars.', 'secret', 'Donner Falls, Ambarino', 'medium', false, 42
+FROM games g WHERE g.slug = 'rdr2';
+
+-- All 16 Legendary Animals (individual entries)
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Legendary Grizzly Bear', 'Grizzlies East, north of O''Creagh''s Run. Early Hosea mission encounter. High-powered rifles.', 'secret', 'Grizzlies East, Ambarino', 'hard', false, 43
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Legendary White Bison', 'NW Ambarino, west of Barrow Lagoon near Lake Isabella. Extreme cold area.', 'secret', 'Lake Isabella, Ambarino', 'hard', false, 44
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Legendary Buck (HUNT FIRST!)', 'Big Valley, west of Mount Shann. Buck Antler Trinket from Fence permanently improves ALL pelt quality.', 'secret', 'Big Valley, West Elizabeth', 'medium', false, 45
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Legendary Beaver', 'West of Van Horn, pond south of Elysian Pool.', 'secret', 'Van Horn, New Hanover', 'medium', false, 46
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Legendary Boar', 'Bluewater Marsh, east of Kamassa River. Aggressive charger.', 'secret', 'Bluewater Marsh, Lemoyne', 'medium', false, 47
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Legendary Fox', 'Mattock Pond, north of Rhodes. Small and fast.', 'secret', 'Mattock Pond, Lemoyne', 'medium', false, 48
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Legendary Ram', 'NW of Valentine, east of Cattail Pond.', 'secret', 'NW Valentine, New Hanover', 'medium', false, 49
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Legendary Elk', 'East of Fort Wallace, south of Bacchus Bridge.', 'secret', 'Fort Wallace, Ambarino', 'medium', false, 50
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Legendary Moose', 'Roanoke Ridge wooded lake. Hardest to find. Very rare spawn.', 'secret', 'Roanoke Ridge, New Hanover', 'hard', false, 51
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Legendary Coyote', 'West Lemoyne, south of Dewberry Creek.', 'secret', 'West Lemoyne', 'medium', false, 52
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Legendary Wolf', 'Cotorra Springs, north of Dakota River. Travels with pack.', 'secret', 'Cotorra Springs, Ambarino', 'hard', false, 53
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Legendary Alligator', 'Lagras Lake, SE Lemoyne. Requires Ch.4 "Country Pursuits." Massive and dangerous.', 'secret', 'Lagras, Lemoyne', 'hard', false, 54
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Legendary Tatanka Bison', 'South West Elizabeth, near Thieves Landing. Epilogue only.', 'secret', 'Thieves Landing', 'medium', false, 55
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Legendary Cougar', 'Gaptooth Ridge, west of Tumbleweed. Extremely aggressive. Epilogue only.', 'secret', 'Gaptooth Ridge, New Austin', 'hard', false, 56
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Legendary Pronghorn', 'Rio Bravo, west of Rio del Lobo Rock. Epilogue only.', 'secret', 'Rio Bravo, New Austin', 'medium', false, 57
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Legendary Panther (Most Elusive)', 'West of Shady Belle. ONLY after Master Hunter Rank 9. Can one-shot you. Bring shotgun and Dead Eye.', 'secret', 'Shady Belle, Lemoyne', 'hard', false, 58
+FROM games g WHERE g.slug = 'rdr2';
+
+-- Gang Hideouts (6+1)
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Gang Hideout: Six Point Cabin', 'O''Driscolls in Cumberland Forest. Ch.2 story encounter.', 'mini_event', 'Cumberland Forest', 'medium', false, 59
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Gang Hideout: Shady Belle', 'Lemoyne Raiders SW of Saint Denis. Ch.3 story.', 'mini_event', 'SW Saint Denis', 'medium', false, 60
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Gang Hideout: Beaver Hollow', 'Murfree Brood cave west of Annesburg. Tight corridors.', 'mini_event', 'Roanoke Ridge', 'hard', false, 61
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Gang Hideout: Hanging Dog Ranch', 'O''Driscolls north of Little Creek River. Becomes Laramie in Epilogue.', 'mini_event', 'West Elizabeth', 'hard', false, 62
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Gang Hideout: Thieves'' Landing', 'Del Lobos south of Blackwater. Epilogue only.', 'mini_event', 'New Austin', 'medium', false, 63
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Gang Hideout: Fort Mercer', 'Del Lobos SW of Armadillo. Most guarded. Epilogue only.', 'mini_event', 'Rio Bravo, New Austin', 'hard', false, 64
+FROM games g WHERE g.slug = 'rdr2';
+
+-- Missable Content
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Missable Weapons', 'Flaco''s Revolver, Granger''s Revolver, Midnight''s Pistol (Noblest of Men), Rare Rolling Block Rifle (Magicians for Sport), Calloway''s Revolver.', 'missable', 'Various', 'medium', true, 65
+FROM games g WHERE g.slug = 'rdr2';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Guarma Animals (Chapter 5 Only)', 'Study in Guarma: Scarlet/Blue-Yellow/Great Green Macaws, Red-Footed Booby, snake species. Cannot return.', 'missable', 'Guarma', 'medium', true, 66
 FROM games g WHERE g.slug = 'rdr2';
 
 -- Elder Scrolls (Skyrim) quests
