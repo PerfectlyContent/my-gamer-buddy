@@ -1503,3 +1503,261 @@ FROM games g WHERE g.slug = 'elder-scrolls';
 INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
 SELECT g.id, 'Dragon Priest Masks (8+1)', 'Collect all 8 Dragon Priest masks and place them at Labyrinthian''s altar to receive Konahrik.', 'secret', 'Various', 'hard', false, 15
 FROM games g WHERE g.slug = 'elder-scrolls';
+
+-- =============================================
+-- Additional seed data – Batch 3 (new games & expanded content)
+-- =============================================
+
+-- =============================================
+-- Fortnite cheats (Creative mode settings & pro tips)
+-- =============================================
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Infinite Materials (Creative)', 'Island Settings > Infinite Resources: ON', 'All', 'god-mode', 'Enable unlimited building materials in Creative mode islands'
+FROM games g WHERE g.slug = 'fortnite';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Instant Respawn (Creative)', 'Island Settings > Respawn Time: Instant', 'All', 'other', 'Set respawn timer to zero in Creative for uninterrupted practice'
+FROM games g WHERE g.slug = 'fortnite';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Grant Weapons on Spawn', 'My Island > Starting Inventory > Add weapons', 'All', 'weapons', 'Pre-load any weapon loadout when players spawn in Creative islands'
+FROM games g WHERE g.slug = 'fortnite';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Enable Flight (Creative)', 'Island Settings > Player Flight: ON', 'All', 'fun', 'Allow all players to fly freely in your Creative island'
+FROM games g WHERE g.slug = 'fortnite';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Gravity Control (Creative)', 'Island Settings > Gravity: Low / Normal / High', 'All', 'fun', 'Change gravity level on your Creative island for moon-jump gameplay'
+FROM games g WHERE g.slug = 'fortnite';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'No Fall Damage (Creative)', 'Island Settings > Fall Damage: OFF', 'All', 'god-mode', 'Disable fall damage on your Creative island for build practice'
+FROM games g WHERE g.slug = 'fortnite';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Right-Hand Peek Trick', 'Always approach fights from the left so your camera peeks right', 'All', 'other', 'Fortnite is third-person with left-offset camera – right-hand peeks expose less of your body'
+FROM games g WHERE g.slug = 'fortnite';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Scroll Wheel Edit Reset', 'Bind Edit Reset to Mouse Scroll Wheel', 'PC', 'other', 'Bind edit reset to scroll wheel for frame-perfect instant edit resets'
+FROM games g WHERE g.slug = 'fortnite';
+
+-- =============================================
+-- Call of Duty (Warzone / MW3) cheats & Easter egg codes
+-- =============================================
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Bunker 11 Easter Egg', 'Find red phone > decode 3 Russian numbers > activate 3 blue phones > open Bunker 11', 'All', 'other', 'Warzone Verdansk multi-step Easter egg that unlocks a secret bunker with top-tier loot and a nuke blueprint'
+FROM games g WHERE g.slug = 'cod';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Bunker Code Doors (1, 3, 10)', 'Bunker 1: 97264138 | Bunker 3: 87624851 | Bunker 10: 60274513', 'All', 'other', 'Permanent door codes for Verdansk bunkers – codes are the same every match'
+FROM games g WHERE g.slug = 'cod';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Bunker 0 Binary Code', '01011000', 'All', 'other', 'Binary code for the letter X – opens the final secret Bunker 0 in Verdansk'
+FROM games g WHERE g.slug = 'cod';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Winter Rebirth Gulag Easter Egg', 'Melt Outpost bunker with Thermite > grab SSD > melt Turbine door > read binary > enter code at Prison tunnel', 'All', 'other', 'Multi-step Easter egg on Winter Rebirth Island that opens the old Gulag for a free weapon blueprint'
+FROM games g WHERE g.slug = 'cod';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Haven''s Hollow Secret Cave', 'Look behind the waterfall in the northern portion of Haven''s Hollow', 'All', 'other', 'Hidden cave entrance behind the waterfall on the Haven''s Hollow map with bonus loot'
+FROM games g WHERE g.slug = 'cod';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Slide Cancel Movement', 'Sprint > Slide > Jump > Sprint (repeat)', 'All', 'other', 'Slide cancelling for faster movement – essential advanced movement tech in Warzone'
+FROM games g WHERE g.slug = 'cod';
+
+-- =============================================
+-- Additional Minecraft cheats (commands not already seeded)
+-- =============================================
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Teleport to Player', '/tp @p <playername>', 'All', 'other', 'Teleport yourself to another player''s location instantly'
+FROM games g WHERE g.slug = 'minecraft';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Clone Structure', '/clone <x1> <y1> <z1> <x2> <y2> <z2> <dest_x> <dest_y> <dest_z>', 'All', 'world', 'Copy-paste a region of blocks from one location to another – great for duplicating builds'
+FROM games g WHERE g.slug = 'minecraft';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Locate Biome', '/locate biome minecraft:cherry_grove', 'All', 'other', 'Find the nearest biome of a specific type – works with any biome name'
+FROM games g WHERE g.slug = 'minecraft';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Set World Spawn', '/setworldspawn', 'All', 'world', 'Set the world spawn point to your current position'
+FROM games g WHERE g.slug = 'minecraft';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Give Enchanted Sword (NBT)', '/give @p diamond_sword{Enchantments:[{id:sharpness,lvl:5},{id:unbreaking,lvl:3},{id:fire_aspect,lvl:2}]} 1', 'Java', 'weapons', 'Give yourself a fully enchanted diamond sword with Sharpness V, Unbreaking III, and Fire Aspect II'
+FROM games g WHERE g.slug = 'minecraft';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Clear All Effects', '/effect clear @p', 'All', 'stats', 'Remove all active status effects from yourself instantly'
+FROM games g WHERE g.slug = 'minecraft';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Summon Any Entity', '/summon minecraft:ender_dragon', 'All', 'spawn', 'Summon any entity at your location – replace ender_dragon with any mob name'
+FROM games g WHERE g.slug = 'minecraft';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Set Difficulty Hard', '/difficulty hard', 'All', 'world', 'Change difficulty to hard – mobs deal more damage and zombies can break doors'
+FROM games g WHERE g.slug = 'minecraft';
+
+-- =============================================
+-- Additional Elden Ring cheats (exploits & hidden mechanics)
+-- =============================================
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Sleeping Dragon Rune Farm', 'Travel to Fort Faroth in Caelid > find the giant sleeping dragon behind the fort > attack with a bleed weapon', 'All', 'money', 'Kill the sleeping Elder Dragon for ~75,000 runes in the first hour of the game using any bleed weapon'
+FROM games g WHERE g.slug = 'elden-ring';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Sacred Relic Sword Endgame Farm', 'Equip Sacred Relic Sword at Palace Approach > use Wave of Gold weapon art on the Albinauric crowd', 'All', 'money', 'Endgame rune farm yielding ~810,000 runes per minute by wiping the crowd with one skill use'
+FROM games g WHERE g.slug = 'elden-ring';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Gold Scarab + Fowl Foot Boost', 'Equip Gold Scarab talisman + use Gold-Pickled Fowl Foot consumable', 'All', 'stats', 'Stack both rune-boosting effects for roughly 50% more runes from every kill'
+FROM games g WHERE g.slug = 'elden-ring';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Illusory Wall Detection', 'Hit or roll into suspicious walls – many dungeons have hidden passages', 'All', 'other', 'Dozens of illusory walls hide secret areas, items, and shortcuts throughout the Lands Between'
+FROM games g WHERE g.slug = 'elden-ring';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Stonesword Key Imp Statues', 'Use Stonesword Keys on fog-sealed Imp Statues to unlock hidden areas', 'All', 'other', 'Many of the game''s best talismans and weapons are locked behind Imp Statue fog gates'
+FROM games g WHERE g.slug = 'elden-ring';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Respec with Larval Tears', 'Defeat Rennala > select Rebirth > spend one Larval Tear to reallocate all stats', 'All', 'stats', 'Respec your character at Rennala in Raya Lucaria – there are 18 Larval Tears in a single playthrough'
+FROM games g WHERE g.slug = 'elden-ring';
+
+-- =============================================
+-- Zelda: Tears of the Kingdom cheats (glitches & tricks)
+-- =============================================
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Item Duplication (SID Method)', 'Have 3+ of target item > equip bow > sort consumable left of target > quick-menu swap', 'Switch', 'money', 'Split Item Duplication – duplicate any material for infinite rupees or upgrades (works on v1.4.2)'
+FROM games g WHERE g.slug = 'zelda';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Fuse Entanglement Glitch', 'Interrupt the fuse process mid-animation to keep both the fused copy and original item', 'Switch', 'other', 'Exploit that lets you keep equipment while also having a fused version – effectively doubles gear'
+FROM games g WHERE g.slug = 'zelda';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Diamond Duplication for Rupees', 'Duplicate diamonds using SID method > sell to any merchant for 500 rupees each', 'Switch', 'money', 'Fastest way to earn unlimited rupees – duplicate stacks of diamonds and sell them'
+FROM games g WHERE g.slug = 'zelda';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Zonaite Duplication', 'Duplicate Zonaite using any dupe method > spend at Crystal Refineries for Energy Cells', 'Switch', 'other', 'Max out your Energy Cell battery without grinding by duplicating Zonaite'
+FROM games g WHERE g.slug = 'zelda';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Infinite Arrows (Fuse Trick)', 'Fuse valuable materials to arrows > pick up missed arrows to recover both arrow and material', 'Switch', 'weapons', 'Missed fused arrows can be picked up, giving back both the arrow and the fuse material'
+FROM games g WHERE g.slug = 'zelda';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Recall on Thrown Objects', 'Use Recall on boulders, rocks, or objects enemies throw at you to send them flying back', 'Switch', 'fun', 'Use Recall on Talus rocks, thrown objects, or even Stone Talus boulders for massive damage'
+FROM games g WHERE g.slug = 'zelda';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Shield Surf Speed Boost', 'Fuse a Minecart or Zonai Sled to your shield > shield surf for massive speed', 'Switch', 'fun', 'Fusing certain objects to shields creates extremely fast traversal across Hyrule'
+FROM games g WHERE g.slug = 'zelda';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Blood Moon Farming', 'Wait for or trigger a Blood Moon > all overworld enemies respawn with their drops', 'Switch', 'other', 'Blood Moons reset all enemies – farm valuable monster parts by revisiting camps after each moon'
+FROM games g WHERE g.slug = 'zelda';
+
+-- =============================================
+-- Additional Elder Scrolls (Skyrim) cheats
+-- =============================================
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Set Player Speed', 'player.setav speedmult 200', 'PC', 'stats', 'Double your movement speed – change 200 to any percentage (100 is default)'
+FROM games g WHERE g.slug = 'elder-scrolls';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Remove Bounty', 'player.paycrimegold 0 0 <factionID>', 'PC', 'money', 'Clear your bounty in any hold without paying gold or going to jail'
+FROM games g WHERE g.slug = 'elder-scrolls';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Change Weather', 'sw <weatherID>', 'PC', 'world', 'Force a specific weather type – e.g., sw 10e1f2 for clear skies, sw 10a235 for heavy rain'
+FROM games g WHERE g.slug = 'elder-scrolls';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Set NPC as Essential', 'setessential <baseID> 1', 'PC', 'other', 'Click on NPC and make them unkillable – useful for protecting important quest givers'
+FROM games g WHERE g.slug = 'elder-scrolls';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Spawn Arrows', 'player.additem 000139C0 500', 'PC', 'weapons', 'Adds 500 Daedric Arrows. Also: 000139BE (Ebony), 00034182 (Dwarven), 000139BF (Glass)'
+FROM games g WHERE g.slug = 'elder-scrolls';
+
+-- =============================================
+-- Apex Legends cheats (Easter eggs & tips)
+-- =============================================
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Nessie Easter Eggs', 'Search every map for hidden Nessie plush toys in corners, under desks, and inside buildings', 'All', 'other', 'Respawn hides dozens of Nessie plush toys across every map – a tradition carried over from Titanfall'
+FROM games g WHERE g.slug = 'apex';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Firing Range 3rd Person Mode', 'In Firing Range > go to the far-left cave > face the wall > look down > crouch > switch Legend', 'All', 'fun', 'Hidden Easter egg that toggles third-person camera in the Firing Range'
+FROM games g WHERE g.slug = 'apex';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Firing Range Dummy AI', 'In Firing Range > far-right platform > look up at ceiling > switch Legend > Dummies come alive', 'All', 'fun', 'Hidden Easter egg that makes the training dummies fight back – great for warm-up practice'
+FROM games g WHERE g.slug = 'apex';
+INSERT INTO cheat_codes (game_id, title, code, platform, category, description)
+SELECT g.id, 'Win Streak Nessie Growth', 'Win consecutive matches to see increasingly large Nessie statues on the Champion screen', 'All', 'other', 'After each consecutive win, an increasingly large Nessie appears in front of your Legend'
+FROM games g WHERE g.slug = 'apex';
+
+-- =============================================
+-- Additional Zelda: TotK quests (side adventures)
+-- =============================================
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Potential Princess Sightings', 'Investigate rumors of Princess Zelda across Hyrule – complete all leads to earn the full Froggy Armor set', 'npc_encounter', 'Various', 'medium', false, 13
+FROM games g WHERE g.slug = 'zelda';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'The Hunt for Bubbul Gems', 'Collect Bubbul Gems from cave Bubbulfrogs and trade them to Koltin for monster-themed armor and the Mystic set', 'npc_encounter', 'Various', 'medium', false, 14
+FROM games g WHERE g.slug = 'zelda';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Hateno Village Election', 'Help resolve the mayoral election between incumbent Reede and fashion designer Cece in Hateno Village', 'npc_encounter', 'Hateno Village', 'easy', false, 15
+FROM games g WHERE g.slug = 'zelda';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Zelda''s Golden Horse', 'Track down Zelda''s missing golden horse near Snowfield Stable in the Tabantha region', 'npc_encounter', 'Tabantha', 'medium', false, 16
+FROM games g WHERE g.slug = 'zelda';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Swordsman in the Sand', 'Follow the pointing statues through the Gerudo Desert to uncover secret underground ruins and treasure', 'secret', 'Gerudo Desert', 'hard', false, 17
+FROM games g WHERE g.slug = 'zelda';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Uma''s Garden', 'Unlock gardening in Hateno Village – tell Uma what to grow and return later to harvest crops', 'npc_encounter', 'Hateno Village', 'easy', false, 18
+FROM games g WHERE g.slug = 'zelda';
+
+-- =============================================
+-- Additional Elder Scrolls (Skyrim) quests (Daedric & hidden)
+-- =============================================
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Boethiah''s Calling', 'Reach level 30, find Boethiah''s shrine east of Windhelm, and sacrifice a follower to earn the Ebony Mail armor', 'npc_encounter', 'Eastmarch', 'hard', false, 16
+FROM games g WHERE g.slug = 'elder-scrolls';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'The Whispering Door', 'Hear rumors about the Jarl''s son in Whiterun to start Mephala''s quest for the Ebony Blade', 'secret', 'Whiterun', 'medium', false, 17
+FROM games g WHERE g.slug = 'elder-scrolls';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Ill Met by Moonlight', 'Meet Sinding in Falkreath Jail and hunt him in Bloated Man''s Grotto – choose Hircine''s Ring or Savior''s Hide (or both)', 'npc_encounter', 'Falkreath', 'medium', true, 18
+FROM games g WHERE g.slug = 'elder-scrolls';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Pieces of the Past', 'Visit Silus Vesuius'' museum in Dawnstar at level 20+ to reassemble Mehrunes'' Razor – a dagger with a 3% instant-kill chance', 'npc_encounter', 'Dawnstar', 'medium', false, 19
+FROM games g WHERE g.slug = 'elder-scrolls';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'The House of Horrors', 'Enter the abandoned house in Markarth and encounter Molag Bal to earn his Mace – one of the strongest weapons in the game', 'easter_egg', 'Markarth', 'medium', false, 20
+FROM games g WHERE g.slug = 'elder-scrolls';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Waking Nightmare', 'Help the priest in Dawnstar end the town''s nightmares – choose to betray him for Vaermina''s Skull of Corruption', 'npc_encounter', 'Dawnstar', 'medium', true, 21
+FROM games g WHERE g.slug = 'elder-scrolls';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'The Cursed Tribe', 'Help the Orc chief at Largashbur appease Malacath and earn the Volendrung warhammer', 'npc_encounter', 'The Rift', 'medium', false, 22
+FROM games g WHERE g.slug = 'elder-scrolls';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Discerning the Transmundane', 'Help Septimus Signus open a Dwemer lockbox for Hermaeus Mora – collect blood from every elf race to earn the Oghma Infinium', 'secret', 'Winterhold', 'hard', false, 23
+FROM games g WHERE g.slug = 'elder-scrolls';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'The Break of Dawn', 'Find Meridia''s Beacon (random loot at level 12+) and clear her temple of undead for the Dawnbreaker sword', 'npc_encounter', 'Haafingar', 'medium', false, 24
+FROM games g WHERE g.slug = 'elder-scrolls';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'A Daedra''s Best Friend', 'Follow Barbas the talking dog to Clavicus Vile''s shrine – choose the Masque (not the Rueful Axe) for Oblivion Walker', 'npc_encounter', 'Falkreath', 'easy', false, 25
+FROM games g WHERE g.slug = 'elder-scrolls';
+
+-- =============================================
+-- Call of Duty quests (Warzone Easter egg hunts)
+-- =============================================
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Verdansk Bunker 11 Hunt', 'Decode Russian phone numbers across Verdansk to unlock the legendary Bunker 11 and its secret MP7 blueprint', 'easter_egg', 'Verdansk', 'hard', false, 1
+FROM games g WHERE g.slug = 'cod';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Haven''s Hollow Super Easter Egg', 'Complete all 6 hidden Easter eggs on Haven''s Hollow including the Blood Moon Ritual to unlock the Now You See Me camo', 'easter_egg', 'Haven''s Hollow', 'hard', false, 2
+FROM games g WHERE g.slug = 'cod';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Overlook Safe Room Puzzle', 'Find 3 pool balls in the Overlook building, place them on the pool table, and decode the numbers to open the hidden safe room', 'secret', 'Verdansk', 'medium', false, 3
+FROM games g WHERE g.slug = 'cod';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Winter Rebirth Gulag Opening', 'Use Thermite to melt frozen bunker doors, recover an SSD, decode binary, and open the old Gulag beneath Prison for epic loot', 'easter_egg', 'Rebirth Island', 'hard', false, 4
+FROM games g WHERE g.slug = 'cod';
+
+-- =============================================
+-- Apex Legends quests (Easter eggs & lore discoveries)
+-- =============================================
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Nessie Plush Collection', 'Find all hidden Nessie plush toys scattered across every map – a tradition from Titanfall that ties into Wattson''s lore', 'easter_egg', 'All Maps', 'easy', false, 1
+FROM games g WHERE g.slug = 'apex';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Firing Range Secrets', 'Discover hidden Easter eggs in the Firing Range including third-person mode and the living dummy fight', 'secret', 'Firing Range', 'medium', false, 2
+FROM games g WHERE g.slug = 'apex';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Olympus Titanfall References', 'Find the hidden Titanfall photo frame in the Gardens on Olympus featuring Macallan, Barker, and Graves', 'easter_egg', 'Olympus', 'easy', false, 3
+FROM games g WHERE g.slug = 'apex';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Wattson''s Pylon Lore Room', 'Explore Wattson''s office inside the Pylon POI on Storm Point for Easter eggs about her relationships with other Legends', 'easter_egg', 'Storm Point', 'easy', false, 4
+FROM games g WHERE g.slug = 'apex';
+INSERT INTO quests (game_id, name, description, category, region, difficulty, is_missable, sort_order)
+SELECT g.id, 'Loba and Revenant''s Restaurant', 'Land at the Bonsai Tower restaurant on Olympus with Loba and Revenant on the same squad for unique dialogue about her parents', 'easter_egg', 'Olympus', 'easy', false, 5
+FROM games g WHERE g.slug = 'apex';
