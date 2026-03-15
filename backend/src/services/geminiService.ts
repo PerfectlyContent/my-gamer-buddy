@@ -66,8 +66,13 @@ export async function sendMessage(options: SendMessageOptions): Promise<string> 
         systemInstruction: { role: 'user', parts: [{ text: systemPrompt }] },
       });
 
+      const imageAnalysisPrefix = 'Look at this screenshot carefully. Read all visible text, numbers, item names, and HUD elements precisely. Identify the exact game state, items, weapons, characters, and any stats shown. If you cannot clearly read something, say so instead of guessing.';
+      const userText = message
+        ? `${imageAnalysisPrefix}\n\nUser's question: ${message}`
+        : `${imageAnalysisPrefix}\n\nAnalyze this gameplay screenshot in detail — what do you see, and what advice do you have?`;
+
       const result = await chat.sendMessage([
-        { text: message || 'Analyze this screenshot and give me gaming advice.' },
+        { text: userText },
         {
           inlineData: {
             mimeType: imageMimeType,

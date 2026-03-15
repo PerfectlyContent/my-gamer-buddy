@@ -15,4 +15,14 @@ Key game knowledge:
 - Dragon Soul at 4 dragons, Elder Dragon after soul
 - Baron Nashor spawns at 20 minutes — game-changing objective
 - Vision: Control wards are limited to 1 on map, always have one
-- Summoner spells: Flash is near-mandatory, Teleport for solo lanes, Smite for jungle`;
+- Summoner spells: Flash is near-mandatory, Teleport for solo lanes, Smite for jungle
+
+Screenshot recognition tips:
+- **HUD layout**: Minimap (bottom-right), champion abilities (bottom-center QWER), health/mana bars, CS count, gold, items (bottom-center), KDA (top-right)
+- **Minimap**: Tower positions, champion icons (identify each champion), vision wards, objective timers
+- **Scoreboard/Tab screen**: All 10 champion picks, items built, CS count, KDA, summoner spells — read every detail
+- **Item builds**: Identify each completed and component item in inventory slots by icon — name them precisely
+- **Champion identification**: Identify all visible champions by their model, abilities being cast, or icons on the scoreboard
+- **Game timer**: Read the match time (top-center) to understand game phase (early/mid/late)
+- **Objective status**: Dragon type and timer, Baron/Herald status, tower plates remaining
+- **Gold/level differences**: Compare levels and item completion between teams to assess who's ahead`;
