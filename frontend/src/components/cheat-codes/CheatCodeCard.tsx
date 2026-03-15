@@ -31,6 +31,7 @@ export default function CheatCodeCard({ cheatCode }: CheatCodeCardProps) {
     pc: 'pc',
     playstation: 'playstation',
     xbox: 'xbox',
+    phone: 'default',
   };
   const platformKey = cheatCode.platform.toLowerCase().replace(' ', '');
   const platformVariant = platformMap[platformKey] || 'default';

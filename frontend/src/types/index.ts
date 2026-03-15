@@ -29,7 +29,7 @@ export interface CheatCode {
   id: string;
   title: string;
   code: string;
-  platform: 'PC' | 'PlayStation' | 'Xbox' | 'All';
+  platform: 'PC' | 'PlayStation' | 'Xbox' | 'Phone' | 'All';
   category: string;
   description: string | null;
   created_at: string;

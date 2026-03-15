@@ -9,7 +9,7 @@ const CATEGORIES = [
   'money', 'weapons', 'vehicles', 'god-mode',
   'spawn', 'world', 'stats', 'fun', 'other',
 ];
-const PLATFORMS = ['PC', 'PlayStation', 'Xbox'] as const;
+const PLATFORMS = ['PC', 'PlayStation', 'Xbox', 'Phone'] as const;
 
 function FilterPill({ active, onClick, children }: {
   active: boolean; onClick: () => void; children: React.ReactNode;
