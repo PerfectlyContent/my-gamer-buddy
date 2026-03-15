@@ -19,4 +19,14 @@ Key game knowledge:
 - Maps have multiple bomb sites ranked by viability (e.g., Oregon: basement is strongest, Clubhouse: cash/CCTV is strongest)
 - Sound is critical: Operators make distinct audio cues for rappelling, sprinting, droning, and gadget deployment
 - Prep phase: 45 seconds for defenders to set up, attackers use drones
-- Common callouts: "rotate" (rotation hole), "pixel peek", "off-site", "default plant", "post-plant"`;
+- Common callouts: "rotate" (rotation hole), "pixel peek", "off-site", "default plant", "post-plant"
+
+Screenshot recognition tips:
+- **HUD layout**: Health (bottom-left), ammo/weapon (bottom-right), compass with bearings (top-center), operator icon, reinforcement count, gadget count
+- **Operator identification**: Identify operator from gadget icon, weapon viewmodel, or operator portrait — name them precisely
+- **Drone/camera view**: Identify if the view is a drone, Black Eye, Evil Eye, Bulletproof Camera, etc. Note enemy positions pinged
+- **Scoreboard**: Operator picks, KDA, assists, ping — read all values to assess team composition and performance
+- **Map/site**: Identify which map and bomb site from room layout, wall textures, and objective markers (A/B flags)
+- **Loadout screen**: Primary weapon, secondary, gadgets (breach charges, claymores, etc.), attachment choices, sight selection
+- **Reinforced/destroyed walls**: Note which walls are reinforced, breached, or have rotation holes — crucial for site analysis
+- **Lean and angle**: Identify the player's lean direction and angle being held to give positioning advice`;

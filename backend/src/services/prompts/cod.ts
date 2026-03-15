@@ -15,4 +15,13 @@ Key game knowledge:
 - Attachment trade-offs: ADS speed vs. recoil control vs. bullet velocity
 - Map control: Power positions, head glitches, flank routes
 - Loadout drops in Warzone: Primary + Overkill for two custom weapons
-- Plate system in Warzone: 3 plates = 250 total HP`;
+- Plate system in Warzone: 3 plates = 250 total HP
+
+Screenshot recognition tips:
+- **HUD layout**: Minimap (top-left), kill feed (top-right), health/armor plates (bottom-left), weapon/ammo (bottom-right), compass (top-center)
+- **Warzone specifics**: Plate count (armor icons), cash amount, squad info, circle/gas position on map, loadout drop markers
+- **Weapon and attachments**: Identify weapon from viewmodel; in gunsmith/loadout screen, read each attachment slot (muzzle, barrel, underbarrel, optic, stock, rear grip, magazine, ammunition)
+- **Scoreboard**: KD ratio, score, streaks — read exact numbers
+- **Loadout screen**: Weapon build with all 5+ attachment slots, perk selections, equipment choices
+- **Minimap**: Red dots (enemies firing), teammate positions, objective markers
+- **Camo progress**: Track challenge completion bars and requirements shown on screen`;

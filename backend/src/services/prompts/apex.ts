@@ -14,4 +14,13 @@ Key game knowledge:
 - Weapons by ammo: Light, Heavy, Energy, Sniper, Shotgun, Special
 - Movement is king — Apex has the highest skill ceiling movement in any BR
 - Legends: Offense, Defense, Support, Recon classes with unique passives, tacticals, and ultimates
-- Ring damage increases each round — don't get caught rotating late`;
+- Ring damage increases each round — don't get caught rotating late
+
+Screenshot recognition tips:
+- **HUD layout**: Health bar (bottom-left), shield bar above health, ammo count (bottom-right), minimap (top-left), kill feed (top-right)
+- **Shield colors**: White/Blue/Purple/Gold/Red correspond to armor tiers — read the color precisely
+- **Weapon slots**: Two weapons shown bottom-right with ammo type icons and attachment indicators
+- **Legend identification**: Look at the character model, tactical/ultimate ability icons (bottom-center)
+- **Inventory screen**: Backpack slots, attachments on weapons, healing items, grenades — count exact quantities
+- **Minimap**: Ring position, nearby teammates (blue arrows), nearby enemies if scanned
+- **Death recap**: Shows damage sources, weapons used, and who finished the player`;
