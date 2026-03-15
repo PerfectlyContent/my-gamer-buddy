@@ -29,9 +29,11 @@ export const useChatStore = create<ChatStore>((set, get) => ({
   error: null,
 
   fetchConversations: async () => {
+    const { conversations } = get();
+    if (conversations.length > 0) return;
     try {
-      const conversations = await conversationsApi.list();
-      set({ conversations });
+      const convs = await conversationsApi.list();
+      set({ conversations: convs });
     } catch (error) {
       console.error('Failed to fetch conversations:', error);
     }
