@@ -11,7 +11,7 @@ interface ChatStore {
   sending: boolean;
   error: string | null;
 
-  fetchConversations: () => Promise<void>;
+  fetchConversations: (forceRefresh?: boolean) => Promise<void>;
   createConversation: (gameId?: string) => Promise<Conversation>;
   selectConversation: (conversation: Conversation) => Promise<void>;
   deleteConversation: (id: string) => Promise<void>;
@@ -28,9 +28,9 @@ export const useChatStore = create<ChatStore>((set, get) => ({
   sending: false,
   error: null,
 
-  fetchConversations: async () => {
+  fetchConversations: async (forceRefresh = false) => {
     const { conversations } = get();
-    if (conversations.length > 0) return;
+    if (!forceRefresh && conversations.length > 0) return;
     try {
       const convs = await conversationsApi.list();
       set({ conversations: convs });
@@ -107,8 +107,8 @@ export const useChatStore = create<ChatStore>((set, get) => ({
         sending: false,
       }));
 
-      // Refresh conversations to get updated titles
-      get().fetchConversations();
+      // Refresh conversations to get updated titles (force refresh)
+      get().fetchConversations(true);
     } catch (error) {
       console.error('Failed to send message:', error);
 

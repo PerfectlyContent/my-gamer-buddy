@@ -59,19 +59,19 @@ export const messagesApi = {
 };
 
 export const cheatCodesApi = {
-  list: (slug: string, params?: { category?: string; platform?: string }) =>
-    api.get(`/games/${slug}/cheat-codes`, { params }).then((r) => r.data),
+  list: (slug: string) =>
+    api.get(`/games/${slug}/cheat-codes`).then((r) => r.data),
 };
 
 export const mapsApi = {
   listMaps: (slug: string) => api.get(`/games/${slug}/maps`).then((r) => r.data),
-  getMarkers: (mapId: string, type?: string) =>
-    api.get(`/maps/${mapId}/markers`, { params: { type } }).then((r) => r.data),
+  getMarkers: (mapId: string) =>
+    api.get(`/maps/${mapId}/markers`).then((r) => r.data),
 };
 
 export const questsApi = {
-  list: (slug: string, category?: string) =>
-    api.get(`/games/${slug}/quests`, { params: { category } }).then((r) => r.data),
+  list: (slug: string) =>
+    api.get(`/games/${slug}/quests`).then((r) => r.data),
   getProgress: (slug: string) =>
     api.get(`/games/${slug}/quest-progress`).then((r) => r.data),
   updateProgress: (questId: string, data: { completed?: boolean; notes?: string }) =>
