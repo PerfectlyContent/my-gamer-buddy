@@ -48,7 +48,6 @@ export default function Maps() {
     markersLoading,
     fetchMaps,
     selectMap,
-    fetchMarkers,
     setMarkerType,
     selectMarker,
   } = useMapStore();
@@ -59,13 +58,6 @@ export default function Maps() {
       fetchMaps(selectedGame.slug);
     }
   }, [selectedGame, fetchMaps]);
-
-  // Re-fetch markers when marker type filter changes
-  useEffect(() => {
-    if (selectedMap) {
-      fetchMarkers(selectedMap.id);
-    }
-  }, [selectedMarkerType, selectedMap, fetchMarkers]);
 
   const handleMarkerClick = (marker: MapMarker) => {
     playSound('marker');

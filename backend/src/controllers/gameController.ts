@@ -30,6 +30,7 @@ export async function listGames(_req: Request, res: Response) {
     const result = await pool.query(
       'SELECT id, name, slug, icon, color_accent FROM games ORDER BY sort_order ASC'
     );
+    res.set('Cache-Control', 'public, max-age=300, stale-while-revalidate=600');
     res.json(result.rows);
   } catch (error) {
     console.error('Error fetching games:', error);

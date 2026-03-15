@@ -356,6 +356,8 @@ CREATE TABLE IF NOT EXISTS cheat_codes (
 
 CREATE INDEX IF NOT EXISTS idx_cheat_codes_game ON cheat_codes(game_id);
 CREATE INDEX IF NOT EXISTS idx_cheat_codes_category ON cheat_codes(category);
+CREATE INDEX IF NOT EXISTS idx_cheat_codes_game_category ON cheat_codes(game_id, category);
+CREATE INDEX IF NOT EXISTS idx_cheat_codes_platform ON cheat_codes(platform);
 
 -- =============================================
 -- Quests table
@@ -375,6 +377,7 @@ CREATE TABLE IF NOT EXISTS quests (
 
 CREATE INDEX IF NOT EXISTS idx_quests_game ON quests(game_id);
 CREATE INDEX IF NOT EXISTS idx_quests_category ON quests(category);
+CREATE INDEX IF NOT EXISTS idx_quests_game_category ON quests(game_id, category);
 
 -- Quest Progress tracking
 CREATE TABLE IF NOT EXISTS quest_progress (
@@ -389,6 +392,8 @@ CREATE TABLE IF NOT EXISTS quest_progress (
 );
 
 CREATE INDEX IF NOT EXISTS idx_quest_progress_session ON quest_progress(session_id);
+CREATE INDEX IF NOT EXISTS idx_quest_progress_quest ON quest_progress(quest_id);
+CREATE INDEX IF NOT EXISTS idx_map_markers_map_type ON map_markers(map_id, marker_type);
 
 -- =============================================
 -- Seed cheat codes

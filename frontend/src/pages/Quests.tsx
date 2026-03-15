@@ -57,13 +57,13 @@ export default function Quests() {
   } = useQuestStore();
   const { toast } = useToast();
 
-  // Fetch quests and progress when game or category changes
+  // Fetch quests and progress when game changes
   useEffect(() => {
     if (selectedGame) {
       fetchQuests(selectedGame.slug);
       fetchProgress(selectedGame.slug);
     }
-  }, [selectedGame, selectedCategory, fetchQuests, fetchProgress]);
+  }, [selectedGame, fetchQuests, fetchProgress]);
 
   // Filter quests by completion status
   const filteredQuests = useMemo(() => {

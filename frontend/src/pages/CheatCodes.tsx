@@ -37,7 +37,7 @@ export default function CheatCodes() {
 
   useEffect(() => {
     if (selectedGame) fetchCheatCodes(selectedGame.slug);
-  }, [selectedGame, selectedCategory, selectedPlatform, fetchCheatCodes]);
+  }, [selectedGame, fetchCheatCodes]);
 
   return (
     <div className="flex flex-col flex-1 min-h-0">

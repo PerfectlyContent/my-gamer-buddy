@@ -5,6 +5,7 @@ import { mapsApi } from '../lib/api';
 interface MapStore {
   maps: GameMap[];
   selectedMap: GameMap | null;
+  allMarkers: MapMarker[];
   markers: MapMarker[];
   selectedMarkerType: string | null;
   selectedMarker: MapMarker | null;
@@ -17,9 +18,15 @@ interface MapStore {
   selectMarker: (marker: MapMarker | null) => void;
 }
 
+function filterMarkers(all: MapMarker[], type: string | null): MapMarker[] {
+  if (!type) return all;
+  return all.filter((m) => m.marker_type === type);
+}
+
 export const useMapStore = create<MapStore>((set, get) => ({
   maps: [],
   selectedMap: null,
+  allMarkers: [],
   markers: [],
   selectedMarkerType: null,
   selectedMarker: null,
@@ -27,15 +34,16 @@ export const useMapStore = create<MapStore>((set, get) => ({
   markersLoading: false,
 
   fetchMaps: async (slug: string) => {
-    set({ loading: true, maps: [], selectedMap: null, markers: [], selectedMarker: null });
+    set({ loading: true, maps: [], selectedMap: null, allMarkers: [], markers: [], selectedMarker: null });
     try {
       const maps = await mapsApi.listMaps(slug);
-      set({ maps, loading: false });
-      // Auto-select first map and fetch its markers
       if (maps.length > 0) {
         const firstMap = maps[0];
-        set({ selectedMap: firstMap });
+        // Fetch maps and first map's markers in parallel-ish (set map immediately, kick off markers)
+        set({ maps, selectedMap: firstMap, loading: false });
         get().fetchMarkers(firstMap.id);
+      } else {
+        set({ maps, loading: false });
       }
     } catch (error) {
       console.error('Failed to fetch maps:', error);
@@ -44,22 +52,31 @@ export const useMapStore = create<MapStore>((set, get) => ({
   },
 
   selectMap: (map: GameMap) => {
-    set({ selectedMap: map, markers: [], selectedMarker: null });
+    set({ selectedMap: map, allMarkers: [], markers: [], selectedMarker: null });
     get().fetchMarkers(map.id);
   },
 
   fetchMarkers: async (mapId: string) => {
     set({ markersLoading: true });
     try {
+      const allMarkers = await mapsApi.getMarkers(mapId);
       const { selectedMarkerType } = get();
-      const markers = await mapsApi.getMarkers(mapId, selectedMarkerType || undefined);
-      set({ markers, markersLoading: false });
+      set({
+        allMarkers,
+        markers: filterMarkers(allMarkers, selectedMarkerType),
+        markersLoading: false,
+      });
     } catch (error) {
       console.error('Failed to fetch markers:', error);
-      set({ markers: [], markersLoading: false });
+      set({ allMarkers: [], markers: [], markersLoading: false });
     }
   },
 
-  setMarkerType: (type) => set({ selectedMarkerType: type }),
+  setMarkerType: (type) => {
+    set({ selectedMarkerType: type });
+    const { allMarkers } = get();
+    set({ markers: filterMarkers(allMarkers, type) });
+  },
+
   selectMarker: (marker) => set({ selectedMarker: marker }),
 }));

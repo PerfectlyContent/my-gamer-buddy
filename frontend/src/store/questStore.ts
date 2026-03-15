@@ -3,9 +3,11 @@ import { Quest, QuestProgress } from '../types';
 import { questsApi } from '../lib/api';
 
 interface QuestStore {
+  allQuests: Quest[];
   quests: Quest[];
   progress: Record<string, QuestProgress>;
   loading: boolean;
+  loadedSlug: string | null;
   selectedCategory: string | null;
   showCompleted: 'all' | 'incomplete' | 'complete';
   fetchQuests: (slug: string) => Promise<void>;
@@ -16,22 +18,39 @@ interface QuestStore {
   setShowCompleted: (filter: 'all' | 'incomplete' | 'complete') => void;
 }
 
+function filterByCategory(all: Quest[], category: string | null): Quest[] {
+  if (!category) return all;
+  return all.filter((q) => q.category === category);
+}
+
 export const useQuestStore = create<QuestStore>((set, get) => ({
+  allQuests: [],
   quests: [],
   progress: {},
   loading: false,
+  loadedSlug: null,
   selectedCategory: null,
   showCompleted: 'all',
 
   fetchQuests: async (slug: string) => {
+    const { loadedSlug, allQuests, selectedCategory } = get();
+    // If already loaded for this game, just re-filter
+    if (loadedSlug === slug && allQuests.length > 0) {
+      set({ quests: filterByCategory(allQuests, selectedCategory) });
+      return;
+    }
     set({ loading: true });
     try {
-      const { selectedCategory } = get();
-      const quests = await questsApi.list(slug, selectedCategory || undefined);
-      set({ quests, loading: false });
+      const quests = await questsApi.list(slug);
+      set({
+        allQuests: quests,
+        quests: filterByCategory(quests, selectedCategory),
+        loadedSlug: slug,
+        loading: false,
+      });
     } catch (error) {
       console.error('Failed to fetch quests:', error);
-      set({ quests: [], loading: false });
+      set({ allQuests: [], quests: [], loading: false });
     }
   },
 
@@ -66,10 +85,10 @@ export const useQuestStore = create<QuestStore>((set, get) => ({
           },
         },
       });
-      // Refetch for consistency
-      get().fetchProgress(slug);
     } catch (error) {
       console.error('Failed to toggle quest:', error);
+      // Refetch on error for consistency
+      get().fetchProgress(slug);
     }
   },
 
@@ -89,12 +108,18 @@ export const useQuestStore = create<QuestStore>((set, get) => ({
           },
         },
       });
-      get().fetchProgress(slug);
     } catch (error) {
       console.error('Failed to update notes:', error);
+      // Refetch on error for consistency
+      get().fetchProgress(slug);
     }
   },
 
-  setCategory: (category) => set({ selectedCategory: category }),
+  setCategory: (category) => {
+    set({ selectedCategory: category });
+    const { allQuests } = get();
+    set({ quests: filterByCategory(allQuests, category) });
+  },
+
   setShowCompleted: (filter) => set({ showCompleted: filter }),
 }));
