@@ -2,11 +2,10 @@ export interface Weapon {
   name: string;
   icon: string;
   type: string;
-  damage: number; // 0-100
 }
 
-export interface PlaystyleLoadout {
-  weapons: Weapon[];
+export interface PlaystyleInfo {
+  recommended: string[];
   aiTip: string;
   metaRank: number;
   matchPercent: number;
@@ -15,23 +14,37 @@ export interface PlaystyleLoadout {
 }
 
 export interface GameLoadouts {
+  allWeapons: Weapon[];
   playstyles: string[];
   patchLabel: string;
-  loadouts: Record<string, PlaystyleLoadout>;
+  loadouts: Record<string, PlaystyleInfo>;
 }
 
 export const LOADOUT_DATA: Record<string, GameLoadouts> = {
   fortnite: {
+    allWeapons: [
+      { name: 'Harbinger SMG', icon: '🔫', type: 'SMG' },
+      { name: 'Striker AR', icon: '💥', type: 'Assault Rifle' },
+      { name: 'Combat Shotgun', icon: '🎯', type: 'Shotgun' },
+      { name: 'Shockwave Grenade', icon: '💣', type: 'Utility' },
+      { name: 'Bolt-Action Sniper', icon: '🎯', type: 'Sniper' },
+      { name: 'Ranger AR', icon: '💥', type: 'Assault Rifle' },
+      { name: 'Shield Potion', icon: '🛡️', type: 'Consumable' },
+      { name: 'Smoke Grenade', icon: '💨', type: 'Utility' },
+      { name: 'Shield Keg', icon: '🛡️', type: 'Healing' },
+      { name: 'Port-a-Fort', icon: '🏗️', type: 'Utility' },
+      { name: 'Med-Mist', icon: '💚', type: 'Healing' },
+      { name: 'Chug Splash', icon: '🧪', type: 'Healing' },
+      { name: 'Firefly Jar', icon: '🔥', type: 'Utility' },
+      { name: 'Drum Gun', icon: '🔫', type: 'SMG' },
+      { name: 'Rocket Launcher', icon: '🚀', type: 'Heavy' },
+      { name: 'Tactical Pistol', icon: '🔫', type: 'Pistol' },
+    ],
     playstyles: ['Aggressive', 'Sniper', 'Builder', 'Support'],
     patchLabel: 'Updated for Chapter 6 Season 2',
     loadouts: {
       Aggressive: {
-        weapons: [
-          { name: 'Harbinger SMG', icon: '🔫', type: 'SMG', damage: 82 },
-          { name: 'Striker AR', icon: '💥', type: 'Assault Rifle', damage: 76 },
-          { name: 'Combat Shotgun', icon: '🎯', type: 'Shotgun', damage: 88 },
-          { name: 'Shockwave Grenade', icon: '💣', type: 'Utility', damage: 40 },
-        ],
+        recommended: ['Harbinger SMG', 'Striker AR', 'Combat Shotgun', 'Shockwave Grenade'],
         aiTip: 'The Harbinger SMG shreds at close range and pairs perfectly with the Combat Shotgun for quick swaps. Push fights aggressively after weakening with AR shots from mid-range.',
         metaRank: 2,
         matchPercent: 94,
@@ -39,12 +52,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Close Range', 'Solo', 'W-Key'],
       },
       Sniper: {
-        weapons: [
-          { name: 'Bolt-Action Sniper', icon: '🎯', type: 'Sniper', damage: 95 },
-          { name: 'Ranger AR', icon: '💥', type: 'Assault Rifle', damage: 72 },
-          { name: 'Shield Potion', icon: '🛡️', type: 'Consumable', damage: 0 },
-          { name: 'Smoke Grenade', icon: '💨', type: 'Utility', damage: 10 },
-        ],
+        recommended: ['Bolt-Action Sniper', 'Ranger AR', 'Shield Potion', 'Smoke Grenade'],
         aiTip: 'The Bolt-Action one-shots at 250+ damage on headshot. Pair with the Ranger AR for consistent mid-range poke while repositioning between snipe attempts.',
         metaRank: 5,
         matchPercent: 88,
@@ -52,12 +60,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Long Range', 'Duo', 'Late Game'],
       },
       Builder: {
-        weapons: [
-          { name: 'Striker AR', icon: '💥', type: 'Assault Rifle', damage: 76 },
-          { name: 'Combat Shotgun', icon: '🎯', type: 'Shotgun', damage: 88 },
-          { name: 'Shield Keg', icon: '🛡️', type: 'Healing', damage: 0 },
-          { name: 'Port-a-Fort', icon: '🏗️', type: 'Utility', damage: 0 },
-        ],
+        recommended: ['Striker AR', 'Combat Shotgun', 'Shield Keg', 'Port-a-Fort'],
         aiTip: 'High ground control is king for builders. The Striker AR gives you consistent damage while building up, and the Combat Shotgun punishes anyone who tries to take your walls.',
         metaRank: 1,
         matchPercent: 96,
@@ -65,12 +68,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Build Fights', 'Competitive', 'High Ground'],
       },
       Support: {
-        weapons: [
-          { name: 'Med-Mist', icon: '💚', type: 'Healing', damage: 0 },
-          { name: 'Chug Splash', icon: '🧪', type: 'Healing', damage: 0 },
-          { name: 'Ranger AR', icon: '💥', type: 'Assault Rifle', damage: 72 },
-          { name: 'Firefly Jar', icon: '🔥', type: 'Utility', damage: 35 },
-        ],
+        recommended: ['Med-Mist', 'Chug Splash', 'Ranger AR', 'Firefly Jar'],
         aiTip: 'Med-Mist heals through builds and Chug Splash can heal your entire squad instantly. Focus on keeping teammates alive while using the Ranger AR for suppressive fire.',
         metaRank: 4,
         matchPercent: 85,
@@ -81,16 +79,29 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
   },
 
   cod: {
+    allWeapons: [
+      { name: 'HRM-9', icon: '🔫', type: 'SMG' },
+      { name: 'Renetti', icon: '🔫', type: 'Pistol' },
+      { name: 'Stun Grenade', icon: '💥', type: 'Tactical' },
+      { name: 'Semtex', icon: '💣', type: 'Lethal' },
+      { name: 'MORS', icon: '🎯', type: 'Sniper' },
+      { name: 'MCW', icon: '💥', type: 'Assault Rifle' },
+      { name: 'Smoke Grenade', icon: '💨', type: 'Tactical' },
+      { name: 'Throwing Knife', icon: '🗡️', type: 'Lethal' },
+      { name: 'Rival-9', icon: '🔫', type: 'SMG' },
+      { name: 'Flash Grenade', icon: '💥', type: 'Tactical' },
+      { name: 'C4', icon: '💣', type: 'Lethal' },
+      { name: 'Holger 556', icon: '💥', type: 'LMG' },
+      { name: 'Trophy System', icon: '🛡️', type: 'Field Upgrade' },
+      { name: 'Striker', icon: '🔫', type: 'SMG' },
+      { name: 'SVA 545', icon: '💥', type: 'Assault Rifle' },
+      { name: 'Lockwood 680', icon: '💥', type: 'Shotgun' },
+    ],
     playstyles: ['Rusher', 'Marksman', 'Tactical', 'Support'],
     patchLabel: 'Updated for Warzone Season 3',
     loadouts: {
       Rusher: {
-        weapons: [
-          { name: 'HRM-9', icon: '🔫', type: 'SMG', damage: 84 },
-          { name: 'Renetti', icon: '🔫', type: 'Pistol', damage: 70 },
-          { name: 'Stun Grenade', icon: '💥', type: 'Tactical', damage: 15 },
-          { name: 'Semtex', icon: '💣', type: 'Lethal', damage: 65 },
-        ],
+        recommended: ['HRM-9', 'Renetti', 'Stun Grenade', 'Semtex'],
         aiTip: 'The HRM-9 has the fastest TTK in close quarters this season. Run it with Double Time and lightweight stock to outpace every gunfight within 15m.',
         metaRank: 1,
         matchPercent: 95,
@@ -98,12 +109,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['CQB', 'Ranked', 'Aggressive'],
       },
       Marksman: {
-        weapons: [
-          { name: 'MORS', icon: '🎯', type: 'Sniper', damage: 97 },
-          { name: 'MCW', icon: '💥', type: 'Assault Rifle', damage: 75 },
-          { name: 'Smoke Grenade', icon: '💨', type: 'Tactical', damage: 0 },
-          { name: 'Throwing Knife', icon: '🗡️', type: 'Lethal', damage: 80 },
-        ],
+        recommended: ['MORS', 'MCW', 'Smoke Grenade', 'Throwing Knife'],
         aiTip: 'The MORS is a guaranteed one-shot to upper chest at any range. Pair with the MCW for versatile mid-range coverage when you need to relocate between angles.',
         metaRank: 3,
         matchPercent: 89,
@@ -111,12 +117,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Long Range', 'Warzone', 'Picks'],
       },
       Tactical: {
-        weapons: [
-          { name: 'MCW', icon: '💥', type: 'Assault Rifle', damage: 75 },
-          { name: 'Rival-9', icon: '🔫', type: 'SMG', damage: 78 },
-          { name: 'Flash Grenade', icon: '💥', type: 'Tactical', damage: 10 },
-          { name: 'C4', icon: '💣', type: 'Lethal', damage: 72 },
-        ],
+        recommended: ['MCW', 'Rival-9', 'Flash Grenade', 'C4'],
         aiTip: 'The MCW and Rival-9 combo covers all ranges effectively. Use flashes to clear rooms before entering and C4 for area denial on objectives.',
         metaRank: 2,
         matchPercent: 92,
@@ -124,12 +125,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Versatile', 'Objective', 'Search & Destroy'],
       },
       Support: {
-        weapons: [
-          { name: 'Holger 556', icon: '💥', type: 'LMG', damage: 73 },
-          { name: 'Renetti', icon: '🔫', type: 'Pistol', damage: 70 },
-          { name: 'Trophy System', icon: '🛡️', type: 'Field Upgrade', damage: 0 },
-          { name: 'Smoke Grenade', icon: '💨', type: 'Tactical', damage: 0 },
-        ],
+        recommended: ['Holger 556', 'Renetti', 'Trophy System', 'Smoke Grenade'],
         aiTip: 'The Holger 556 provides sustained suppressive fire with its massive magazine. Deploy Trophy Systems on objectives and use smokes to cover teammate pushes.',
         metaRank: 6,
         matchPercent: 82,
@@ -140,16 +136,29 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
   },
 
   valorant: {
+    allWeapons: [
+      { name: 'Vandal', icon: '🔫', type: 'Rifle' },
+      { name: 'Ghost', icon: '🔫', type: 'Pistol' },
+      { name: 'Frenzy', icon: '🔫', type: 'Pistol' },
+      { name: 'Shorty', icon: '💥', type: 'Sidearm' },
+      { name: 'Operator', icon: '🎯', type: 'Sniper' },
+      { name: 'Sheriff', icon: '🔫', type: 'Pistol' },
+      { name: 'Phantom', icon: '🔫', type: 'Rifle' },
+      { name: 'Marshal', icon: '🎯', type: 'Sniper' },
+      { name: 'Spectre', icon: '🔫', type: 'SMG' },
+      { name: 'Judge', icon: '💥', type: 'Shotgun' },
+      { name: 'Bulldog', icon: '🔫', type: 'Rifle' },
+      { name: 'Classic', icon: '🔫', type: 'Pistol' },
+      { name: 'Stinger', icon: '🔫', type: 'SMG' },
+      { name: 'Odin', icon: '💥', type: 'Heavy' },
+      { name: 'Ares', icon: '💥', type: 'Heavy' },
+      { name: 'Bucky', icon: '💥', type: 'Shotgun' },
+    ],
     playstyles: ['Duelist', 'Operator', 'Controller', 'Sentinel'],
     patchLabel: 'Updated for Episode 10 Act 1',
     loadouts: {
       Duelist: {
-        weapons: [
-          { name: 'Vandal', icon: '🔫', type: 'Rifle', damage: 90 },
-          { name: 'Ghost', icon: '🔫', type: 'Pistol', damage: 55 },
-          { name: 'Frenzy', icon: '🔫', type: 'Pistol', damage: 45 },
-          { name: 'Shorty', icon: '💥', type: 'Sidearm', damage: 60 },
-        ],
+        recommended: ['Vandal', 'Ghost', 'Frenzy', 'Shorty'],
         aiTip: 'The Vandal one-taps at any range making it the ideal duelist weapon. Full buy rounds should always prioritize the Vandal over the Phantom for entry fraggers.',
         metaRank: 1,
         matchPercent: 96,
@@ -157,12 +166,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Entry Frag', 'Ranked', 'Aggro'],
       },
       Operator: {
-        weapons: [
-          { name: 'Operator', icon: '🎯', type: 'Sniper', damage: 98 },
-          { name: 'Sheriff', icon: '🔫', type: 'Pistol', damage: 65 },
-          { name: 'Phantom', icon: '🔫', type: 'Rifle', damage: 85 },
-          { name: 'Marshal', icon: '🎯', type: 'Sniper', damage: 70 },
-        ],
+        recommended: ['Operator', 'Sheriff', 'Phantom', 'Marshal'],
         aiTip: 'The Operator is a guaranteed one-shot to the body. Hold long angles on defense and use the Sheriff as your eco-round backup for consistent one-tap potential.',
         metaRank: 3,
         matchPercent: 87,
@@ -170,12 +174,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Angle Holder', 'Defense', 'High Risk'],
       },
       Controller: {
-        weapons: [
-          { name: 'Phantom', icon: '🔫', type: 'Rifle', damage: 85 },
-          { name: 'Spectre', icon: '🔫', type: 'SMG', damage: 62 },
-          { name: 'Ghost', icon: '🔫', type: 'Pistol', damage: 55 },
-          { name: 'Judge', icon: '💥', type: 'Shotgun', damage: 72 },
-        ],
+        recommended: ['Phantom', 'Spectre', 'Ghost', 'Judge'],
         aiTip: 'Controllers should prioritize the Phantom for its spray accuracy through smokes. The silenced shots prevent tracers, making it impossible for enemies to pinpoint your position in smoke plays.',
         metaRank: 2,
         matchPercent: 93,
@@ -183,12 +182,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Smoke Play', 'Site Anchor', 'Ranked'],
       },
       Sentinel: {
-        weapons: [
-          { name: 'Vandal', icon: '🔫', type: 'Rifle', damage: 90 },
-          { name: 'Bulldog', icon: '🔫', type: 'Rifle', damage: 60 },
-          { name: 'Classic', icon: '🔫', type: 'Pistol', damage: 40 },
-          { name: 'Stinger', icon: '🔫', type: 'SMG', damage: 50 },
-        ],
+        recommended: ['Vandal', 'Bulldog', 'Classic', 'Stinger'],
         aiTip: 'Sentinels need the Vandal for retake potential — one-taps win 1vX clutches. Save economy on half-buys with the Bulldog burst-fire which is deadly accurate at mid-range.',
         metaRank: 4,
         matchPercent: 88,
@@ -199,16 +193,28 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
   },
 
   apex: {
+    allWeapons: [
+      { name: 'R-99', icon: '🔫', type: 'SMG' },
+      { name: 'Peacekeeper', icon: '💥', type: 'Shotgun' },
+      { name: 'Arc Star', icon: '⚡', type: 'Ordnance' },
+      { name: 'Thermite', icon: '🔥', type: 'Ordnance' },
+      { name: 'Kraber', icon: '🎯', type: 'Sniper' },
+      { name: 'R-301', icon: '💥', type: 'Assault Rifle' },
+      { name: 'Frag Grenade', icon: '💣', type: 'Ordnance' },
+      { name: 'Sentinel', icon: '🎯', type: 'Sniper' },
+      { name: 'Volt SMG', icon: '🔫', type: 'SMG' },
+      { name: 'Flatline', icon: '💥', type: 'Assault Rifle' },
+      { name: 'Alternator', icon: '🔫', type: 'SMG' },
+      { name: 'Wingman', icon: '🔫', type: 'Pistol' },
+      { name: 'Mastiff', icon: '💥', type: 'Shotgun' },
+      { name: 'Havoc', icon: '⚡', type: 'Assault Rifle' },
+      { name: 'Longbow DMR', icon: '🎯', type: 'Sniper' },
+    ],
     playstyles: ['Aggro', 'Sniper', 'Recon', 'Support'],
     patchLabel: 'Updated for Season 24',
     loadouts: {
       Aggro: {
-        weapons: [
-          { name: 'R-99', icon: '🔫', type: 'SMG', damage: 86 },
-          { name: 'Peacekeeper', icon: '💥', type: 'Shotgun', damage: 90 },
-          { name: 'Arc Star', icon: '⚡', type: 'Ordnance', damage: 55 },
-          { name: 'Thermite', icon: '🔥', type: 'Ordnance', damage: 48 },
-        ],
+        recommended: ['R-99', 'Peacekeeper', 'Arc Star', 'Thermite'],
         aiTip: 'The R-99 has the highest DPS in close quarters and the Peacekeeper chunks for 100+ on a good shot. Push teams after cracking a shield with arc stars for quick squad wipes.',
         metaRank: 1,
         matchPercent: 94,
@@ -216,12 +222,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Hot Drop', 'Ranked', 'Push'],
       },
       Sniper: {
-        weapons: [
-          { name: 'Kraber', icon: '🎯', type: 'Sniper', damage: 99 },
-          { name: 'R-301', icon: '💥', type: 'Assault Rifle', damage: 78 },
-          { name: 'Frag Grenade', icon: '💣', type: 'Ordnance', damage: 60 },
-          { name: 'Sentinel', icon: '🎯', type: 'Sniper', damage: 82 },
-        ],
+        recommended: ['Kraber', 'R-301', 'Frag Grenade', 'Sentinel'],
         aiTip: 'The Kraber is a care package one-shot king. Run the R-301 as your primary for mid-range fights and swap to the Sentinel early game until you find a Kraber.',
         metaRank: 4,
         matchPercent: 85,
@@ -229,12 +230,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Long Range', 'Poke', 'Late Game'],
       },
       Recon: {
-        weapons: [
-          { name: 'R-301', icon: '💥', type: 'Assault Rifle', damage: 78 },
-          { name: 'Volt SMG', icon: '🔫', type: 'SMG', damage: 74 },
-          { name: 'Arc Star', icon: '⚡', type: 'Ordnance', damage: 55 },
-          { name: 'Frag Grenade', icon: '💣', type: 'Ordnance', damage: 60 },
-        ],
+        recommended: ['R-301', 'Volt SMG', 'Arc Star', 'Frag Grenade'],
         aiTip: 'Recon legends like Bloodhound and Seer should run the R-301 for versatile range coverage. Scan before pushing and use the Volt as a cleanup weapon after getting info.',
         metaRank: 2,
         matchPercent: 91,
@@ -242,12 +238,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Info Plays', 'Ranked', 'Versatile'],
       },
       Support: {
-        weapons: [
-          { name: 'Flatline', icon: '💥', type: 'Assault Rifle', damage: 76 },
-          { name: 'Alternator', icon: '🔫', type: 'SMG', damage: 65 },
-          { name: 'Frag Grenade', icon: '💣', type: 'Ordnance', damage: 60 },
-          { name: 'Thermite', icon: '🔥', type: 'Ordnance', damage: 48 },
-        ],
+        recommended: ['Flatline', 'Alternator', 'Frag Grenade', 'Thermite'],
         aiTip: 'Support legends like Lifeline and Newcastle need reliable weapons — the Flatline has incredible hipfire and the Alternator has virtually zero recoil for consistent damage while reviving teammates.',
         metaRank: 5,
         matchPercent: 83,
@@ -258,16 +249,29 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
   },
 
   gta: {
+    allWeapons: [
+      { name: 'Special Carbine', icon: '🔫', type: 'Assault Rifle' },
+      { name: 'AP Pistol', icon: '🔫', type: 'Pistol' },
+      { name: 'Combat MG Mk II', icon: '💥', type: 'LMG' },
+      { name: 'Sticky Bomb', icon: '💣', type: 'Explosive' },
+      { name: 'Heavy Sniper Mk II', icon: '🎯', type: 'Sniper' },
+      { name: 'Marksman Rifle', icon: '🎯', type: 'DMR' },
+      { name: 'Up-n-Atomizer', icon: '⚡', type: 'Special' },
+      { name: 'Proximity Mine', icon: '💣', type: 'Explosive' },
+      { name: 'Assault Shotgun', icon: '💥', type: 'Shotgun' },
+      { name: 'Micro SMG', icon: '🔫', type: 'SMG' },
+      { name: 'Homing Launcher', icon: '🚀', type: 'Heavy' },
+      { name: 'Armor', icon: '🛡️', type: 'Protection' },
+      { name: 'Grenade', icon: '💣', type: 'Thrown' },
+      { name: 'Jerry Can', icon: '🔥', type: 'Utility' },
+      { name: 'Minigun', icon: '💥', type: 'Heavy' },
+      { name: 'RPG', icon: '🚀', type: 'Heavy' },
+    ],
     playstyles: ['Run & Gun', 'Sniper', 'Heist', 'Racer'],
     patchLabel: 'Updated for GTA Online 2025',
     loadouts: {
       'Run & Gun': {
-        weapons: [
-          { name: 'Special Carbine', icon: '🔫', type: 'Assault Rifle', damage: 82 },
-          { name: 'AP Pistol', icon: '🔫', type: 'Pistol', damage: 68 },
-          { name: 'Combat MG Mk II', icon: '💥', type: 'LMG', damage: 85 },
-          { name: 'Sticky Bomb', icon: '💣', type: 'Explosive', damage: 90 },
-        ],
+        recommended: ['Special Carbine', 'AP Pistol', 'Combat MG Mk II', 'Sticky Bomb'],
         aiTip: 'The Special Carbine is the most versatile weapon in freemode. The AP Pistol is essential for drive-by shooting — it has the highest DPS of any weapon usable in vehicles.',
         metaRank: 1,
         matchPercent: 93,
@@ -275,12 +279,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Freemode', 'PvP', 'Drive-by'],
       },
       Sniper: {
-        weapons: [
-          { name: 'Heavy Sniper Mk II', icon: '🎯', type: 'Sniper', damage: 98 },
-          { name: 'Marksman Rifle', icon: '🎯', type: 'DMR', damage: 78 },
-          { name: 'Up-n-Atomizer', icon: '⚡', type: 'Special', damage: 45 },
-          { name: 'Proximity Mine', icon: '💣', type: 'Explosive', damage: 85 },
-        ],
+        recommended: ['Heavy Sniper Mk II', 'Marksman Rifle', 'Up-n-Atomizer', 'Proximity Mine'],
         aiTip: 'The Heavy Sniper Mk II with explosive rounds is the most powerful weapon in GTA Online — it destroys most vehicles in 2-3 hits. Use thermal scope for easy target acquisition.',
         metaRank: 2,
         matchPercent: 90,
@@ -288,12 +287,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Anti-Vehicle', 'Long Range', 'Griefing Counter'],
       },
       Heist: {
-        weapons: [
-          { name: 'Assault Shotgun', icon: '💥', type: 'Shotgun', damage: 88 },
-          { name: 'Micro SMG', icon: '🔫', type: 'SMG', damage: 60 },
-          { name: 'Homing Launcher', icon: '🚀', type: 'Heavy', damage: 95 },
-          { name: 'Armor', icon: '🛡️', type: 'Protection', damage: 0 },
-        ],
+        recommended: ['Assault Shotgun', 'Micro SMG', 'Homing Launcher', 'Armor'],
         aiTip: 'For heists, the Assault Shotgun dominates indoor sections and the Homing Launcher handles vehicle chases. Always buy max armor before starting — it is the difference between success and failure.',
         metaRank: 3,
         matchPercent: 87,
@@ -301,12 +295,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Heist', 'Co-op', 'Indoor'],
       },
       Racer: {
-        weapons: [
-          { name: 'AP Pistol', icon: '🔫', type: 'Pistol', damage: 68 },
-          { name: 'Sticky Bomb', icon: '💣', type: 'Explosive', damage: 90 },
-          { name: 'Grenade', icon: '💣', type: 'Thrown', damage: 75 },
-          { name: 'Jerry Can', icon: '🔥', type: 'Utility', damage: 40 },
-        ],
+        recommended: ['AP Pistol', 'Sticky Bomb', 'Grenade', 'Jerry Can'],
         aiTip: 'In vehicle combat the AP Pistol is king — no other weapon matches its fire rate from a car. Sticky bombs are perfect for disabling pursuers during chases and races.',
         metaRank: 4,
         matchPercent: 80,
@@ -317,16 +306,32 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
   },
 
   minecraft: {
+    allWeapons: [
+      { name: 'Netherite Sword', icon: '⚔️', type: 'Melee' },
+      { name: 'Shield', icon: '🛡️', type: 'Defense' },
+      { name: 'Totem of Undying', icon: '✨', type: 'Utility' },
+      { name: 'Golden Apple', icon: '🍎', type: 'Consumable' },
+      { name: 'Bow (Power V)', icon: '🏹', type: 'Ranged' },
+      { name: 'Crossbow', icon: '🏹', type: 'Ranged' },
+      { name: 'Tipped Arrows', icon: '🧪', type: 'Ammo' },
+      { name: 'Firework Rocket', icon: '🎆', type: 'Ammo' },
+      { name: 'Netherite Pickaxe', icon: '⛏️', type: 'Tool' },
+      { name: 'Fortune III Pick', icon: '💎', type: 'Tool' },
+      { name: 'TNT', icon: '💣', type: 'Explosive' },
+      { name: 'Water Bucket', icon: '💧', type: 'Utility' },
+      { name: 'Elytra', icon: '🪽', type: 'Transport' },
+      { name: 'Ender Pearls', icon: '🔮', type: 'Utility' },
+      { name: 'Firework Rockets', icon: '🎆', type: 'Fuel' },
+      { name: 'Spyglass', icon: '🔭', type: 'Tool' },
+      { name: 'Trident', icon: '🔱', type: 'Melee' },
+      { name: 'Netherite Axe', icon: '🪓', type: 'Melee' },
+      { name: 'Enchanted Golden Apple', icon: '🍎', type: 'Consumable' },
+    ],
     playstyles: ['Warrior', 'Archer', 'Miner', 'Explorer'],
     patchLabel: 'Updated for 1.21 Tricky Trials',
     loadouts: {
       Warrior: {
-        weapons: [
-          { name: 'Netherite Sword', icon: '⚔️', type: 'Melee', damage: 92 },
-          { name: 'Shield', icon: '🛡️', type: 'Defense', damage: 0 },
-          { name: 'Totem of Undying', icon: '✨', type: 'Utility', damage: 0 },
-          { name: 'Golden Apple', icon: '🍎', type: 'Consumable', damage: 0 },
-        ],
+        recommended: ['Netherite Sword', 'Shield', 'Totem of Undying', 'Golden Apple'],
         aiTip: 'Netherite Sword with Sharpness V deals 11 damage per hit — enough to three-shot most mobs. Always carry a shield for Creeper encounters and a Totem for emergencies.',
         metaRank: 1,
         matchPercent: 95,
@@ -334,12 +339,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['PvE', 'Combat', 'Boss Fight'],
       },
       Archer: {
-        weapons: [
-          { name: 'Bow (Power V)', icon: '🏹', type: 'Ranged', damage: 88 },
-          { name: 'Crossbow', icon: '🏹', type: 'Ranged', damage: 82 },
-          { name: 'Tipped Arrows', icon: '🧪', type: 'Ammo', damage: 60 },
-          { name: 'Firework Rocket', icon: '🎆', type: 'Ammo', damage: 75 },
-        ],
+        recommended: ['Bow (Power V)', 'Crossbow', 'Tipped Arrows', 'Firework Rocket'],
         aiTip: 'Power V bows deal massive damage at range and are perfect for the Ender Dragon fight. Crossbows with Multishot and Firework Rockets are devastating for crowd control.',
         metaRank: 3,
         matchPercent: 86,
@@ -347,12 +347,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Ranged', 'Dragon Fight', 'PvP'],
       },
       Miner: {
-        weapons: [
-          { name: 'Netherite Pickaxe', icon: '⛏️', type: 'Tool', damage: 45 },
-          { name: 'Fortune III Pick', icon: '💎', type: 'Tool', damage: 40 },
-          { name: 'TNT', icon: '💣', type: 'Explosive', damage: 80 },
-          { name: 'Water Bucket', icon: '💧', type: 'Utility', damage: 0 },
-        ],
+        recommended: ['Netherite Pickaxe', 'Fortune III Pick', 'TNT', 'Water Bucket'],
         aiTip: 'Efficiency V Netherite Pickaxe mines instantly with a Haste II beacon. Fortune III on a separate pick maximizes diamond drops — never combine Fortune and Silk Touch on the same tool.',
         metaRank: 2,
         matchPercent: 90,
@@ -360,12 +355,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Mining', 'Resource', 'Diamonds'],
       },
       Explorer: {
-        weapons: [
-          { name: 'Elytra', icon: '🪽', type: 'Transport', damage: 0 },
-          { name: 'Ender Pearls', icon: '🔮', type: 'Utility', damage: 25 },
-          { name: 'Firework Rockets', icon: '🎆', type: 'Fuel', damage: 0 },
-          { name: 'Spyglass', icon: '🔭', type: 'Tool', damage: 0 },
-        ],
+        recommended: ['Elytra', 'Ender Pearls', 'Firework Rockets', 'Spyglass'],
         aiTip: 'Elytra with Firework Rockets is the fastest travel method in the game. Carry Ender Pearls as emergency teleports when your Elytra durability gets low mid-flight.',
         metaRank: 5,
         matchPercent: 78,
@@ -376,16 +366,32 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
   },
 
   'elden-ring': {
+    allWeapons: [
+      { name: 'Giant-Crusher', icon: '🔨', type: 'Colossal Weapon' },
+      { name: 'Greatsword', icon: '⚔️', type: 'Colossal Sword' },
+      { name: 'Greatshield', icon: '🛡️', type: 'Shield' },
+      { name: 'Fire Grease', icon: '🔥', type: 'Consumable' },
+      { name: 'Rivers of Blood', icon: '🗡️', type: 'Katana' },
+      { name: 'Uchigatana', icon: '🗡️', type: 'Katana' },
+      { name: 'Bloodhound Step', icon: '💨', type: 'Ash of War' },
+      { name: 'Lord of Blood Exultation', icon: '💎', type: 'Talisman' },
+      { name: 'Lusat Staff', icon: '🪄', type: 'Glintstone Staff' },
+      { name: 'Comet Azur', icon: '☄️', type: 'Sorcery' },
+      { name: 'Moonveil', icon: '🗡️', type: 'Katana' },
+      { name: 'Cerulean Hidden Tear', icon: '🧪', type: 'Flask' },
+      { name: 'Blasphemous Blade', icon: '🔥', type: 'Greatsword' },
+      { name: 'Erdtree Seal', icon: '✨', type: 'Sacred Seal' },
+      { name: 'Black Flame Tornado', icon: '🌀', type: 'Incantation' },
+      { name: 'Lord\'s Divine Fortification', icon: '🛡️', type: 'Buff' },
+      { name: 'Starscourge Greatsword', icon: '⚔️', type: 'Colossal Sword' },
+      { name: 'Hand of Malenia', icon: '🗡️', type: 'Katana' },
+      { name: 'Wing of Astel', icon: '✨', type: 'Curved Sword' },
+    ],
     playstyles: ['Strength', 'Dex/Bleed', 'Sorcery', 'Faith'],
     patchLabel: 'Updated for Shadow of the Erdtree DLC',
     loadouts: {
       Strength: {
-        weapons: [
-          { name: 'Giant-Crusher', icon: '🔨', type: 'Colossal Weapon', damage: 95 },
-          { name: 'Greatsword', icon: '⚔️', type: 'Colossal Sword', damage: 90 },
-          { name: 'Greatshield', icon: '🛡️', type: 'Shield', damage: 0 },
-          { name: 'Fire Grease', icon: '🔥', type: 'Consumable', damage: 30 },
-        ],
+        recommended: ['Giant-Crusher', 'Greatsword', 'Greatshield', 'Fire Grease'],
         aiTip: 'The Giant-Crusher has the highest physical AR in the game with Heavy infusion. Jump attacks with this weapon stagger every boss in 2-3 hits — abuse the poise damage.',
         metaRank: 2,
         matchPercent: 91,
@@ -393,12 +399,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['PvE', 'Stagger', 'Boss Killer'],
       },
       'Dex/Bleed': {
-        weapons: [
-          { name: 'Rivers of Blood', icon: '🗡️', type: 'Katana', damage: 88 },
-          { name: 'Uchigatana', icon: '🗡️', type: 'Katana', damage: 75 },
-          { name: 'Bloodhound Step', icon: '💨', type: 'Ash of War', damage: 0 },
-          { name: 'Lord of Blood Exultation', icon: '💎', type: 'Talisman', damage: 20 },
-        ],
+        recommended: ['Rivers of Blood', 'Uchigatana', 'Bloodhound Step', 'Lord of Blood Exultation'],
         aiTip: 'Rivers of Blood Corpse Piler skill melts bosses in seconds with bleed procs. Dual-wield with an Occult Uchigatana for maximum bleed buildup per combo.',
         metaRank: 1,
         matchPercent: 96,
@@ -406,12 +407,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Bleed', 'DPS', 'PvP Meta'],
       },
       Sorcery: {
-        weapons: [
-          { name: 'Lusat Staff', icon: '🪄', type: 'Glintstone Staff', damage: 85 },
-          { name: 'Comet Azur', icon: '☄️', type: 'Sorcery', damage: 98 },
-          { name: 'Moonveil', icon: '🗡️', type: 'Katana', damage: 80 },
-          { name: 'Cerulean Hidden Tear', icon: '🧪', type: 'Flask', damage: 0 },
-        ],
+        recommended: ['Lusat Staff', 'Comet Azur', 'Moonveil', 'Cerulean Hidden Tear'],
         aiTip: 'Comet Azur with Cerulean Hidden Tear gives you 10 seconds of unlimited FP — enough to delete any boss. Moonveil is your backup for when bosses close the distance.',
         metaRank: 3,
         matchPercent: 89,
@@ -419,12 +415,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Magic', 'Burst Damage', 'Cheese'],
       },
       Faith: {
-        weapons: [
-          { name: 'Blasphemous Blade', icon: '🔥', type: 'Greatsword', damage: 87 },
-          { name: 'Erdtree Seal', icon: '✨', type: 'Sacred Seal', damage: 70 },
-          { name: 'Black Flame Tornado', icon: '🌀', type: 'Incantation', damage: 82 },
-          { name: 'Lord\'s Divine Fortification', icon: '🛡️', type: 'Buff', damage: 0 },
-        ],
+        recommended: ['Blasphemous Blade', 'Erdtree Seal', 'Black Flame Tornado', 'Lord\'s Divine Fortification'],
         aiTip: 'Blasphemous Blade Taker\'s Flame heals you per hit and per kill — you become nearly unkillable. Stack fire damage talismans and watch bosses melt while you sustain through everything.',
         metaRank: 4,
         matchPercent: 86,
@@ -435,16 +426,32 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
   },
 
   lol: {
+    allWeapons: [
+      { name: 'Youmuu\'s Ghostblade', icon: '🗡️', type: 'Lethality' },
+      { name: 'Hubris', icon: '💀', type: 'Lethality' },
+      { name: 'Edge of Night', icon: '🌙', type: 'Lethality' },
+      { name: 'Serylda\'s Grudge', icon: '❄️', type: 'Armor Pen' },
+      { name: 'Infinity Edge', icon: '⚔️', type: 'Crit' },
+      { name: 'Kraken Slayer', icon: '🐙', type: 'Attack Speed' },
+      { name: 'Phantom Dancer', icon: '💨', type: 'Zeal' },
+      { name: 'Bloodthirster', icon: '❤️', type: 'Lifesteal' },
+      { name: 'Heartsteel', icon: '💚', type: 'Health' },
+      { name: 'Sunfire Aegis', icon: '🔥', type: 'Immolate' },
+      { name: 'Thornmail', icon: '🛡️', type: 'Armor' },
+      { name: 'Spirit Visage', icon: '💜', type: 'Magic Resist' },
+      { name: 'Imperial Mandate', icon: '👑', type: 'Ability Haste' },
+      { name: 'Staff of Flowing Water', icon: '🌊', type: 'Enchanter' },
+      { name: 'Redemption', icon: '✨', type: 'Heal' },
+      { name: 'Wardstone', icon: '👁️', type: 'Vision' },
+      { name: 'Rabadon\'s Deathcap', icon: '🎩', type: 'Ability Power' },
+      { name: 'Blade of the Ruined King', icon: '🗡️', type: 'On-Hit' },
+      { name: 'Guardian Angel', icon: '👼', type: 'Revive' },
+    ],
     playstyles: ['Assassin', 'ADC', 'Tank', 'Support'],
     patchLabel: 'Updated for Patch 16.5',
     loadouts: {
       Assassin: {
-        weapons: [
-          { name: 'Youmuu\'s Ghostblade', icon: '🗡️', type: 'Lethality', damage: 82 },
-          { name: 'Hubris', icon: '💀', type: 'Lethality', damage: 78 },
-          { name: 'Edge of Night', icon: '🌙', type: 'Lethality', damage: 70 },
-          { name: 'Serylda\'s Grudge', icon: '❄️', type: 'Armor Pen', damage: 75 },
-        ],
+        recommended: ['Youmuu\'s Ghostblade', 'Hubris', 'Edge of Night', 'Serylda\'s Grudge'],
         aiTip: 'Youmuu\'s rush gives you roaming speed and burst to snowball early. Hubris second item lets you stack AD from kills — the faster you get fed, the harder you scale.',
         metaRank: 2,
         matchPercent: 90,
@@ -452,12 +459,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Mid Lane', 'Roaming', 'Snowball'],
       },
       ADC: {
-        weapons: [
-          { name: 'Infinity Edge', icon: '⚔️', type: 'Crit', damage: 95 },
-          { name: 'Kraken Slayer', icon: '🐙', type: 'Attack Speed', damage: 88 },
-          { name: 'Phantom Dancer', icon: '💨', type: 'Zeal', damage: 65 },
-          { name: 'Bloodthirster', icon: '❤️', type: 'Lifesteal', damage: 72 },
-        ],
+        recommended: ['Infinity Edge', 'Kraken Slayer', 'Phantom Dancer', 'Bloodthirster'],
         aiTip: 'IE third item with 60% crit chance is the biggest power spike for any ADC. Kraken Slayer first gives you tank-shredding true damage that scales into late game teamfights.',
         metaRank: 1,
         matchPercent: 94,
@@ -465,12 +467,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Bot Lane', 'Late Game', 'Team Fight'],
       },
       Tank: {
-        weapons: [
-          { name: 'Heartsteel', icon: '💚', type: 'Health', damage: 55 },
-          { name: 'Sunfire Aegis', icon: '🔥', type: 'Immolate', damage: 60 },
-          { name: 'Thornmail', icon: '🛡️', type: 'Armor', damage: 45 },
-          { name: 'Spirit Visage', icon: '💜', type: 'Magic Resist', damage: 30 },
-        ],
+        recommended: ['Heartsteel', 'Sunfire Aegis', 'Thornmail', 'Spirit Visage'],
         aiTip: 'Heartsteel infinite scaling makes you an unstoppable frontline by 25 minutes. Sunfire gives you consistent damage in extended fights — just stand in the enemy team and zone their carries.',
         metaRank: 3,
         matchPercent: 87,
@@ -478,12 +475,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Top Lane', 'Frontline', 'Scaling'],
       },
       Support: {
-        weapons: [
-          { name: 'Imperial Mandate', icon: '👑', type: 'Ability Haste', damage: 50 },
-          { name: 'Staff of Flowing Water', icon: '🌊', type: 'Enchanter', damage: 30 },
-          { name: 'Redemption', icon: '✨', type: 'Heal', damage: 20 },
-          { name: 'Wardstone', icon: '👁️', type: 'Vision', damage: 0 },
-        ],
+        recommended: ['Imperial Mandate', 'Staff of Flowing Water', 'Redemption', 'Wardstone'],
         aiTip: 'Imperial Mandate procs off any CC ability for free damage and a speed boost for your ADC. Wardstone late game gives you extra ward slots that single-handedly win vision wars around objectives.',
         metaRank: 5,
         matchPercent: 82,
@@ -494,16 +486,32 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
   },
 
   zelda: {
+    allWeapons: [
+      { name: 'Master Sword', icon: '⚔️', type: 'Sword' },
+      { name: 'Hylian Shield', icon: '🛡️', type: 'Shield' },
+      { name: 'Silver Lynel Saber', icon: '🗡️', type: 'Sword' },
+      { name: 'Mighty Banana', icon: '🍌', type: 'Attack Food' },
+      { name: 'Great Eagle Bow', icon: '🏹', type: 'Bow (x3)' },
+      { name: 'Savage Lynel Bow', icon: '🏹', type: 'Bow (x5)' },
+      { name: 'Bomb Arrows', icon: '💣', type: 'Ammo' },
+      { name: 'Keese Eye Arrows', icon: '👁️', type: 'Homing Ammo' },
+      { name: 'Sheikah Armor Set', icon: '🥷', type: 'Armor' },
+      { name: 'Sneaky Elixir', icon: '🧪', type: 'Stealth Buff' },
+      { name: 'Dagger', icon: '🗡️', type: 'Short Blade' },
+      { name: 'Puffshroom', icon: '🍄', type: 'Utility' },
+      { name: 'Paraglider', icon: '🪂', type: 'Traversal' },
+      { name: 'Zonai Wing', icon: '🪽', type: 'Vehicle' },
+      { name: 'Battery', icon: '🔋', type: 'Energy' },
+      { name: 'Stamina Food', icon: '🍖', type: 'Consumable' },
+      { name: 'Royal Guard Claymore', icon: '⚔️', type: 'Two-Handed' },
+      { name: 'Ancient Blade', icon: '🗡️', type: 'Fuse Material' },
+      { name: 'Brightbloom Seed', icon: '🌱', type: 'Utility' },
+    ],
     playstyles: ['Melee', 'Ranged', 'Stealth', 'Exploration'],
     patchLabel: 'Updated for TotK v2.1',
     loadouts: {
       Melee: {
-        weapons: [
-          { name: 'Master Sword', icon: '⚔️', type: 'Sword', damage: 95 },
-          { name: 'Hylian Shield', icon: '🛡️', type: 'Shield', damage: 0 },
-          { name: 'Silver Lynel Saber', icon: '🗡️', type: 'Sword', damage: 88 },
-          { name: 'Mighty Banana', icon: '🍌', type: 'Attack Food', damage: 25 },
-        ],
+        recommended: ['Master Sword', 'Hylian Shield', 'Silver Lynel Saber', 'Mighty Banana'],
         aiTip: 'The Master Sword deals double damage to Ganondorf and never breaks permanently. Fuse it with a Silver Lynel Horn for the highest melee damage possible in the game.',
         metaRank: 1,
         matchPercent: 96,
@@ -511,12 +519,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Boss Fight', 'Ganondorf', 'Main Quest'],
       },
       Ranged: {
-        weapons: [
-          { name: 'Great Eagle Bow', icon: '🏹', type: 'Bow (x3)', damage: 85 },
-          { name: 'Savage Lynel Bow', icon: '🏹', type: 'Bow (x5)', damage: 92 },
-          { name: 'Bomb Arrows', icon: '💣', type: 'Ammo', damage: 78 },
-          { name: 'Keese Eye Arrows', icon: '👁️', type: 'Homing Ammo', damage: 60 },
-        ],
+        recommended: ['Great Eagle Bow', 'Savage Lynel Bow', 'Bomb Arrows', 'Keese Eye Arrows'],
         aiTip: 'The Savage Lynel Bow fires 5 arrows per shot — fuse each with a Gibdo Bone for 90+ damage per volley. Use bullet time from paraglider for guaranteed headshots.',
         metaRank: 2,
         matchPercent: 90,
@@ -524,12 +527,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Lynel Farming', 'Gleeok', 'Burst'],
       },
       Stealth: {
-        weapons: [
-          { name: 'Sheikah Armor Set', icon: '🥷', type: 'Armor', damage: 0 },
-          { name: 'Sneaky Elixir', icon: '🧪', type: 'Stealth Buff', damage: 0 },
-          { name: 'Dagger', icon: '🗡️', type: 'Short Blade', damage: 55 },
-          { name: 'Puffshroom', icon: '🍄', type: 'Utility', damage: 0 },
-        ],
+        recommended: ['Sheikah Armor Set', 'Sneaky Elixir', 'Dagger', 'Puffshroom'],
         aiTip: 'Full Sheikah armor maxes stealth — you can sneak-strike enemies for 8x damage. Puffshrooms create smoke cover for re-entering stealth mid-combat for repeated sneak strikes.',
         metaRank: 4,
         matchPercent: 82,
@@ -537,12 +535,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Sneak Strike', 'Night', 'Yiga Clan'],
       },
       Exploration: {
-        weapons: [
-          { name: 'Paraglider', icon: '🪂', type: 'Traversal', damage: 0 },
-          { name: 'Zonai Wing', icon: '🪽', type: 'Vehicle', damage: 0 },
-          { name: 'Battery', icon: '🔋', type: 'Energy', damage: 0 },
-          { name: 'Stamina Food', icon: '🍖', type: 'Consumable', damage: 0 },
-        ],
+        recommended: ['Paraglider', 'Zonai Wing', 'Battery', 'Stamina Food'],
         aiTip: 'Zonai Wings with fans are the fastest way to cross Hyrule. Max your stamina wheel before hearts — stamina is more useful for climbing, swimming, and paragliding exploration.',
         metaRank: 3,
         matchPercent: 88,
@@ -553,16 +546,32 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
   },
 
   rdr2: {
+    allWeapons: [
+      { name: 'Schofield Revolver', icon: '🔫', type: 'Revolver' },
+      { name: 'Cattleman Revolver', icon: '🔫', type: 'Revolver' },
+      { name: 'Sawed-Off Shotgun', icon: '💥', type: 'Shotgun' },
+      { name: 'Volatile Dynamite', icon: '💣', type: 'Throwable' },
+      { name: 'Carcano Rifle', icon: '🎯', type: 'Sniper' },
+      { name: 'Rolling Block Rifle', icon: '🎯', type: 'Sniper' },
+      { name: 'Lancaster Repeater', icon: '🔫', type: 'Repeater' },
+      { name: 'Binoculars', icon: '🔭', type: 'Utility' },
+      { name: 'Pump-Action Shotgun', icon: '💥', type: 'Shotgun' },
+      { name: 'Machete', icon: '🗡️', type: 'Melee' },
+      { name: 'Tomahawk', icon: '🪓', type: 'Thrown' },
+      { name: 'Fire Bottle', icon: '🔥', type: 'Throwable' },
+      { name: 'Springfield Rifle', icon: '🎯', type: 'Rifle' },
+      { name: 'Varmint Rifle', icon: '🔫', type: 'Rifle' },
+      { name: 'Bow', icon: '🏹', type: 'Ranged' },
+      { name: 'Lasso', icon: '🤠', type: 'Utility' },
+      { name: 'Double-Action Revolver', icon: '🔫', type: 'Revolver' },
+      { name: 'Litchfield Repeater', icon: '🔫', type: 'Repeater' },
+      { name: 'Semi-Auto Shotgun', icon: '💥', type: 'Shotgun' },
+    ],
     playstyles: ['Gunslinger', 'Sniper', 'Brawler', 'Hunter'],
     patchLabel: 'Updated for RDR2 Online 2025',
     loadouts: {
       Gunslinger: {
-        weapons: [
-          { name: 'Schofield Revolver', icon: '🔫', type: 'Revolver', damage: 85 },
-          { name: 'Cattleman Revolver', icon: '🔫', type: 'Revolver', damage: 72 },
-          { name: 'Sawed-Off Shotgun', icon: '💥', type: 'Shotgun', damage: 90 },
-          { name: 'Volatile Dynamite', icon: '💣', type: 'Throwable', damage: 88 },
-        ],
+        recommended: ['Schofield Revolver', 'Cattleman Revolver', 'Sawed-Off Shotgun', 'Volatile Dynamite'],
         aiTip: 'Dual Schofield Revolvers with express ammo are devastating in Dead Eye. Fan the hammer for rapid fire at close range and use the Sawed-Off as a last-resort hip fire weapon.',
         metaRank: 1,
         matchPercent: 94,
@@ -570,12 +579,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Dead Eye', 'Dual Wield', 'Close Range'],
       },
       Sniper: {
-        weapons: [
-          { name: 'Carcano Rifle', icon: '🎯', type: 'Sniper', damage: 96 },
-          { name: 'Rolling Block Rifle', icon: '🎯', type: 'Sniper', damage: 92 },
-          { name: 'Lancaster Repeater', icon: '🔫', type: 'Repeater', damage: 75 },
-          { name: 'Binoculars', icon: '🔭', type: 'Utility', damage: 0 },
-        ],
+        recommended: ['Carcano Rifle', 'Rolling Block Rifle', 'Lancaster Repeater', 'Binoculars'],
         aiTip: 'The Carcano Rifle has the highest damage per shot in the game with express ammo. Use Dead Eye to paint targets at extreme range and the Lancaster for mid-range backup.',
         metaRank: 2,
         matchPercent: 89,
@@ -583,12 +587,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Long Range', 'Dead Eye', 'Hunting'],
       },
       Brawler: {
-        weapons: [
-          { name: 'Pump-Action Shotgun', icon: '💥', type: 'Shotgun', damage: 92 },
-          { name: 'Machete', icon: '🗡️', type: 'Melee', damage: 70 },
-          { name: 'Tomahawk', icon: '🪓', type: 'Thrown', damage: 78 },
-          { name: 'Fire Bottle', icon: '🔥', type: 'Throwable', damage: 82 },
-        ],
+        recommended: ['Pump-Action Shotgun', 'Machete', 'Tomahawk', 'Fire Bottle'],
         aiTip: 'The Pump-Action Shotgun with slugs is a one-shot kill at surprising range. Use fire bottles to flush enemies from cover and the tomahawk for silent one-hit kills.',
         metaRank: 3,
         matchPercent: 85,
@@ -596,12 +595,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['CQB', 'Melee', 'Aggressive'],
       },
       Hunter: {
-        weapons: [
-          { name: 'Springfield Rifle', icon: '🎯', type: 'Rifle', damage: 88 },
-          { name: 'Varmint Rifle', icon: '🔫', type: 'Rifle', damage: 45 },
-          { name: 'Bow', icon: '🏹', type: 'Ranged', damage: 65 },
-          { name: 'Lasso', icon: '🤠', type: 'Utility', damage: 0 },
-        ],
+        recommended: ['Springfield Rifle', 'Varmint Rifle', 'Bow', 'Lasso'],
         aiTip: 'Use the Springfield with high velocity ammo for perfect large animal pelts. The Varmint Rifle is essential for small game — it is the only way to get perfect small pelts without ruining them.',
         metaRank: 4,
         matchPercent: 80,
@@ -612,16 +606,32 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
   },
 
   'rainbow-six': {
+    allWeapons: [
+      { name: 'R4-C (Ash)', icon: '🔫', type: 'Assault Rifle' },
+      { name: 'G8A1 (IQ)', icon: '🔫', type: 'LMG' },
+      { name: 'Frag Grenades', icon: '💣', type: 'Gadget' },
+      { name: 'Breaching Charges', icon: '💥', type: 'Gadget' },
+      { name: 'MP7 (Bandit)', icon: '🔫', type: 'SMG' },
+      { name: '416-C (Jäger)', icon: '🔫', type: 'Assault Rifle' },
+      { name: 'Nitro Cell', icon: '💣', type: 'Gadget' },
+      { name: 'Barbed Wire', icon: '🛡️', type: 'Gadget' },
+      { name: 'P90 (Doc/Rook)', icon: '🔫', type: 'SMG' },
+      { name: 'MP5 (Doc)', icon: '🔫', type: 'SMG' },
+      { name: 'Deployable Shield', icon: '🛡️', type: 'Gadget' },
+      { name: 'Impact Grenades', icon: '💣', type: 'Gadget' },
+      { name: 'T-5 SMG (Lesion)', icon: '🔫', type: 'SMG' },
+      { name: 'Mx4 Storm (Alibi)', icon: '🔫', type: 'SMG' },
+      { name: 'C4', icon: '💣', type: 'Gadget' },
+      { name: 'Proximity Alarm', icon: '📡', type: 'Gadget' },
+      { name: 'AK-12 (Ace)', icon: '🔫', type: 'Assault Rifle' },
+      { name: 'M762 (Zofia)', icon: '🔫', type: 'Assault Rifle' },
+      { name: 'ALDA 5.56 (Maestro)', icon: '🔫', type: 'LMG' },
+    ],
     playstyles: ['Attacker', 'Defender', 'Support', 'Roamer'],
     patchLabel: 'Updated for Year 9 Season 4',
     loadouts: {
       Attacker: {
-        weapons: [
-          { name: 'R4-C (Ash)', icon: '🔫', type: 'Assault Rifle', damage: 84 },
-          { name: 'G8A1 (IQ)', icon: '🔫', type: 'LMG', damage: 78 },
-          { name: 'Frag Grenades', icon: '💣', type: 'Gadget', damage: 72 },
-          { name: 'Breaching Charges', icon: '💥', type: 'Gadget', damage: 65 },
-        ],
+        recommended: ['R4-C (Ash)', 'G8A1 (IQ)', 'Frag Grenades', 'Breaching Charges'],
         aiTip: 'The R4-C is the fastest-killing attacker rifle with its insane fire rate. Ash\'s speed and small hitbox make her the go-to entry fragger — rush site after droning and trade with your team.',
         metaRank: 1,
         matchPercent: 95,
@@ -629,12 +639,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Entry Frag', 'Ranked', 'Aggressive'],
       },
       Defender: {
-        weapons: [
-          { name: 'MP7 (Bandit)', icon: '🔫', type: 'SMG', damage: 76 },
-          { name: '416-C (Jäger)', icon: '🔫', type: 'Assault Rifle', damage: 82 },
-          { name: 'Nitro Cell', icon: '💣', type: 'Gadget', damage: 85 },
-          { name: 'Barbed Wire', icon: '🛡️', type: 'Gadget', damage: 0 },
-        ],
+        recommended: ['MP7 (Bandit)', '416-C (Jäger)', 'Nitro Cell', 'Barbed Wire'],
         aiTip: 'Jäger\'s 416-C is the best defender weapon in the game — it hits like an attacker rifle. Place ADS devices to deny grenades on site, then play aggressively with your gun skill advantage.',
         metaRank: 1,
         matchPercent: 94,
@@ -642,12 +647,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Anchor', 'Anti-Grenade', 'Site Hold'],
       },
       Support: {
-        weapons: [
-          { name: 'P90 (Doc/Rook)', icon: '🔫', type: 'SMG', damage: 68 },
-          { name: 'MP5 (Doc)', icon: '🔫', type: 'SMG', damage: 72 },
-          { name: 'Deployable Shield', icon: '🛡️', type: 'Gadget', damage: 0 },
-          { name: 'Impact Grenades', icon: '💣', type: 'Gadget', damage: 55 },
-        ],
+        recommended: ['P90 (Doc/Rook)', 'MP5 (Doc)', 'Deployable Shield', 'Impact Grenades'],
         aiTip: 'Doc\'s stim pistol can overheal to 140 HP — use it on yourself during gunfights for a massive advantage. Rook\'s armor plates guarantee a DBNO state instead of instant death for your whole team.',
         metaRank: 3,
         matchPercent: 88,
@@ -655,12 +655,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Anchor', 'Healer', 'Team Play'],
       },
       Roamer: {
-        weapons: [
-          { name: 'T-5 SMG (Lesion)', icon: '🔫', type: 'SMG', damage: 74 },
-          { name: 'Mx4 Storm (Alibi)', icon: '🔫', type: 'SMG', damage: 70 },
-          { name: 'C4', icon: '💣', type: 'Gadget', damage: 85 },
-          { name: 'Proximity Alarm', icon: '📡', type: 'Gadget', damage: 0 },
-        ],
+        recommended: ['T-5 SMG (Lesion)', 'Mx4 Storm (Alibi)', 'C4', 'Proximity Alarm'],
         aiTip: 'Lesion\'s Gu mines give you intel on attacker positions and slow their push — place them on common entry points. Roam above or below site and rotate back when you hear a Gu trigger.',
         metaRank: 2,
         matchPercent: 91,
@@ -671,16 +666,32 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
   },
 
   'elder-scrolls': {
+    allWeapons: [
+      { name: 'Daedric Greatsword', icon: '⚔️', type: 'Two-Handed' },
+      { name: 'Daedric Shield', icon: '🛡️', type: 'Heavy Armor' },
+      { name: 'Dragonbone Warhammer', icon: '🔨', type: 'Two-Handed' },
+      { name: 'Vegetable Soup', icon: '🍲', type: 'Consumable' },
+      { name: 'Staff of Magnus', icon: '🪄', type: 'Staff' },
+      { name: 'Destruction Spells', icon: '🔥', type: 'Magic' },
+      { name: 'Conjuration Spells', icon: '👻', type: 'Magic' },
+      { name: 'Archmage Robes', icon: '🧙', type: 'Apparel' },
+      { name: 'Dragonbone Bow', icon: '🏹', type: 'Bow' },
+      { name: 'Daedric Arrows', icon: '🏹', type: 'Ammo' },
+      { name: 'Nightingale Armor', icon: '🥷', type: 'Light Armor' },
+      { name: 'Invisibility Potion', icon: '🧪', type: 'Potion' },
+      { name: 'Dawnbreaker', icon: '☀️', type: 'One-Handed' },
+      { name: 'Spellbreaker Shield', icon: '🛡️', type: 'Shield' },
+      { name: 'Restoration Spells', icon: '✨', type: 'Magic' },
+      { name: 'Amulet of Stendarr', icon: '📿', type: 'Amulet' },
+      { name: 'Mehrunes\' Razor', icon: '🗡️', type: 'Dagger' },
+      { name: 'Ebony Mail', icon: '🛡️', type: 'Heavy Armor' },
+      { name: 'Wabbajack', icon: '🪄', type: 'Staff' },
+    ],
     playstyles: ['Warrior', 'Mage', 'Stealth Archer', 'Paladin'],
     patchLabel: 'Updated for Skyrim Anniversary Edition',
     loadouts: {
       Warrior: {
-        weapons: [
-          { name: 'Daedric Greatsword', icon: '⚔️', type: 'Two-Handed', damage: 94 },
-          { name: 'Daedric Shield', icon: '🛡️', type: 'Heavy Armor', damage: 0 },
-          { name: 'Dragonbone Warhammer', icon: '🔨', type: 'Two-Handed', damage: 92 },
-          { name: 'Vegetable Soup', icon: '🍲', type: 'Consumable', damage: 0 },
-        ],
+        recommended: ['Daedric Greatsword', 'Daedric Shield', 'Dragonbone Warhammer', 'Vegetable Soup'],
         aiTip: 'The Daedric Greatsword with the Chaos Enchantment deals fire, frost, and shock damage simultaneously. Vegetable Soup grants unlimited power attacks — spam them for maximum DPS.',
         metaRank: 2,
         matchPercent: 90,
@@ -688,12 +699,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Melee', 'Tank', 'Power Attack'],
       },
       Mage: {
-        weapons: [
-          { name: 'Staff of Magnus', icon: '🪄', type: 'Staff', damage: 85 },
-          { name: 'Destruction Spells', icon: '🔥', type: 'Magic', damage: 90 },
-          { name: 'Conjuration Spells', icon: '👻', type: 'Magic', damage: 75 },
-          { name: 'Archmage Robes', icon: '🧙', type: 'Apparel', damage: 0 },
-        ],
+        recommended: ['Staff of Magnus', 'Destruction Spells', 'Conjuration Spells', 'Archmage Robes'],
         aiTip: 'Impact perk in Destruction staggers any enemy with dual-cast spells — even dragons. Conjure two Dremora Lords as tanks while you blast from range with Lightning Storm.',
         metaRank: 1,
         matchPercent: 93,
@@ -701,12 +707,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Destruction', 'Conjuration', 'Crowd Control'],
       },
       'Stealth Archer': {
-        weapons: [
-          { name: 'Dragonbone Bow', icon: '🏹', type: 'Bow', damage: 92 },
-          { name: 'Daedric Arrows', icon: '🏹', type: 'Ammo', damage: 80 },
-          { name: 'Nightingale Armor', icon: '🥷', type: 'Light Armor', damage: 0 },
-          { name: 'Invisibility Potion', icon: '🧪', type: 'Potion', damage: 0 },
-        ],
+        recommended: ['Dragonbone Bow', 'Daedric Arrows', 'Nightingale Armor', 'Invisibility Potion'],
         aiTip: 'Stealth Archer is the most overpowered build in Skyrim. With maxed Sneak and Archery, you deal 3x sneak attack damage with bows — most enemies die before they detect you.',
         metaRank: 1,
         matchPercent: 97,
@@ -714,12 +715,7 @@ export const LOADOUT_DATA: Record<string, GameLoadouts> = {
         tags: ['Sneak', 'One-Shot', 'Cheese'],
       },
       Paladin: {
-        weapons: [
-          { name: 'Dawnbreaker', icon: '☀️', type: 'One-Handed', damage: 82 },
-          { name: 'Spellbreaker Shield', icon: '🛡️', type: 'Shield', damage: 0 },
-          { name: 'Restoration Spells', icon: '✨', type: 'Magic', damage: 40 },
-          { name: 'Amulet of Stendarr', icon: '📿', type: 'Amulet', damage: 0 },
-        ],
+        recommended: ['Dawnbreaker', 'Spellbreaker Shield', 'Restoration Spells', 'Amulet of Stendarr'],
         aiTip: 'Dawnbreaker causes a fiery explosion when killing undead, chain-killing groups of Draugr instantly. Spellbreaker creates a ward that blocks dragon breath and mage spells.',
         metaRank: 3,
         matchPercent: 86,

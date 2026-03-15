@@ -6,6 +6,7 @@ import gameRoutes from './routes/games';
 import fileRoutes from './routes/files';
 import mapRoutes from './routes/maps';
 import questRoutes from './routes/quests';
+import { seedGames } from './controllers/gameController';
 
 dotenv.config();
 
@@ -56,6 +57,7 @@ process.on('unhandledRejection', (reason, promise) => {
 
 app.listen(PORT, () => {
   console.log(`My Gamer Buddy API running on port ${PORT}`);
+  seedGames();
 });
 
 export default app;
